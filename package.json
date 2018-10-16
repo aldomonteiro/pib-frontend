@@ -1,0 +1,33 @@
+{
+  "name": "pib-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0",
+    "fetchutils": "^0.0.1",
+    "jwt-decode": "^2.2.0",
+    "prop-types": "^15.6.2",
+    "query-string": "^6.1.0",
+    "ra-data-json-server": "^2.3.0",
+    "ra-data-simple-rest": "^2.3.3",
+    "react": "^16.5.0",
+    "react-admin": "^2.3.3",
+    "react-dom": "^16.5.0",
+    "react-facebook-login": "^4.1.0",
+    "react-scripts": "2.0.4",
+    "simple-flexbox": "^1.2.0"
+  },
+  "scripts": {
+    "start": "HTTPS=true react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
