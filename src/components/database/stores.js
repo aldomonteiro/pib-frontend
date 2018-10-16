@@ -8,18 +8,25 @@ import {
   NumberField,
   EditButton,
   DisabledInput,
-  SimpleForm,
+  BooleanInput,
   NumberInput,
   TextInput,
   number,
   minValue,
+  TabbedForm,
+  FormTab
 } from "react-admin";
+import { TimeInput } from 'react-admin-date-inputs';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const editStyles = {
+const storeStyles = {
   address: { maxWidth: 400 },
-  city: { display: 'inline-block' },
-  state: { display: 'inline-block', marginLeft: 32 },
+  col1: { display: 'inline-block' },
+  col2: { display: 'inline-block', marginLeft: 32 },
+  tableLine: { display: 'table' },
+  col1of3: { display: 'inline-block', width: '10em', maxWidth: '10em', marginLeft: 1 },
+  col2of3: { display: 'inline-block', width: '10em', maxWidth: '10em', marginLeft: 100 },
+  col3of3: { display: 'inline-block', width: '10em', maxWidth: '10em', marginLeft: 200 },
 };
 
 
@@ -39,28 +46,84 @@ export const StoreList = props => (
   </List>
 );
 
-export const StoreEdit = withStyles(editStyles)(({ classes, ...props }) => (
+export const StoreEdit = withStyles(storeStyles)(({ classes, ...props }) => (
   <Edit title={<StoreTitle />} {...props}>
-    <SimpleForm redirect="show">
-      <DisabledInput source="id" />
-      <TextInput source="name" />
-      <TextInput source="address" formClassName={classes.address} />
-      <TextInput source="city" formClassName={classes.city} />
-      <TextInput source="state" formClassName={classes.state} />
-      <TextInput source="phone" />
-    </SimpleForm>
+    <TabbedForm>
+      <FormTab label="resources.stores.tabs.main">
+        <DisabledInput source="id" />
+        <TextInput source="name" />
+        <TextInput source="address" formClassName={classes.address} />
+        <TextInput source="city" formClassName={classes.col1} />
+        <TextInput source="state" formClassName={classes.col2} />
+        <TextInput source="phone" />
+      </FormTab>
+      <FormTab label="resources.stores.tabs.openingtimes">
+        <BooleanInput source="sun_is_open" label="resources.stores.fields.sunday" />
+        <TimeInput source="sun_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="sun_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="mon_is_open" label="resources.stores.fields.monday" />
+        <TimeInput source="mon_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="mon_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="tue_is_open" label="resources.stores.fields.tuesday" />
+        <TimeInput source="tue_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="tue_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="wed_is_open" label="resources.stores.fields.wednesday" />
+        <TimeInput source="wed_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="wed_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="thu_is_open" label="resources.stores.fields.thursday" />
+        <TimeInput source="thu_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="thu_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="fri_is_open" label="resources.stores.fields.friday" />
+        <TimeInput source="fri_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="fri_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="sat_is_open" label="resources.stores.fields.saturday" />
+        <TimeInput source="sat_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="sat_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="hol_is_open" label="resources.stores.fields.holyday" />
+        <TimeInput source="hol_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="hol_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+      </FormTab>
+    </TabbedForm>
   </Edit>
 ));
 
-export const StoreCreate = props => (
+export const StoreCreate = withStyles(storeStyles)(({ classes, ...props }) => (
   <Create {...props}>
-    <SimpleForm redirect="show">
-      <TextInput source="id" />
-      <TextInput source="name" />
-      <TextInput source="address" />
-      <TextInput source="city" />
-      <TextInput source="state" />
-      <TextInput source="phone" />
-    </SimpleForm>
+    <TabbedForm>
+      <FormTab label="resources.stores.tabs.main">
+        <TextInput source="id" />
+        <TextInput source="name" />
+        <TextInput source="address" formClassName={classes.address} />
+        <TextInput source="city" formClassName={classes.col1} />
+        <TextInput source="state" formClassName={classes.col2} />
+        <TextInput source="phone" />
+      </FormTab>
+      <FormTab label="resources.stores.tabs.openingtimes">
+        <BooleanInput source="sun_is_open" label="resources.stores.fields.sunday" />
+        <TimeInput source="sun_open" isRequired={true} label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="sun_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="mon_is_open" label="resources.stores.fields.monday" />
+        <TimeInput source="mon_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="mon_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="tue_is_open" label="resources.stores.fields.tuesday" />
+        <TimeInput source="tue_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="tue_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="wed_is_open" label="resources.stores.fields.wednesday" />
+        <TimeInput source="wed_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="wed_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="thu_is_open" label="resources.stores.fields.thursday" />
+        <TimeInput source="thu_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="thu_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="fri_is_open" label="resources.stores.fields.friday" />
+        <TimeInput source="fri_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="fri_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="sat_is_open" label="resources.stores.fields.saturday" />
+        <TimeInput source="sat_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="sat_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        <BooleanInput source="hol_is_open" label="resources.stores.fields.holyday" />
+        <TimeInput source="hol_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+        <TimeInput source="hol_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+      </FormTab>
+    </TabbedForm>
   </Create>
-);
+));

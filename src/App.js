@@ -14,6 +14,8 @@ import PagesIcon from "@material-ui/icons/Book";
 import BeverageIcon from "@material-ui/icons/LocalDrink";
 import StoreIcon from "@material-ui/icons/Store";
 
+import englishMessages from './i18n/en';
+
 // import UserIcon from "@material-ui/icons/Group";
 import authProvider from "./authProvider";
 import CustomLogin from "./components/facebook/CustomLogin";
@@ -37,6 +39,17 @@ const httpClient = (url, options = {}) => {
 
 const dataProvider = simpleRestProvider("https://localhost:8080", httpClient);
 
+const i18nProvider = locale => {
+  console.log(`i18nProvider locale: ${locale}`);
+
+  if (locale === 'pt') {
+    return import('./i18n/pt').then(messages => messages.default);
+  }
+
+  // Always fallback on english
+  return englishMessages;
+};
+
 const App = () => (
   <Admin
     customReducers={{ pagesReducer }}
@@ -45,6 +58,8 @@ const App = () => (
     authProvider={authProvider}
     dataProvider={dataProvider}
     customRoutes={customRoutes}
+    locale="en"
+    i18nProvider={i18nProvider}
   >
     <Resource
       name="stores"
