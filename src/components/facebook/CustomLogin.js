@@ -144,7 +144,7 @@ class Login extends Component {
                 }
                 else {
                     window.FB.login(this.facebookLoginHandler,
-                        { scope: 'public_profile, email, manage_pages, publish_pages' });
+                        { scope: 'public_profile, email, manage_pages, publish_pages, pages_messaging, pages_messaging_subscriptions' });
                 }
             });
         }
