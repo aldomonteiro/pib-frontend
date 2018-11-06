@@ -31,7 +31,7 @@ const storeStyles = {
 
 
 const StoreTitle = ({ record }) => {
-  return <span>Store {record ? `"${record.name}"` : ""}</span>;
+  return <span>{record ? `${record.name}` : ""}</span>;
 };
 
 export const StoreList = props => (

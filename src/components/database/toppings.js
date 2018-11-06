@@ -22,7 +22,7 @@ export const ToppingList = props => (
 );
 
 const ToppingTitle = ({ record }) => {
-    return <span>Topping {record ? `"${record.topping}"` : ""}</span>;
+    return <span>{record ? `${record.topping}` : ""}</span>;
 };
 
 export const ToppingEdit = props => (

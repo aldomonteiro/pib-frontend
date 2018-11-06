@@ -30,8 +30,22 @@ const styles = theme => ({
         alignItems: 'center'
     },
     header: {
+        position: 'relative',
         width: '100%',
-        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    logo: {
+        position: 'absolute',
+        top: 10,
+        left: 0,
+    },
+    title: {
+        textAlign: 'center'
+    },
+    logoImg: {
+        height: '5rem',
+        width: '5rem',
     },
     buttons: {
         width: '100%',
@@ -118,9 +132,9 @@ class PageList extends React.Component {
         if (this.state.checkedPage.length > 0) {
             localStorage.setItem('activePage', this.state.checkedPage[0].id);
         }
-        this.setState({
-            openSnackOk: true
-        });
+        // this.setState({
+        //     openSnackOk: true
+        // });
     }
 
     handleBackButton = () => {
@@ -133,29 +147,34 @@ class PageList extends React.Component {
         const accessToken = await localStorage.getItem('accessToken');
         const activePageID = await localStorage.getItem('activePage');
 
-        try {
-            const pagesData = await fbLoadPages(accessToken);
-            const picturesData = await this.loadPagePictures(pagesData);
-            this.setState({ pages: pagesData.data, pagePictures: picturesData }, () => {
-                if (activePageID !== null) {
-                    const activePage = pagesData.data.filter((page) =>
-                        page.id === activePageID
-                    );
+        if (accessToken === null) {
+            this.props.dispatch(this.props.push("/login"));
+        } else {
 
-                    if (activePage.length !== 0) {
-                        const newChecked = [];
-                        newChecked.push(activePage[0].name);
+            try {
+                const pagesData = await fbLoadPages(accessToken);
+                const picturesData = await this.loadPagePictures(pagesData);
+                this.setState({ pages: pagesData.data, pagePictures: picturesData }, () => {
+                    if (activePageID !== null) {
+                        const activePage = pagesData.data.filter((page) =>
+                            page.id === activePageID
+                        );
 
-                        this.setState({
-                            checked: newChecked,
-                            checkedPage: activePage[0],
-                        });
+                        if (activePage.length !== 0) {
+                            const newChecked = [];
+                            newChecked.push(activePage[0].name);
+
+                            this.setState({
+                                checked: newChecked,
+                                checkedPage: activePage[0],
+                            });
+                        }
                     }
-                }
-            });
-        } catch (error) {
-            console.log(accessToken);
-            console.log(error);
+                });
+            } catch (error) {
+                console.log(accessToken);
+                console.log(error);
+            }
         }
     }
 
@@ -171,9 +190,15 @@ class PageList extends React.Component {
             this.state.loading ? <LoadingPage className={classes.divloader} /> :
                 <div className={classes.main}>
                     <div className={classes.header}>
-                        <h2>Páginas do Facebook</h2>
-                        <br />
-                        <h3>Selecione a página que será conectada ao bot</h3>
+                        <div className={classes.logo}>
+                            <img alt="PizzAIbot"
+                                className={classes.logoImg}
+                                src={process.env.PUBLIC_URL + '/images/pizzaibot-avatar.png'} />
+                        </div>
+                        <div className={classes.title}>
+                            <h2>Páginas do Facebook</h2>
+                            <h3>Selecione a página que será conectada ao bot</h3>
+                        </div>
                     </div>
                     <div>
                         <List>

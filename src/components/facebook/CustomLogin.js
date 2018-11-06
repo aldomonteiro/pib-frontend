@@ -83,20 +83,13 @@ class Login extends Component {
 
     componentDidMount() {
         setfbAsyncInit();
-        fbEnsureInit(() => {
+        fbEnsureInit(async () => {
             // Automatic login
-            window.FB.getLoginStatus((response) => {
-                this.setState({ responseStatus: response.status });
+            window.FB.getLoginStatus(async (response) => {
+                // This status is important because it is the first status when the user opens the page.
+                await this.setState({ responseStatus: response.status });
                 if (response.status === 'connected') {
                     this.props.userLogin(response, this.props.location.state ? this.props.location.state.nextPathname : '/');
-                    // window.FB.api('/me?fields=id,name,email,picture', userData => {
-                    //     let result = {
-                    //         status: response.status,
-                    //         ...response,
-                    //         ...userData
-                    //     };
-                    //     this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
-                    // });
                 }
             });
         });
@@ -105,13 +98,17 @@ class Login extends Component {
     componentWillUnmount() {
     }
 
-    facebookLoginHandler = response => {
+    facebookLoginHandler = async response => {
         console.log(response);
         // here, the user clicked login and I do not if he is a new user or not anymore,
         // because the status is connected. So, I saved on state responseStatus the 
         // first status when the page was loaded.
+        // await this.setState({ responseStatus: response.status });
+
         if (response.status === 'connected') {
-            window.FB.api('/me?fields=id,name,email,picture', userData => {
+            window.FB.api('/me?fields=id,name,email,picture,location', userData => {
+                console.log("window.FB.api fields");
+                console.log(userData);
                 let result = {
                     status: this.state.responseStatus,
                     facebookLoginStatus: response.status,
@@ -140,11 +137,11 @@ class Login extends Component {
                     this.props.userLogin(response, this.props.location.state ? this.props.location.state.nextPathname : '/');
                 }
                 else if (response.status === 'authorization_expired') {
-                    // TODO: what to do?                
+                    console.log("WARNING: need to do something about " + response.status);
                 }
                 else {
                     window.FB.login(this.facebookLoginHandler,
-                        { scope: 'public_profile, email, manage_pages, publish_pages, pages_messaging, pages_messaging_subscriptions' });
+                        { scope: 'public_profile, email, user_location, manage_pages, publish_pages, pages_messaging, pages_messaging_subscriptions' });
                 }
             });
         }
@@ -155,10 +152,10 @@ class Login extends Component {
         return (
             <div className={classes.main}>
                 <Card className={classes.card}>
-                    <CardHeader title="Connect Facebook Account" />
+                    <CardHeader title={translate('pos.login.connect')} />
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            Sign In with Facebook to create your first bot
+                            {translate('pos.login.sign_in')}
                         </Typography>
                     </CardContent>
                     <div className={classes.avatar}>
@@ -191,17 +188,15 @@ class Login extends Component {
                                     color="primary"
                                 />
                             }
-                            label="I agree to PizzaIBot Terms of Service and Privacy Police"
+                            label={translate('pos.login.agree_terms_of_service')}
                         />
                     </form>
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            What's coming next?
+                            {translate('pos.login.agree_next')}
                         </Typography>
                         <Typography component="p">
-                            We'll need some permissions to manage your Page's messages to
-                            automate your replies. That will open Facebook but don't worry!
-                            You will be back right after granting all requested permissions.
+                            {translate('pos.login.agree_description')}
                         </Typography>
                     </CardContent>
                 </Card>

@@ -18,7 +18,7 @@ import {
 import { choices_kinds } from '../../util';
 
 const FlavorTitle = ({ record }) => {
-  return <span>Flavor {record ? `"${record.flavor}"` : ""}</span>;
+  return <span>{record ? `${record.flavor}` : ""}</span>;
 };
 
 export const FlavorList = props => (
@@ -38,7 +38,7 @@ export const FlavorEdit = props => (
       <DisabledInput source="id" />
       <TextInput source="flavor" />
       <SelectInput source="kind" choices={choices_kinds()} />
-      <ReferenceArrayInput label="Toppings" reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
+      <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
         <SelectArrayInput optionText="topping">
           <ChipField source="id" />
         </SelectArrayInput>
@@ -56,7 +56,7 @@ export const FlavorCreate = props => (
       <TextInput source="id" />
       <TextInput source="flavor" />
       <SelectInput source="kind" choices={choices_kinds()} />
-      <ReferenceArrayInput label="Toppings" reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
+      <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
         <SelectArrayInput optionText="topping" >
           <ChipField source="id" />
         </SelectArrayInput>
