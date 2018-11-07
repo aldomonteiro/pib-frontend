@@ -113,29 +113,8 @@ export default async (type, params) => {
   return Promise.reject("Unknown method: " + type);
 };
 
-// const auth = async (userID, accessToken) => {
-//   const request = new Request('https://localhost:8080/users/auth', {
-//     method: 'POST',
-//     body: JSON.stringify({ userID, accessToken }),
-//     headers: new Headers({ 'Content-Type': 'application/json' }),
-//   });
-
-//   return fetch(request)
-//     .then(response => {
-//       if (response.status < 200 || response.status >= 300) {
-//         throw new Error(response.body);
-//         // return Promise.reject();
-//       }
-//       console.log("fetch first then return");
-//       return response.json();
-//     })
-//     .then(({ user }) => {
-//       return user;
-//     });
-// }
-
 const auth = async (userID, accessToken, name, email, pictureUrl, timeZone, locationName) => {
-  const request = new Request('https://localhost:8080/users/auth', {
+  const request = new Request(process.env.REACT_APP_API_URL + '/users/auth', {
     method: 'POST',
     body: JSON.stringify({ userID, accessToken, name, email, pictureUrl, timeZone, locationName }),
     headers: new Headers({ 'Content-Type': 'application/json' }),

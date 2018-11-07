@@ -38,7 +38,7 @@ const httpClient = (url, options = {}) => {
   return fetchUtils.fetchJson(url, options);
 }
 
-const dataProvider = simpleRestProvider("https://localhost:8080", httpClient);
+const dataProvider = simpleRestProvider(process.env.REACT_APP_API_URL, httpClient);
 
 const messages = {
   pt: portugueseMessages,
