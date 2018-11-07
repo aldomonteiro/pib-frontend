@@ -60,17 +60,17 @@ export default async (type, params) => {
 
   // called when the user clicks on the logout button
   if (type === AUTH_LOGOUT) {
-    console.log("AUTH_LOGOUT ...");
+    // console.log("AUTH_LOGOUT ...");
     // await setfbAsyncInit();
     const loginStatusResp = await fbGetLoginStatus();
     console.log("AUTH_LOGOUT after fbGetLoginStatus");
 
     if (loginStatusResp && loginStatusResp.status === 'connected') {
       const loginStatusLogout = await fbLogout();
-      console.log("FB.logout:", loginStatusLogout);
+      // console.log("FB.logout:", loginStatusLogout);
       localStorage.clear();
     }
-    console.log("resolved logout promise");
+    // console.log("resolved logout promise");
     return Promise.resolve();
   }
 
