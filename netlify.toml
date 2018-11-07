@@ -1,0 +1,6 @@
+[build]
+  command = "yarn build-netlify"
+  publish = "build"
+
+[context.production.environment]
+  REACT_APP_API_URL=https://app.pizzaibot.com
