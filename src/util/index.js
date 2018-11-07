@@ -2,7 +2,7 @@
 export const setfbAsyncInit = async () => {
     window.fbAsyncInit = function () {
         window.FB.init({
-            appId: '267537643995936',
+            appId: '493125474434244',
             autoLogAppEvents: true,
             xfbml: true,
             version: 'v3.1'
