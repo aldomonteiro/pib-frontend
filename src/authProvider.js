@@ -5,34 +5,7 @@ import decodeJwt from 'jwt-decode';
 export default async (type, params) => {
   // called when the user attemps to log in
   if (type === AUTH_LOGIN) {
-    console.log("AUTH_LOGIN.. ", params.status);
-    // user is connected to the application
-    // if (params.status === 'connected') {
-
-    //   const { authResponse } = params;
-    //   const { userID, accessToken } = authResponse;
-
-    //   const user = await auth(userID, accessToken);
-
-    //   if (user.token) {
-
-    //     localStorage.setItem('userID', userID);
-    //     localStorage.setItem('token', user.token);
-    //     localStorage.setItem('name', user.name);
-    //     localStorage.setItem('email', user.email);
-
-    //     if (user.activePage) localStorage.setItem('activePage', user.activePage);
-    //     if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
-
-    //     return Promise.resolve();
-    //   }
-
-    //   return Promise.reject("pos.auth.no_token");
-    // }
-    // else if (params.status === 'authorization_expired') {
-    //   console.log("AUTH_LOGIN.. ", params.status);
-    // } else if (params.status === 'not_authorized' || params.status === 'unknown') {
-    //   // new user
+    console.log("AUTH_LOGIN.. ", params);
     const { authResponse, name, email, picture, location } = params;
     const locationName = location ? location.name : null;
     const pictureUrl = picture ? picture.data.url : null;
@@ -63,7 +36,6 @@ export default async (type, params) => {
     // console.log("AUTH_LOGOUT ...");
     // await setfbAsyncInit();
     const loginStatusResp = await fbGetLoginStatus();
-    console.log("AUTH_LOGOUT after fbGetLoginStatus");
 
     if (loginStatusResp && loginStatusResp.status === 'connected') {
       const loginStatusLogout = await fbLogout();
@@ -129,5 +101,10 @@ const auth = async (userID, accessToken, name, email, pictureUrl, timeZone, loca
     })
     .then(({ user }) => {
       return user;
+    })
+    .catch((err) => {
+      if (err.message)
+        return Promise.reject(err.message);
+      else return Promise.reject("UNKNOWN ERROR!");
     });
 }

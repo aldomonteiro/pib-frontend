@@ -89,7 +89,15 @@ class Login extends Component {
                 // This status is important because it is the first status when the user opens the page.
                 await this.setState({ responseStatus: response.status });
                 if (response.status === 'connected') {
-                    this.props.userLogin(response, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                    window.FB.api('/me?fields=id,name,email,picture,location', userData => {
+                        let result = {
+                            status: this.state.responseStatus,
+                            facebookLoginStatus: response.status,
+                            authResponse: response.authResponse,
+                            ...userData
+                        };
+                        this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                    });
                 }
             });
         });

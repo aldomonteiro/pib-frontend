@@ -68,12 +68,12 @@ const Cardapio = ({
                     className={classes.value}
                 >
                     <Link to={location} className={classes.titleLink}>
-                        {translate('pos.dashboard.cardapio_tradicional')}
+                        {translate('pos.dashboard.cardapio')}
                     </Link>
                 </Typography>
                 <Divider />
                 <List>
-                    {fl.filter(record => record.kind === "tradicional").map(record => (
+                    {fl.map(record => (
                         <ListItem
                             key={record.id}
                             button

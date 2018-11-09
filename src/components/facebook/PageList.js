@@ -6,13 +6,14 @@ import List from '@material-ui/core/List';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
-import { getDefaultValues, translate } from 'ra-core';
+import { getDefaultValues } from 'ra-core';
 import Button from '@material-ui/core/Button';
 import { setfbAsyncInit, fbEnsureInit, fbLoadPages, fbRequestPagePicture } from '../../util';
 import SnackbarError from '@material-ui/core/Snackbar';
 import SnackbarOk from '@material-ui/core/Snackbar';
 import UpdatePage from './UpdatePage';
 import { push as pushAction } from 'react-router-redux';
+import { translate } from 'react-admin';
 
 const styles = theme => ({
     main: {
@@ -185,19 +186,19 @@ class PageList extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, translate } = this.props;
         return (
             this.state.loading ? <LoadingPage className={classes.divloader} /> :
                 <div className={classes.main}>
                     <div className={classes.header}>
                         <div className={classes.logo}>
-                            <img alt="PizzAIbot"
+                            <img alt="pizzAIbot"
                                 className={classes.logoImg}
                                 src={process.env.PUBLIC_URL + '/images/pizzaibot-avatar.png'} />
                         </div>
                         <div className={classes.title}>
-                            <h2>Páginas do Facebook</h2>
-                            <h3>Selecione a página que será conectada ao bot</h3>
+                            <h2>{translate('pos.pageList.facebook_pages')}</h2>
+                            <h4>{translate('pos.pageList.select_facebook_page')}</h4>
                         </div>
                     </div>
                     <div>
@@ -218,7 +219,9 @@ class PageList extends React.Component {
                         <Button variant="raised"
                             type="submit"
                             color="primary"
-                            onClick={this.handleBackButton}>Voltar</Button>
+                            onClick={this.handleBackButton}>
+                            {translate('pos.pageList.back')}
+                        </Button>
                     </div>
                     <SnackbarOk
                         open={this.state.openSnackOk}
@@ -240,9 +243,11 @@ class PageList extends React.Component {
 PageList.propTypes = {
     classes: PropTypes.object.isRequired,
     push: PropTypes.func,
+    translate: PropTypes.func,
 }
 
 const enhance = compose(
+    translate,
     connect((state, props) => ({
         initialValues: getDefaultValues(state, props),
         push: pushAction,

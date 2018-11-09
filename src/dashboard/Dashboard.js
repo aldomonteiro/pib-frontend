@@ -47,7 +47,7 @@ class DashBoard extends Component {
         const { flavors, toppings } = this.state;
         return (
             <Fragment>
-                <Title title="PizzAIbot admin" />
+                <Title title="pizzAIbot admin" />
                 <div style={styles.flex}>
                     <div style={styles.leftCol}>
                         <div style={styles.singleCol}>

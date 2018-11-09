@@ -32,10 +32,10 @@ export default {
                     'by %{customer_name}, one item |||| by %{customer_name}, %{nb_items} items',
             },
             welcome: {
-                title: 'Welcome to react-admin demo',
+                title: 'Bem-vindo a administração do Pizzaibot',
                 subtitle:
-                    "This is the admin of an imaginary poster shop. Fell free to explore and modify the data - it's local to your computer, and will reset each time you reload.",
-                aor_button: 'react-admin site',
+                    "Aqui você poderá administrar as opções que serão oferecidas aos seus clientes quando eles entrarem em contato com a sua empresa através do seu chatbot.",
+                aor_button: 'Site do pizzaibot',
                 demo_button: 'Source for this demo',
             },
         },
@@ -45,6 +45,12 @@ export default {
             agree_terms_of_service: "Eu concordo com os Termos de Serviço e Política de Privacidade do PizzaAIBot",
             agree_next: "O que acontece depois?",
             agree_description: "Nós vamos precisar de algumas permissões para gerenciar a sua Página e automatizar as suas respostas. Agora você será direcionado para o Facebook, mas não se preocupe! Você estará de volta ao nosso site assim que as permissões solicitadas forem concedidas."
+        },
+        pageList: {
+            facebook_pages: "Páginas do Facebook",
+            select_facebook_page: "Selecione a página que será conectada ao bot",
+            back: "Voltar",
+            confirm: "Confirmar",
         }
     },
     resources: {
@@ -108,9 +114,17 @@ export default {
             fields: {
                 name: 'Nome',
                 greetingText: 'Saudação do Facebook',
-                firstResponseText: 'Primeira resposta após iniciar',
+                firstResponseText: 'Primeira resposta do bot ($NAME = será substituído pelo nome do cliente)',
             }
 
+        },
+        pageslist: {
+            name: 'Página Ativa |||| Páginas Ativas',
+            fields: {
+                name: 'Nome',
+                greetingText: 'Saudação do Facebook',
+                firstResponseText: 'Primeira resposta após iniciar',
+            }
         },
         sizes: {
             name: 'Tamanho |||| Tamanhos',
