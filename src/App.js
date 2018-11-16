@@ -105,14 +105,13 @@ const App = () => (
         list={PageList}
         icon={PageListIcon}
       />,
-      permissions === 'admin'
-        ? <Resource
-          name="toppings"
-          list={ToppingList}
-          edit={ToppingEdit}
-          create={ToppingCreate}
-          icon={ToppingIcon}
-        /> : null,
+      <Resource
+        name="toppings"
+        list={ToppingList}
+        edit={permissions === 'admin' ? ToppingEdit : null}
+        create={permissions === 'admin' ? ToppingCreate : null}
+        icon={ToppingIcon}
+      />
     ]}
 
     {/* <Resource name="users" list={UserList} icon={UserIcon} /> */}

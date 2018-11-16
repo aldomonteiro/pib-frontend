@@ -151,12 +151,20 @@ class Login extends Component {
                     window.FB.login(this.facebookLoginHandler,
                         { scope: 'public_profile, email, user_location, manage_pages, publish_pages, pages_messaging, pages_messaging_subscriptions' });
                 }
-            });
+            }, true);
         }
     }
 
     render() {
         const { classes, handleSubmit, isLoading, translate } = this.props;
+
+        let environmentTag = process.env.NODE_ENV !== 'production' ?
+            (<Typography component="p" color="error">
+                {process.env.NODE_ENV}<br />
+                Server:{process.env.REACT_APP_API_URL}<br />
+                FB App:{process.env.REACT_APP_FACEBOOK_APP_ID}
+            </Typography>) : '';
+
         return (
             <div className={classes.main}>
                 <Card className={classes.card}>
@@ -206,6 +214,7 @@ class Login extends Component {
                         <Typography component="p">
                             {translate('pos.login.agree_description')}
                         </Typography>
+                        {environmentTag}
                     </CardContent>
                 </Card>
                 <Notification />

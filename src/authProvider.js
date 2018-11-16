@@ -50,7 +50,7 @@ export default async (type, params) => {
   if (type === AUTH_ERROR) {
     const status = params.message.status;
 
-    console.log("AUTH_ERROR");
+    console.log("AUTH_ERROR, status:" + status);
 
     if (status === 401 || status === 403) {
       localStorage.clear();

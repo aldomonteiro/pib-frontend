@@ -18,7 +18,7 @@ import {
   number,
   minValue,
 } from "react-admin";
-import { choices_kinds, choices_sizes } from '../../util';
+import { choices_kinds } from '../../util';
 
 const PricingTitle = ({ record }) => {
   return <span>Pricing {record ? `"${record.kind} - ${record.size}"` : ""}</span>;

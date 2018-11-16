@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import HomeIcon from '@material-ui/icons/Home';
-import CodeIcon from '@material-ui/icons/Code';
+// import CodeIcon from '@material-ui/icons/Code';
 import { withStyles } from '@material-ui/core/styles';
 
 import { translate } from 'react-admin';

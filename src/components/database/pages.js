@@ -7,7 +7,6 @@ import {
   EditButton,
   DisabledInput,
   SimpleForm,
-  TextInput,
   LongTextInput,
 } from "react-admin";
 
