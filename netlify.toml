@@ -3,5 +3,5 @@
   publish = "build"
 
 [context.production.environment]
-  REACT_APP_API_URL = "https://app.pizzaibot.com"
-  REACT_APP_FACEBOOK_APP_ID = "493125474434244"
+  REACT_APP_API_URL="https://app.pizzaibot.com"
+  REACT_APP_FACEBOOK_APP_ID="493125474434244"
