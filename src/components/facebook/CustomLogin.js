@@ -86,22 +86,22 @@ class Login extends Component {
         this.setState({ [name]: event.target.checked });
     };
 
-    componentDidMount() {
-        setfbAsyncInit();
-        fbEnsureInit(async () => {
+    async componentDidMount() {
+        await setfbAsyncInit();
+        await fbEnsureInit(async () => {
             // Automatic login
-            window.FB.getLoginStatus(async (response) => {
+            await window.FB.getLoginStatus(async response => {
                 // This status is important because it is the first status when the user opens the page.
                 await this.setState({ responseStatus: response.status });
                 if (response.status === 'connected') {
-                    window.FB.api('/me?fields=id,name,email,picture,location', userData => {
+                    await window.FB.api('/me?fields=id,name,email,picture,location', async userData => {
                         let result = {
                             status: this.state.responseStatus,
                             facebookLoginStatus: response.status,
                             authResponse: response.authResponse,
                             ...userData
                         };
-                        this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                        await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
                     });
                 }
             });
