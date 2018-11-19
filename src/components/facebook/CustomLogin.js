@@ -149,7 +149,7 @@ class Login extends Component {
                 }
                 else {
                     window.FB.login(this.facebookLoginHandler,
-                        { scope: 'public_profile, email, user_location, manage_pages, publish_pages, pages_messaging, pages_messaging_subscriptions' });
+                        { scope: 'public_profile, email, manage_pages, pages_messaging, pages_messaging_subscriptions' });
                 }
             }, true);
         }
