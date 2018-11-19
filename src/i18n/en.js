@@ -36,9 +36,11 @@ export default {
         login: {
             connect: "Connect Facebook Account",
             sign_in: "Sign In with Facebook to create your first bot",
-            agree_terms_of_service: 'I agree to PizzaIBot Terms of Service and Privacy Police',
+            agree_terms_of_service_ini: 'I agree to PizzaIBot ',
+            agree_terms_of_service_end: 'Terms of Service and Privacy Police',
             agree_next: "What's coming next?",
-            agree_description: "We'll need some permissions to manage your Page's messages to automate your replies. That will open Facebook but don't worry! You will be back right after granting all requested permissions."
+            agree_description: "We'll need some permissions to manage your Page's messages to automate your replies. That will open Facebook but don't worry! You will be back right after granting all requested permissions.",
+            continue_with_facebook: "Continue with Facebook"
         },
         pageList: {
             facebook_pages: "Facebook Pages",

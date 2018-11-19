@@ -19,6 +19,9 @@ import LockIcon from '@material-ui/icons/Lock';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { IconContext } from "react-icons";
+import { FaFacebookF } from 'react-icons/fa'
+
 import { setfbAsyncInit, fbEnsureInit } from '../../util';
 
 import { Notification, translate, userLogin } from 'react-admin';
@@ -62,6 +65,8 @@ const styles = theme => ({
     },
     actions: {
         padding: '0 1em 1em 1em',
+        display: 'flex',
+        justifyContent: 'center',
     },
     title: {
         fontSize: 14,
@@ -165,6 +170,13 @@ class Login extends Component {
                 FB App:{process.env.REACT_APP_FACEBOOK_APP_ID}
             </Typography>) : '';
 
+        let tos = (
+            <p>{translate('pos.login.agree_terms_of_service_ini')}
+                < a href="https://www.pizzaibot.com/politica-de-privacidade/" >
+                    {translate('pos.login.agree_terms_of_service_end')}
+                </a >
+            </p>);
+
         return (
             <div className={classes.main}>
                 <Card className={classes.card}>
@@ -184,15 +196,28 @@ class Login extends Component {
                             <Button
                                 variant="raised"
                                 type="submit"
-                                color="primary"
+                                // color="primary"
+                                style={{
+                                    backgroundColor: '#4267b2', color: 'white',
+                                    fontFamily: 'arial,sans-serif'
+                                }}
                                 disabled={isLoading}
-                                className={classes.button}
                                 fullWidth
+                                classes={classes.actions}
                             >
                                 {isLoading && (
-                                    <CircularProgress size={25} thickness={2} />
+                                    <CircularProgress style={{ color: 'white' }} size={25} thickness={2} />
                                 )}
-                                {translate('ra.auth.sign_in')}
+                                <IconContext.Provider value={{ size: '1.5em' }}>
+                                    <div>
+                                        <FaFacebookF />
+                                    </div>
+                                </IconContext.Provider>
+                                {translate('pos.login.continue_with_facebook')}
+                                {/* <div className="fb-login-button" data-max-rows="1"
+                                    data-size="large" data-button-type="continue_with"
+                                    data-show-faces="false" data-auto-logout-link="false"
+                                    data-use-continue-as="false"></div> */}
                             </Button>
                         </CardActions>
                         <FormControlLabel
@@ -204,7 +229,7 @@ class Login extends Component {
                                     color="primary"
                                 />
                             }
-                            label={translate('pos.login.agree_terms_of_service')}
+                            label={tos}
                         />
                     </form>
                     <CardContent>

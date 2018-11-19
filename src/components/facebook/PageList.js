@@ -186,7 +186,7 @@ class PageList extends React.Component {
     };
 
     render() {
-        const { classes, translate } = this.props;
+        const { classes, translate, isLoading } = this.props;
         return (
             this.state.loading ? <LoadingPage className={classes.divloader} /> :
                 <div className={classes.main}>
@@ -215,6 +215,7 @@ class PageList extends React.Component {
                             disabled={!this.state.confirmEnabled || this.state.checked.length === 0}
                             record={this.state.checkedPage[0]}
                             confirmUpdate={this.handleConfirmUpdate}
+                            isLoading={isLoading}
                         />
                         <Button variant="raised"
                             type="submit"
@@ -246,10 +247,13 @@ PageList.propTypes = {
     translate: PropTypes.func,
 }
 
+// const mapStateToProps = state => ({ isLoading: state.admin.loading > 0 });
+
 const enhance = compose(
     translate,
     connect((state, props) => ({
         initialValues: getDefaultValues(state, props),
+        isLoading: state.admin.loading > 0,
         push: pushAction,
     })),
     withStyles(styles)

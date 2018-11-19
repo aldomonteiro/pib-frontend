@@ -42,9 +42,11 @@ export default {
         login: {
             connect: "Conecte sua conta Facebook",
             sign_in: "Entre com o Facebook para criar o seu bot",
-            agree_terms_of_service: "Eu concordo com os Termos de Serviço e Política de Privacidade do PizzaAIBot",
+            agree_terms_of_service_ini: "Eu concordo com os ",
+            agree_terms_of_service_end: "Termos de Serviço e Política de Privacidade do PizzaAIBot",
             agree_next: "O que acontece depois?",
-            agree_description: "Nós vamos precisar de algumas permissões para gerenciar a sua Página e automatizar as suas respostas. Agora você será direcionado para o Facebook, mas não se preocupe! Você estará de volta ao nosso site assim que as permissões solicitadas forem concedidas."
+            agree_description: "Nós vamos precisar de algumas permissões para gerenciar a sua Página e automatizar as suas respostas. Agora você será direcionado para o Facebook, mas não se preocupe! Você estará de volta ao nosso site assim que as permissões solicitadas forem concedidas.",
+            continue_with_facebook: "Continuar com Facebook"
         },
         pageList: {
             facebook_pages: "Páginas do Facebook",

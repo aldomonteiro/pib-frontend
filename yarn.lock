@@ -7431,6 +7431,10 @@ react-headroom@^2.2.4:
     raf "^3.3.0"
     shallowequal "^0.2.2"
 
+react-icons@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-3.2.2.tgz#7b1dc795004a119a35175e62ecef91e5c9c90962"
+
 react-jss@^8.1.0:
   version "8.6.1"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-8.6.1.tgz#a06e2e1d2c4d91b4d11befda865e6c07fbd75252"
