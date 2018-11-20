@@ -2,6 +2,7 @@ import portugueseMessages from 'ra-language-portuguese';
 
 export default {
     ...portugueseMessages,
+    'Successfull page update': 'Página atualizada com sucesso!',
     pos: {
         search: 'Search',
         configuration: 'Configuration',

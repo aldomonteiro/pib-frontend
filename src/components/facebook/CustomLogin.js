@@ -65,8 +65,14 @@ const styles = theme => ({
     },
     actions: {
         padding: '0 1em 1em 1em',
+    },
+    btnlogin: {
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#4267b2',
+        color: 'white',
+        fontFamily: 'arial,sans-serif'
     },
     title: {
         fontSize: 14,
@@ -197,13 +203,13 @@ class Login extends Component {
                                 variant="raised"
                                 type="submit"
                                 // color="primary"
-                                style={{
-                                    backgroundColor: '#4267b2', color: 'white',
-                                    fontFamily: 'arial,sans-serif'
-                                }}
+                                // style={{
+                                //     backgroundColor: '#4267b2', color: 'white',
+                                //     fontFamily: 'arial,sans-serif'
+                                // }}
                                 disabled={isLoading}
                                 fullWidth
-                                classes={classes.actions}
+                                className={classes.btnlogin}
                             >
                                 {isLoading && (
                                     <CircularProgress style={{ color: 'white' }} size={25} thickness={2} />
