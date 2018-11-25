@@ -7,6 +7,13 @@ import { BeverageList, BeverageEdit, BeverageCreate } from "./components/databas
 import { SizeList, SizeEdit, SizeCreate } from "./components/database/sizes";
 import { StoreList, StoreEdit, StoreCreate } from "./components/database/stores";
 import { PageResourceList, PageResourceEdit } from "./components/database/pages";
+import { OrderList, OrderEdit, OrderIcon } from './components/database/orders';
+import {
+  VisitorList,
+  VisitorEdit,
+  VisitorCreate,
+  VisitorIcon,
+} from './components/database/customers';
 import PageList from './components/facebook/PageList';
 // import { UserList } from "./components/users";
 import FlavorIcon from "@material-ui/icons/LocalPizza";
@@ -59,6 +66,20 @@ const App = () => (
     i18nProvider={i18nProvider}
   >
     {permissions => [
+      <Resource
+        name="orders"
+        list={OrderList}
+        edit={OrderEdit}
+        icon={OrderIcon}
+        options={{ label: 'Orders' }}
+      />,
+      <Resource
+        name="customers"
+        list={VisitorList}
+        edit={VisitorEdit}
+        create={VisitorCreate}
+        icon={VisitorIcon}
+      />,
       <Resource
         name="stores"
         list={StoreList}

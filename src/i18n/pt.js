@@ -23,14 +23,13 @@ export default {
             cardapio_tradicional: 'Tradicionais',
             cardapio_especial: 'Especiais',
             cardapio_doce: 'Doces',
-            monthly_revenue: 'Monthly Revenue',
-            new_orders: 'New Orders',
-            pending_reviews: 'Pending Reviews',
-            new_customers: 'New Customers',
-            pending_orders: 'Pending Orders',
+            new_orders: 'Novos Pedidos',
+            new_customers: 'Novos Clientes',
+            pending_orders: 'Pedidos pendentes',
+            monthly_revenue: 'Receita mensal',
             order: {
                 items:
-                    'by %{customer_name}, one item |||| by %{customer_name}, %{nb_items} items',
+                    'por %{customer_name}, um item |||| por %{customer_name}, %{nb_items} itens',
             },
             welcome: {
                 title: 'Bem-vindo a administração do Pizzaibot',
