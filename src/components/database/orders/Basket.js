@@ -30,7 +30,7 @@ class Basket extends Component {
         crudGetMany('flavors', items.map(item => item.flavorId));
     }
     render() {
-        const { classes, record, products, translate } = this.props;
+        const { classes, record, translate } = this.props;
         const { items } = record;
         return (
             <Paper className={classes.container}>
@@ -39,22 +39,22 @@ class Basket extends Component {
                         <TableRow>
                             <TableCell>
                                 {translate(
-                                    'resources.commands.fields.basket.reference'
+                                    'resources.orders.fields.basket.reference'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
                                 {translate(
-                                    'resources.commands.fields.basket.unit_price'
+                                    'resources.orders.fields.basket.unit_price'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
                                 {translate(
-                                    'resources.commands.fields.basket.quantity'
+                                    'resources.orders.fields.basket.quantity'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
                                 {translate(
-                                    'resources.commands.fields.basket.total'
+                                    'resources.orders.fields.basket.total'
                                 )}
                             </TableCell>
                         </TableRow>
@@ -62,42 +62,28 @@ class Basket extends Component {
                     <TableBody>
                         {items.map(
                             item =>
-                                products[item.flavorId] && (
-                                    <TableRow key={item.flavorId}>
+                                item.flavorId && (
+                                    <TableRow key={item.id}>
                                         <TableCell>
-                                            <Link
-                                                to={`/flavors/${
-                                                    item.flavorId
-                                                    }`}
-                                            >
-                                                {
-                                                    products[item.flavorId]
-                                                        .reference
-                                                }
+                                            <Link to={`/flavors/${item.flavorId}`}>
+                                                {item.flavor}
+                                            </Link>
+                                            &nbsp;
+                                            <Link to={`/sizes/${item.sizeId}`}>
+                                                {item.size}
                                             </Link>
                                         </TableCell>
-                                        <TableCell
-                                            className={classes.rightAlignedCell}
-                                        >
-                                            {products[
-                                                item.flavorId
-                                            ].price.toLocaleString(undefined, {
+                                        <TableCell className={classes.rightAlignedCell}>
+                                            {item.price.toLocaleString(undefined, {
                                                 style: 'currency',
                                                 currency: 'BRL',
                                             })}
                                         </TableCell>
-                                        <TableCell
-                                            className={classes.rightAlignedCell}
-                                        >
-                                            {item.qty}
+                                        <TableCell className={classes.rightAlignedCell}>
+                                            {item.split ? item.qty + '/' + item.split : item.qty}
                                         </TableCell>
-                                        <TableCell
-                                            className={classes.rightAlignedCell}
-                                        >
-                                            {(
-                                                products[item.flavorId]
-                                                    .price * item.qty
-                                            ).toLocaleString(undefined, {
+                                        <TableCell className={classes.rightAlignedCell}>
+                                            {(item.price * item.qty).toLocaleString(undefined, {
                                                 style: 'currency',
                                                 currency: 'BRL',
                                             })}
@@ -109,7 +95,7 @@ class Basket extends Component {
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.commands.fields.basket.sum'
+                                    'resources.orders.fields.basket.sum'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
@@ -119,11 +105,11 @@ class Basket extends Component {
                                 )}
                             </TableCell>
                         </TableRow>
-                        <TableRow>
+                        {/* <TableRow>
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.commands.fields.basket.delivery'
+                                    'resources.orders.fields.basket.delivery'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
@@ -132,12 +118,12 @@ class Basket extends Component {
                                     { style: 'currency', currency: 'BRL' }
                                 )}
                             </TableCell>
-                        </TableRow>
-                        <TableRow>
+                        </TableRow> */}
+                        {/* <TableRow>
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.commands.fields.basket.tax_rate'
+                                    'resources.orders.fields.basket.tax_rate'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
@@ -145,12 +131,12 @@ class Basket extends Component {
                                     style: 'percent',
                                 })}
                             </TableCell>
-                        </TableRow>
+                        </TableRow> */}
                         <TableRow>
                             <TableCell colSpan={2} />
                             <TableCell className={classes.boldCell}>
                                 {translate(
-                                    'resources.commands.fields.basket.total'
+                                    'resources.orders.fields.basket.total'
                                 )}
                             </TableCell>
                             <TableCell
@@ -176,9 +162,9 @@ const mapStateToProps = (state, props) => {
     const {
         record: { items },
     } = props;
-    const productIds = items.map(item => item.flavorId);
+    const flavorIds = items.map(item => item.flavorId);
     return {
-        products: productIds
+        products: flavorIds
             .map(productId => state.admin.resources.flavors.data[productId])
             .filter(r => typeof r !== 'undefined')
             .reduce((prev, next) => {

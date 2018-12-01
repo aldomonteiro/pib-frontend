@@ -42,10 +42,7 @@ const OrderFilter = withStyles(filterStyles)(({ classes, ...props }) => (
                 }
             />
         </ReferenceInput>
-        <DateInput source="date_gte" />
-        <DateInput source="date_lte" />
-        <TextInput source="total_gte" />
-        <NullableBooleanInput source="returned" />
+        <DateInput source="createdAt" />
     </Filter>
 ));
 
@@ -55,23 +52,23 @@ const datagridStyles = {
 
 class TabbedDatagrid extends React.Component {
     tabs = [
-        { id: 'ordered', name: 'ordered' },
-        { id: 'delivered', name: 'delivered' },
-        { id: 'cancelled', name: 'cancelled' },
+        { id: 'ordered', name: 'Pedido' },
+        { id: 'delivered', name: 'Entregue' },
+        { id: 'cancelled', name: 'Cancelado' },
     ];
 
     state = { ordered: [], delivered: [], cancelled: [] };
 
     static getDerivedStateFromProps(props, state) {
-        if (props.ids !== state[props.filterValues.status]) {
-            return { ...state, [props.filterValues.status]: props.ids };
+        if (props.ids !== state[props.filterValues.status2]) {
+            return { ...state, [props.filterValues.status2]: props.ids };
         }
         return null;
     }
 
     handleChange = (event, value) => {
         const { filterValues, setFilters } = this.props;
-        setFilters({ ...filterValues, status: value });
+        setFilters({ ...filterValues, status2: value });
     };
 
     render() {
@@ -81,7 +78,7 @@ class TabbedDatagrid extends React.Component {
                 <Tabs
                     fullWidth
                     centered
-                    value={filterValues.status}
+                    value={filterValues.status2}
                     indicatorColor="primary"
                     onChange={this.handleChange}
                 >
@@ -98,18 +95,18 @@ class TabbedDatagrid extends React.Component {
                     xsmall={
                         <MobileGrid
                             {...props}
-                            ids={this.state[filterValues.status]}
+                            ids={this.state[filterValues.status2]}
                         />
                     }
                     medium={
                         <div>
-                            {filterValues.status === 'ordered' && (
+                            {filterValues.status2 === 'ordered' && (
                                 <Datagrid
                                     {...props}
                                     ids={this.state['ordered']}
                                 >
-                                    <DateField source="createdAt" showTime />
-                                    <TextField source="reference" />
+                                    <DateField source="createdAt" showTime locales="pt-BR" />
+                                    <TextField source="id" />
                                     <CustomerReferenceField />
                                     <NbItemsField />
                                     <NumberField
@@ -123,41 +120,40 @@ class TabbedDatagrid extends React.Component {
                                     <EditButton />
                                 </Datagrid>
                             )}
-                            {filterValues.status === 'delivered' && (
+                            {filterValues.status2 === 'delivered' && (
                                 <Datagrid
                                     {...props}
                                     ids={this.state['delivered']}
                                 >
-                                    <DateField source="date" showTime />
-                                    <TextField source="reference" />
+                                    <DateField source="createdAt" showTime locales="pt-BR" />
+                                    <TextField source="id" />
                                     <CustomerReferenceField />
                                     <NbItemsField />
                                     <NumberField
                                         source="total"
                                         options={{
                                             style: 'currency',
-                                            currency: 'USD',
+                                            currency: 'BRL',
                                         }}
                                         className={classes.total}
                                     />
-                                    <BooleanField source="returned" />
                                     <EditButton />
                                 </Datagrid>
                             )}
-                            {filterValues.status === 'cancelled' && (
+                            {filterValues.status2 === 'cancelled' && (
                                 <Datagrid
                                     {...props}
                                     ids={this.state['cancelled']}
                                 >
-                                    <DateField source="date" showTime />
-                                    <TextField source="reference" />
+                                    <DateField source="createdAt" showTime locales="pt-BR" />
+                                    <TextField source="id" />
                                     <CustomerReferenceField />
                                     <NbItemsField />
                                     <NumberField
                                         source="total"
                                         options={{
                                             style: 'currency',
-                                            currency: 'USD',
+                                            currency: 'BRL',
                                         }}
                                         className={classes.total}
                                     />
@@ -178,8 +174,8 @@ const StyledTabbedDatagrid = withStyles(datagridStyles)(TabbedDatagrid);
 const OrderList = ({ classes, ...props }) => (
     <List
         {...props}
-        filterDefaultValues={{ status: 'ordered' }}
-        sort={{ field: 'date', order: 'DESC' }}
+        filterDefaultValues={{ status2: 'ordered' }}
+        sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={25}
         filters={<OrderFilter />}
     >

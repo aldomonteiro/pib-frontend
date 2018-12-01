@@ -53,6 +53,11 @@ export default {
             select_facebook_page: "Selecione a página que será conectada ao bot",
             back: "Voltar",
             confirm: "Confirmar",
+        },
+        customer: {
+            messages: {
+                no_customer_found: "Cliente não foi encontrado."
+            }
         }
     },
     resources: {
@@ -95,6 +100,7 @@ export default {
                 city: 'Cidade',
                 state: 'Estado',
                 phone: 'Telefone',
+                delivery_fee: 'Taxa de Entrega',
                 open: 'Abre',
                 close: 'Fecha',
                 sunday: 'Domingo',
@@ -128,6 +134,30 @@ export default {
                 firstResponseText: 'Primeira resposta após iniciar',
             }
         },
+        customers: {
+            name: 'Cliente |||| Clientes',
+            tabs: {
+                identity: 'Identificação',
+                address: 'Endereço',
+                orders: 'Pedidos',
+                stats: 'Estatísticas',
+            },
+            fields: {
+                first_name: 'Primeiro Nome',
+                last_name: 'Último Nome',
+                phone: 'Telefone',
+                order: 'Pedido',
+                orders: 'Pedidos',
+                addr_formatted: 'Endereço completo',
+                addr_postalcode: 'CEP',
+                addr_city: 'Cidade',
+                first_order: 'Primeiro Pedido',
+                last_order: 'Últims Pedido',
+                nb_orders: 'Número de Pedidos',
+                total_spent: 'Total Gasto',
+            }
+
+        },
         sizes: {
             name: 'Tamanho |||| Tamanhos',
             fields: {
@@ -137,5 +167,19 @@ export default {
             }
 
         },
+        orders: {
+            name: "Pedido |||| Pedidos",
+            fields: {
+                customer: 'Cliente',
+                basket: {
+                    reference: "Referência",
+                    unit_price: "Preço Unit.",
+                    quantity: "Qtde.",
+                    sum: "Soma",
+                    total: "Total",
+                },
+                createdAt: "Data Criação",
+            }
+        }
     },
 };

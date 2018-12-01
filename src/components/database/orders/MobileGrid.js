@@ -88,7 +88,7 @@ const MobileGrid = withStyles(listStyles)(
                         </span>
                         <span className={classes.cardContentRow}>
                             {translate('resources.commands.fields.status')}:&nbsp;
-                            <TextField source="status" record={data[id]} />
+                            <TextField source="status2" record={data[id]} />
                         </span>
                         <span className={classes.cardContentRow}>
                             {translate('resources.commands.fields.returned')}:&nbsp;

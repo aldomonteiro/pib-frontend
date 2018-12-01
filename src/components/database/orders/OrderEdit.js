@@ -17,7 +17,7 @@ import Basket from './Basket';
 
 const OrderTitle = translate(({ record, translate }) => (
     <span>
-        {translate('resources.commands.name', { smart_count: 1 })} #{
+        {translate('resources.orders.name', { smart_count: 1 })} #{
             record.reference
         }
     </span>
@@ -30,46 +30,49 @@ const editStyles = {
 
 const OrderEdit = ({ classes, ...props }) => (
     <EditController title={<OrderTitle />} {...props}>
-        {controllerProps =>
-            controllerProps.record ? (
-                <div className={classes.root}>
-                    <Card className={classes.form}>
-                        <TitleForRecord
-                            defaultTitle={controllerProps.defaultTitle}
-                            record={controllerProps.record}
-                        />
-                        <SimpleForm {...controllerProps}>
-                            <DateInput source="createdAt" />
-                            <ReferenceInput
-                                source="customerId"
-                                reference="customers"
-                            >
-                                <AutocompleteInput
-                                    optionText={choice =>
-                                        `${choice.first_name} ${
-                                        choice.last_name
-                                        }`
-                                    }
-                                />
-                            </ReferenceInput>
-                            <SelectInput
-                                source="status"
-                                choices={[
-                                    { id: 'delivered', name: 'delivered' },
-                                    { id: 'ordered', name: 'ordered' },
-                                    { id: 'cancelled', name: 'cancelled' },
-                                ]}
+        {
+            controllerProps => {
+                const { record, defaultTitle, isLoading, ...rest } = controllerProps;
+                return record ? (
+                    <div className={classes.root}>
+                        <Card className={classes.form}>
+                            <TitleForRecord
+                                defaultTitle={defaultTitle}
+                                record={record}
                             />
-                            <BooleanInput source="returned" />
-                        </SimpleForm>
-                    </Card>
-                    <Basket record={controllerProps.record} />
-                </div>
-            ) : (
-                    ''
-                )
+                            <SimpleForm {...controllerProps}>
+                                <DateInput source="createdAt" />
+                                <ReferenceInput
+                                    source="customerId"
+                                    reference="customers"
+                                >
+                                    <AutocompleteInput
+                                        optionText={choice =>
+                                            `${choice.first_name} ${
+                                            choice.last_name
+                                            }`
+                                        }
+                                    />
+                                </ReferenceInput>
+                                <SelectInput
+                                    source="status2"
+                                    choices={[
+                                        { id: 'delivered', name: 'delivered' },
+                                        { id: 'ordered', name: 'ordered' },
+                                        { id: 'cancelled', name: 'cancelled' },
+                                    ]}
+                                />
+                                {/* <BooleanInput source="returned" /> */}
+                            </SimpleForm>
+                        </Card>
+                        <Basket record={record} />
+                    </div>
+                ) : (
+                        ''
+                    )
+            }
         }
-    </EditController>
+    </EditController >
 );
 
 export default withStyles(editStyles)(OrderEdit);

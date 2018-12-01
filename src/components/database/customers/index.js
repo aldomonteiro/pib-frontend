@@ -65,7 +65,7 @@ export const VisitorList = withStyles(listStyles)(({ classes, ...props }) => (
     <List
         {...props}
         filters={<VisitorFilter />}
-        sort={{ field: 'last_seen', order: 'DESC' }}
+        sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={25}
     >
         <Responsive
@@ -73,18 +73,9 @@ export const VisitorList = withStyles(listStyles)(({ classes, ...props }) => (
             medium={
                 <Datagrid>
                     <CustomerLinkField />
-                    <DateField source="updatedAt" type="date" />
-                    <NumberField
-                        source="nb_commands"
-                        label="resources.customers.fields.commands"
-                        className={classes.nb_commands}
-                    />
-                    <ColoredNumberField
-                        source="total_spent"
-                        options={{ style: 'currency', currency: 'BRL' }}
-                    />
-                    <DateField source="latest_purchase" showTime />
-                    <BooleanField source="has_newsletter" label="News." />
+                    <DateField source="createdAt" type="date" locales="pt-BR" />
+                    <DateField source="updatedAt" type="date" locales="pt-BR" />
+                    <TextField source="phone" />
                     <EditButton />
                 </Datagrid>
             }
@@ -98,7 +89,7 @@ const VisitorTitle = ({ record }) =>
 const editStyles = {
     first_name: { display: 'inline-block' },
     last_name: { display: 'inline-block', marginLeft: 32 },
-    email: { width: 544 },
+    phone: { width: 32 },
     address: { maxWidth: 544 },
     zipcode: { display: 'inline-block' },
     city: { display: 'inline-block', marginLeft: 32 },
@@ -123,21 +114,18 @@ export const VisitorEdit = withStyles(editStyles)(({ classes, ...props }) => (
                     formClassName={classes.last_name}
                 />
                 <TextInput
-                    type="email"
-                    source="email"
-                    validation={{ email: true }}
-                    fullWidth={true}
-                    formClassName={classes.email}
+                    source="phone"
+                    formClassName={classes.phone}
                 />
-                <DateInput source="birthday" />
+                {/* <DateInput source="birthday" /> */}
             </FormTab>
             <FormTab label="resources.customers.tabs.address" path="address">
                 <LongTextInput
-                    source="address"
+                    source="addr_formatted"
                     formClassName={classes.address}
                 />
-                <TextInput source="zipcode" formClassName={classes.zipcode} />
-                <TextInput source="city" formClassName={classes.city} />
+                <TextInput source="addr_postalcode" formClassName={classes.zipcode} />
+                <TextInput source="addr_city" formClassName={classes.city} />
             </FormTab>
             <FormTab label="resources.customers.tabs.orders" path="orders">
                 <ReferenceManyField
@@ -147,7 +135,7 @@ export const VisitorEdit = withStyles(editStyles)(({ classes, ...props }) => (
                     target="customerId"
                 >
                     <Datagrid>
-                        <DateField source="createdAt" />
+                        <DateField source="createdAt" locales="pt-BR" />
                         <TextField source="id" />
                         <NbItemsField />
                         <NumberField
@@ -160,18 +148,26 @@ export const VisitorEdit = withStyles(editStyles)(({ classes, ...props }) => (
                 </ReferenceManyField>
             </FormTab>
             <FormTab label="resources.customers.tabs.stats" path="stats">
-                <NullableBooleanInput source="has_newsletter" />
                 <DateField
-                    source="first_seen"
+                    source="first_order"
                     style={{ width: 128, display: 'inline-block' }}
+                    showTime
+                    locales="pt-BR"
                 />
                 <DateField
-                    source="latest_purchase"
+                    source="last_order"
+                    style={{ width: 128, display: 'inline-block' }}
+                    showTime
+                    locales="pt-BR"
+                />
+                <NumberField
+                    source="nb_orders"
                     style={{ width: 128, display: 'inline-block' }}
                 />
-                <DateField
-                    source="last_seen"
+                <NumberField
+                    source="total_spent"
                     style={{ width: 128, display: 'inline-block' }}
+                    options={{ style: 'currency', currency: 'BRL' }}
                 />
             </FormTab>
         </TabbedForm>

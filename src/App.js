@@ -71,7 +71,6 @@ const App = () => (
         list={OrderList}
         edit={OrderEdit}
         icon={OrderIcon}
-        options={{ label: 'Orders' }}
       />,
       <Resource
         name="customers"

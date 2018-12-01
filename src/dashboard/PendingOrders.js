@@ -38,9 +38,7 @@ const PendingOrders = ({ orders = [], customers = {}, translate, classes }) => (
                     {customers[record.customerId] ? (
                         <Avatar
                             className={classes.avatar}
-                            src={`${
-                                customers[record.customerId].profile_pic
-                                }?size=32x32`}
+                            src={customers[record.customerId].profile_pic}
                         />
                     ) : (
                             <Avatar />
@@ -50,7 +48,7 @@ const PendingOrders = ({ orders = [], customers = {}, translate, classes }) => (
                         secondary={translate('pos.dashboard.order.items', {
                             smart_count: record.items.length,
                             nb_items: record.items.length,
-                            customer_name: customers[record.userId]
+                            customer_name: customers[record.customerId]
                                 ? `${
                                 customers[record.customerId].first_name
                                 } ${customers[record.customerId].last_name}`
@@ -58,7 +56,13 @@ const PendingOrders = ({ orders = [], customers = {}, translate, classes }) => (
                         })}
                     />
                     <ListItemSecondaryAction>
-                        <span className={classes.cost}>{record.total}$</span>
+                        {/* <span className={classes.cost}>{record.total}$</span> */}
+                        <span className={classes.cost}>
+                            {record.total.toLocaleString(undefined, {
+                                style: 'currency',
+                                currency: 'BRL',
+                            })}
+                        </span>
                     </ListItemSecondaryAction>
                 </ListItem>
             ))}

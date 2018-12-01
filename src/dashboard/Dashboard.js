@@ -55,7 +55,7 @@ class DashBoard extends Component {
                         .reduce(
                             (stats, order) => {
                                 if (order.status !== 0) {
-                                    // stats.revenue += order.total;
+                                    stats.revenue += order.total;
                                     stats.nbNewOrders++;
                                 }
                                 if (order.status !== 0) {

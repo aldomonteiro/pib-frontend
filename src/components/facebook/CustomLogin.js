@@ -118,7 +118,6 @@ class Login extends Component {
     }
 
     facebookLoginHandler = async response => {
-        console.log(response);
         // here, the user clicked login and I do not if he is a new user or not anymore,
         // because the status is connected. So, I saved on state responseStatus the 
         // first status when the page was loaded.
@@ -126,8 +125,6 @@ class Login extends Component {
 
         if (response.status === 'connected') {
             window.FB.api('/me?fields=id,name,email,picture,location', userData => {
-                console.log("window.FB.api fields");
-                console.log(userData);
                 let result = {
                     status: this.state.responseStatus,
                     facebookLoginStatus: response.status,
@@ -151,7 +148,6 @@ class Login extends Component {
         if (this.state.checkAccept) {
             if (!window.FB) return;
             window.FB.getLoginStatus((response) => {
-                console.log(response);
                 if (response.status === 'connected') {
                     this.props.userLogin(response, this.props.location.state ? this.props.location.state.nextPathname : '/');
                 }

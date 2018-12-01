@@ -41,6 +41,7 @@ export const StoreList = props => (
       <TextField source="name" />
       <TextField source="city" />
       <TextField source="phone" />
+      <NumberField source="delivery_fee" locales="pt-BR" options={{ style: 'currency', currency: 'BRL' }} />
       <EditButton />
     </Datagrid>
   </List>
@@ -56,6 +57,7 @@ export const StoreEdit = withStyles(storeStyles)(({ classes, ...props }) => (
         <TextInput source="city" formClassName={classes.col1} />
         <TextInput source="state" formClassName={classes.col2} />
         <TextInput source="phone" />
+        <NumberInput source="delivery_fee" validate={[number(), minValue(0)]} />
       </FormTab>
       <FormTab label="resources.stores.tabs.openingtimes">
         <BooleanInput source="sun_is_open" label="resources.stores.fields.sunday" />
@@ -97,6 +99,7 @@ export const StoreCreate = withStyles(storeStyles)(({ classes, ...props }) => (
         <TextInput source="city" formClassName={classes.col1} />
         <TextInput source="state" formClassName={classes.col2} />
         <TextInput source="phone" />
+        <NumberInput source="delivery_fee" validate={[number(), minValue(0)]} />
       </FormTab>
       <FormTab label="resources.stores.tabs.openingtimes">
         <BooleanInput source="sun_is_open" label="resources.stores.fields.sunday" />
