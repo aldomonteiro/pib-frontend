@@ -57,9 +57,9 @@ const OrderEdit = ({ classes, ...props }) => (
                                 <SelectInput
                                     source="status2"
                                     choices={[
-                                        { id: 'delivered', name: 'delivered' },
-                                        { id: 'ordered', name: 'ordered' },
-                                        { id: 'cancelled', name: 'cancelled' },
+                                        { id: 'delivered', name: 'Entregue' },
+                                        { id: 'ordered', name: 'Pendente' },
+                                        { id: 'cancelled', name: 'Cancelado' },
                                     ]}
                                 />
                                 {/* <BooleanInput source="returned" /> */}

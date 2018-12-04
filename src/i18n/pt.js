@@ -171,6 +171,7 @@ export default {
             name: "Pedido |||| Pedidos",
             fields: {
                 customer: 'Cliente',
+                status2: 'Status',
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
