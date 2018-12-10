@@ -62,16 +62,23 @@ class Basket extends Component {
                     <TableBody>
                         {items.map(
                             item =>
-                                item.flavorId && (
+                                (item.flavorId || item.beverageId) && (
                                     <TableRow key={item.id}>
                                         <TableCell>
-                                            <Link to={`/flavors/${item.flavorId}`}>
-                                                {item.flavor}
-                                            </Link>
-                                            &nbsp;
-                                            <Link to={`/sizes/${item.sizeId}`}>
-                                                {item.size}
-                                            </Link>
+                                            {item.flavorId && (
+                                                <span>
+                                                    <Link to={`/flavors/${item.flavorId}`}>
+                                                        {item.flavor}
+                                                    </Link>
+                                                    &nbsp;
+                                                    <Link to={`/sizes/${item.sizeId}`}>
+                                                        {item.size}
+                                                    </Link>
+                                                </span>)}
+                                            {item.beverageId && (
+                                                <Link to={`/beverages/${item.beverageId}`}>
+                                                    {item.beverage}
+                                                </Link>)}
                                         </TableCell>
                                         <TableCell className={classes.rightAlignedCell}>
                                             {item.price.toLocaleString(undefined, {
@@ -80,13 +87,23 @@ class Basket extends Component {
                                             })}
                                         </TableCell>
                                         <TableCell className={classes.rightAlignedCell}>
-                                            {item.split ? item.qty + '/' + item.split : item.qty}
+                                            {item.flavorId ?
+                                                item.split ? item.qty + '/' + item.split : item.qty
+                                                : 1
+                                            }
                                         </TableCell>
                                         <TableCell className={classes.rightAlignedCell}>
-                                            {(item.price * item.qty).toLocaleString(undefined, {
-                                                style: 'currency',
-                                                currency: 'BRL',
-                                            })}
+                                            {item.flavorId ?
+                                                (item.price * item.qty).toLocaleString(undefined, {
+                                                    style: 'currency',
+                                                    currency: 'BRL',
+                                                })
+                                                :
+                                                item.price.toLocaleString(undefined, {
+                                                    style: 'currency',
+                                                    currency: 'BRL',
+                                                })
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 )
