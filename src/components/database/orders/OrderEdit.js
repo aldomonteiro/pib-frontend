@@ -9,6 +9,7 @@ import {
     SelectInput,
     SimpleForm,
     TitleForRecord,
+    TextInput,
 } from 'react-admin';
 import Card from '@material-ui/core/Card';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -62,6 +63,8 @@ const OrderEdit = ({ classes, ...props }) => (
                                         { id: 'cancelled', name: 'Cancelado' },
                                     ]}
                                 />
+                                <TextInput source="phone" />
+                                <TextInput source="address" />
                                 {/* <BooleanInput source="returned" /> */}
                             </SimpleForm>
                         </Card>

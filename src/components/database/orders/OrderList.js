@@ -108,6 +108,8 @@ class TabbedDatagrid extends React.Component {
                                     <DateField source="createdAt" showTime locales="pt-BR" />
                                     <TextField source="id" />
                                     <CustomerReferenceField />
+                                    <TextField source="phone" />
+                                    <TextField source="address" />
                                     <NbItemsField />
                                     <NumberField
                                         source="total"

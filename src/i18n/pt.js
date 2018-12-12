@@ -143,6 +143,7 @@ export default {
                 stats: 'Estatísticas',
             },
             fields: {
+                customer: 'Cliente',
                 first_name: 'Primeiro Nome',
                 last_name: 'Último Nome',
                 phone: 'Telefone',
@@ -171,7 +172,10 @@ export default {
             name: "Pedido |||| Pedidos",
             fields: {
                 customer: 'Cliente',
+                customerId: 'Cliente',
                 status2: 'Status',
+                phone: 'Telefone',
+                address: 'Endereço',
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
