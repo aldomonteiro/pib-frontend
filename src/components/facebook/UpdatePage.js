@@ -10,7 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class UpdatePage extends Component {
     handleClick = () => {
         const { record } = this.props;
-        this.props.updatePage(record.id, record);
+        this.props.updatePage('UPDATE', record.id, record);
         this.props.confirmUpdate();
     }
 

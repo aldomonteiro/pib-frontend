@@ -7,6 +7,8 @@ export default {
         search: 'Search',
         configuration: 'Configuration',
         language: 'Language',
+        areYouSure: 'Você tem certeza disso?',
+        deleting: 'Apagando ',
         theme: {
             name: 'Theme',
             light: 'Light',
@@ -123,8 +125,17 @@ export default {
                 name: 'Nome',
                 greetingText: 'Saudação do Facebook',
                 firstResponseText: 'Primeira resposta do bot ($NAME = será substituído pelo nome do cliente)',
+                activeBot: 'Bot ativo?',
+            },
+            actions: {
+                activate: 'Ativar o Bot',
+                deactivate: 'Apenas Desativar o Bot',
+                deactivateAndDelete: 'Desativar & Apagar tudo',
+            },
+            messages: {
+                warningBeforeDelete: 'Você tem certeza que quer excluir/desativar o Bot? Todos os dados associados serão excluídos. Não é possível desfazer.',
+                successfullDeactivated: 'Bot desativado com sucesso.',
             }
-
         },
         pageslist: {
             name: 'Página Ativa |||| Páginas Ativas',

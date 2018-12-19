@@ -6,6 +6,8 @@ export default {
         search: 'Search',
         configuration: 'Configuration',
         language: 'Language',
+        areYouSure: 'Are you sure?',
+        deleting: 'Deleting ',
         theme: {
             name: 'Theme',
             light: 'Light',
@@ -80,12 +82,24 @@ export default {
                 toppings: 'Toppings',
             },
         },
+        pages: {
+            name: 'Page |||| Pages',
+            actions: {
+                activate: 'Activate Bot',
+                deactivate: 'Deactivate Bot',
+                deactivateAndDelete: 'Erase all data',
+            },
+            messages: {
+                warningBeforeDelete: 'Are you sure you want to delete this entry? This action is permanent.',
+                successfullDeactivated: 'Successfull bot deactivated.',
+            }
+        },
         pageslist: {
             name: 'Active Page |||| Active Pages',
             fields: {
-                name: 'Nome',
-                greetingText: 'Saudação do Facebook',
-                firstResponseText: 'Primeira resposta após iniciar',
+                name: 'Name',
+                greetingText: 'Facebook Messenger Greeting Text',
+                firstResponseText: 'First response after user hits Start',
             }
 
         },

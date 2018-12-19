@@ -17,13 +17,12 @@ export default async (type, params) => {
     if (user.token) {
       const decodedToken = decodeJwt(user.token);
       localStorage.setItem('role', decodedToken.role);
-
       localStorage.setItem('token', user.token);
       localStorage.setItem('userID', userID);
       localStorage.setItem('name', user.name);
       localStorage.setItem('email', user.email);
-      if (user.activePage) localStorage.setItem('activePage', user.activePage);
       if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
+      if (user.activePage) localStorage.setItem('activePage', user.activePage);
 
       return Promise.resolve();
     }
