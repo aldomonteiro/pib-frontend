@@ -9,6 +9,9 @@ export default {
         language: 'Language',
         areYouSure: 'Você tem certeza disso?',
         deleting: 'Apagando ',
+        messages: {
+            duplicatedKey: 'Ops, já há um registro com esse ID, favor utizar outro ID.'
+        },
         theme: {
             name: 'Theme',
             light: 'Light',

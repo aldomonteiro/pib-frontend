@@ -55,7 +55,7 @@ export default async (type, params) => {
       localStorage.clear();
       return Promise.reject();
     }
-    return Promise.reject();
+    return Promise.resolve();
   }
 
   if (type === AUTH_CHECK) {

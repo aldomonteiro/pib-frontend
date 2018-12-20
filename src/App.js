@@ -115,6 +115,13 @@ const App = () => (
         icon={SizeIcon}
       />,
       <Resource
+        name="toppings"
+        list={ToppingList}
+        edit={ToppingEdit}
+        create={ToppingCreate}
+        icon={ToppingIcon}
+      />,
+      <Resource
         name="pages"
         list={PageResourceList}
         edit={PageResourceEdit}
@@ -125,13 +132,6 @@ const App = () => (
         list={PageList}
         icon={PageListIcon}
       />,
-      <Resource
-        name="toppings"
-        list={ToppingList}
-        edit={permissions === 'admin' ? ToppingEdit : null}
-        create={permissions === 'admin' ? ToppingCreate : null}
-        icon={ToppingIcon}
-      />
     ]}
 
     {/* <Resource name="users" list={UserList} icon={UserIcon} /> */}
