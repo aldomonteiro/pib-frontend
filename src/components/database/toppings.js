@@ -27,7 +27,7 @@ const ToppingTitle = ({ record }) => {
 
 export const ToppingEdit = props => (
     <Edit title={<ToppingTitle />} {...props}>
-        <SimpleForm redirect="show">
+        <SimpleForm redirect="list">
             <DisabledInput source="id" />
             {/* <ReferenceInput label="User" source="userId" reference="users">
         <SelectInput optionText="name" />
@@ -39,7 +39,7 @@ export const ToppingEdit = props => (
 
 export const ToppingCreate = props => (
     <Create {...props}>
-        <SimpleForm redirect="show">
+        <SimpleForm redirect="list">
             {/* <ReferenceInput label="User" source="userId" reference="users">
         <SelectInput optionText="name" />
       </ReferenceInput> */}
