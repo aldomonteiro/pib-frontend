@@ -5,7 +5,6 @@ import decodeJwt from 'jwt-decode';
 export default async (type, params) => {
   // called when the user attemps to log in
   if (type === AUTH_LOGIN) {
-    console.log("AUTH_LOGIN.. ", params);
     const { authResponse, name, email, picture, location } = params;
     const locationName = location ? location.name : null;
     const pictureUrl = picture ? picture.data.url : null;
@@ -32,25 +31,19 @@ export default async (type, params) => {
 
   // called when the user clicks on the logout button
   if (type === AUTH_LOGOUT) {
-    // console.log("AUTH_LOGOUT ...");
     // await setfbAsyncInit();
     const loginStatusResp = await fbGetLoginStatus();
 
     if (loginStatusResp && loginStatusResp.status === 'connected') {
       const loginStatusLogout = await fbLogout();
-      // console.log("FB.logout:", loginStatusLogout);
       localStorage.clear();
     }
-    // console.log("resolved logout promise");
     return Promise.resolve();
   }
 
   // called when the API returns an error
   if (type === AUTH_ERROR) {
     const status = params.message.status;
-
-    console.log("AUTH_ERROR, status:" + status);
-
     if (status === 401 || status === 403) {
       localStorage.clear();
       return Promise.reject();
