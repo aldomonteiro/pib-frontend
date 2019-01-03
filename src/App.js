@@ -19,7 +19,7 @@ import PageList from './components/facebook/PageList';
 import FlavorIcon from "@material-ui/icons/LocalPizza";
 import ToppingIcon from "@material-ui/icons/Layers";
 import PricingIcon from "@material-ui/icons/MonetizationOn";
-import PagesIcon from "@material-ui/icons/Book";
+import PagesIcon from "@material-ui/icons/Android";
 import PageListIcon from "@material-ui/icons/Flag";
 import BeverageIcon from "@material-ui/icons/LocalDrink";
 import SizeIcon from "@material-ui/icons/Tonality";

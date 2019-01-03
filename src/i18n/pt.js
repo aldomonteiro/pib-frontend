@@ -129,7 +129,7 @@ export default {
             },
         },
         pages: {
-            name: 'Página |||| Páginas',
+            name: 'Bot |||| Bots',
             fields: {
                 name: 'Nome',
                 greetingText: 'Saudação do Facebook',
