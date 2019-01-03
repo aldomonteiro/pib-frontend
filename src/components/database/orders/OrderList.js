@@ -25,6 +25,7 @@ import Tab from '@material-ui/core/Tab';
 import NbItemsField from './NbItemsField';
 import CustomerReferenceField from '../customers/CustomerReferenceField';
 import MobileGrid from './MobileGrid';
+import OrderActions from './OrderActions';
 
 export const OrderIcon = Icon;
 
@@ -119,6 +120,7 @@ class TabbedDatagrid extends React.Component {
                                         }}
                                         className={classes.total}
                                     />
+                                    <TextField source="distanceFromStore" />
                                     <EditButton />
                                 </Datagrid>
                             )}
@@ -139,6 +141,7 @@ class TabbedDatagrid extends React.Component {
                                         }}
                                         className={classes.total}
                                     />
+                                    <TextField source="distanceFromStore" />
                                     <EditButton />
                                 </Datagrid>
                             )}
@@ -159,7 +162,7 @@ class TabbedDatagrid extends React.Component {
                                         }}
                                         className={classes.total}
                                     />
-                                    <BooleanField source="returned" />
+                                    <TextField source="distanceFromStore" />
                                     <EditButton />
                                 </Datagrid>
                             )}
@@ -176,6 +179,7 @@ const StyledTabbedDatagrid = withStyles(datagridStyles)(TabbedDatagrid);
 const OrderList = ({ classes, ...props }) => (
     <List
         {...props}
+        actions={<OrderActions />}
         filterDefaultValues={{ status2: 'ordered' }}
         sort={{ field: 'createdAt', order: 'DESC' }}
         perPage={25}

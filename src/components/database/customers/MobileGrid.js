@@ -4,10 +4,10 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import { withStyles } from '@material-ui/core/styles';
-import { DateField, EditButton, translate, NumberField } from 'react-admin';
+import { DateField, EditButton, translate, TextField } from 'react-admin';
 
 import AvatarField from './AvatarField';
-import { ColoredNumberField } from './index';
+// import { ColoredNumberField } from './index';
 
 const listStyles = theme => ({
     card: {
@@ -52,33 +52,31 @@ const MobileGrid = withStyles(listStyles)(
                     <CardContent className={classes.cardContent}>
                         <div>
                             {translate(
-                                'resources.customers.fields.last_seen_gte'
+                                'resources.customers.fields.createdAt'
                             )}&nbsp;
                             <DateField
                                 record={data[id]}
-                                source="last_seen"
+                                source="createdAt"
                                 type="date"
                             />
                         </div>
                         <div>
                             {translate(
-                                'resources.commands.name',
-                                parseInt(data[id].nb_commands, 10) || 1
-                            )}&nbsp;:&nbsp;<NumberField
+                                'resources.customers.fields.updatedAt'
+                            )}&nbsp;
+                            <DateField
                                 record={data[id]}
-                                source="nb_commands"
-                                label="resources.customers.fields.commands"
-                                className={classes.nb_commands}
+                                source="updatedAt"
+                                type="date"
                             />
                         </div>
                         <div>
                             {translate(
-                                'resources.customers.fields.total_spent'
+                                'resources.customers.fields.phone'
                             )}&nbsp; :{' '}
-                            <ColoredNumberField
+                            <TextField
                                 record={data[id]}
-                                source="total_spent"
-                                options={{ style: 'currency', currency: 'USD' }}
+                                source="phone"
                             />
                         </div>
                     </CardContent>

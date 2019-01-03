@@ -33,6 +33,7 @@ import CustomLogin from "./components/facebook/CustomLogin";
 import Dashboard from './dashboard';
 import customRoutes from './routes/customRoutes';
 import pagesReducer from './reducers/pages';
+import locationReducer from './reducers/location';
 import simpleRestProvider from 'ra-data-simple-rest';
 
 // Addim Custom Header
@@ -56,7 +57,7 @@ const i18nProvider = locale => messages[locale];
 
 const App = () => (
   <Admin
-    customReducers={{ pagesReducer }}
+    customReducers={{ pagesReducer, locationReducer }}
     dashboard={Dashboard}
     loginPage={CustomLogin}
     authProvider={authProvider}

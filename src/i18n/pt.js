@@ -53,6 +53,12 @@ export default {
             agree_description: "Nós vamos precisar de algumas permissões para gerenciar a sua Página e automatizar as suas respostas. Agora você será direcionado para o Facebook, mas não se preocupe! Você estará de volta ao nosso site assim que as permissões solicitadas forem concedidas.",
             continue_with_facebook: "Continuar com Facebook"
         },
+        orders: {
+            map: "Ver no mapa",
+        },
+        ordersmap: {
+            title: "Pedidos no mapa",
+        },
         pageList: {
             facebook_pages: "Páginas do Facebook",
             select_facebook_page: "Selecione a página que será conectada ao bot",
@@ -160,6 +166,8 @@ export default {
                 customer: 'Cliente',
                 first_name: 'Primeiro Nome',
                 last_name: 'Último Nome',
+                createdAt: 'Data Criação',
+                updatedAt: 'Data Atualização',
                 phone: 'Telefone',
                 order: 'Pedido',
                 orders: 'Pedidos',
@@ -188,8 +196,11 @@ export default {
                 customer: 'Cliente',
                 customerId: 'Cliente',
                 status2: 'Status',
+                createdAt: 'Data Criação',
+                updatedAt: 'Data Atualização',
                 phone: 'Telefone',
                 address: 'Endereço',
+                distanceFromStore: 'Distância',
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
@@ -197,7 +208,6 @@ export default {
                     sum: "Soma",
                     total: "Total",
                 },
-                createdAt: "Data Criação",
             }
         }
     },

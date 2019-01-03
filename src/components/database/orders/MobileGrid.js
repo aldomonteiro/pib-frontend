@@ -6,7 +6,7 @@ import {
     translate,
     NumberField,
     TextField,
-    BooleanField,
+    SelectField,
 } from 'react-admin';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -45,14 +45,14 @@ const MobileGrid = withStyles(listStyles)(
                         title={
                             <div className={classes.cardTitleContent}>
                                 <span>
-                                    {translate('resources.commands.name', 1)}:&nbsp;
+                                    {translate('resources.orders.name', 1)}:&nbsp;
                                     <TextField
                                         record={data[id]}
-                                        source="reference"
+                                        source="id"
                                     />
                                 </span>
                                 <EditButton
-                                    resource="commands"
+                                    resource="orders"
                                     basePath={basePath}
                                     record={data[id]}
                                 />
@@ -68,7 +68,11 @@ const MobileGrid = withStyles(listStyles)(
                             />
                         </span>
                         <span className={classes.cardContentRow}>
-                            {translate('resources.reviews.fields.date')}:&nbsp;
+                            {translate('resources.orders.fields.phone', 1)}:&nbsp;
+                            <TextField source="phone" record={data[id]} />
+                        </span>
+                        <span className={classes.cardContentRow}>
+                            {translate('resources.orders.fields.createdAt')}:&nbsp;
                             <DateField
                                 record={data[id]}
                                 source="date"
@@ -77,22 +81,30 @@ const MobileGrid = withStyles(listStyles)(
                         </span>
                         <span className={classes.cardContentRow}>
                             {translate(
-                                'resources.commands.fields.basket.total'
+                                'resources.orders.fields.basket.total'
                             )}:&nbsp;
                             <NumberField
                                 record={data[id]}
                                 source="total"
-                                options={{ style: 'currency', currency: 'USD' }}
+                                options={{ style: 'currency', currency: 'BRL' }}
                                 className={classes.total}
                             />
                         </span>
                         <span className={classes.cardContentRow}>
-                            {translate('resources.commands.fields.status')}:&nbsp;
-                            <TextField source="status2" record={data[id]} />
+                            {translate('resources.orders.fields.distanceFromStore', 1)}:&nbsp;
+                            <TextField source="distanceFromStore" record={data[id]} />
                         </span>
                         <span className={classes.cardContentRow}>
-                            {translate('resources.commands.fields.returned')}:&nbsp;
-                            <BooleanField record={data[id]} source="returned" />
+                            {translate('resources.orders.fields.status2')}:&nbsp;
+                            <SelectField
+                                source="status2"
+                                record={data[id]}
+                                choices={[
+                                    { id: 'delivered', name: 'Entregue' },
+                                    { id: 'ordered', name: 'Pendente' },
+                                    { id: 'cancelled', name: 'Cancelado' },
+                                ]}
+                            />
                         </span>
                     </CardContent>
                 </Card>
