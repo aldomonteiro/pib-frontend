@@ -35,7 +35,7 @@ export default class CustomMarker extends React.Component {
             hidden,
         } = this.state;
         return (
-            <Container>
+            <Container style={{ zIndex: `${this.props.id}` }}>
                 <Button
                     danger
                     onClick={(ev) => this.handleModal(ev)}
