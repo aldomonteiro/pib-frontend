@@ -81,6 +81,7 @@ class OrdersMap extends Component {
     this.state = {
       orders: [],
       customers: [],
+      stores: [],
       loading: true,
     };
   }
@@ -112,14 +113,25 @@ class OrdersMap extends Component {
         }, {})
       )
       .then(customers => {
-        this.setState({ customers: customers, loading: false });
+        this.setState({ customers: customers });
+
+        dataProviderFactory(GET_LIST, 'stores', {
+          // filter: { date_gte: aMonthAgo.toISOString() },
+          sort: { field: 'createdAt', order: 'DESC' },
+          pagination: { page: 1, perPage: 10 },
+        })
+          .then(response => response.data)
+          .then(stores => this.setState({ stores: stores, loading: false }))
       });
 
   }
 
   render() {
     const { classes, translate } = this.props;
-    const { orders, customers } = this.state;
+    const { orders, customers, stores } = this.state;
+    const map_center = (stores && stores.length) ? [stores[0].location_lat, stores[0].location_long] : MAP_CENTER;
+    console.log(stores[0]);
+    console.log({ map_center });
     return (
       this.state.loading ? <LoadingPage className={classes.divloader} /> :
         <Card>
@@ -130,7 +142,7 @@ class OrdersMap extends Component {
                 {!isEmpty(orders) && (
                   <GoogleMap
                     defaultZoom={10}
-                    defaultCenter={MAP_CENTER}
+                    defaultCenter={map_center}
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => apiIsLoaded(map, maps, orders)}
                   >
@@ -162,6 +174,7 @@ class OrdersMap extends Component {
     );
   }
 }
+
 
 OrdersMap.propTypes = {
   classes: PropTypes.object.isRequired,
