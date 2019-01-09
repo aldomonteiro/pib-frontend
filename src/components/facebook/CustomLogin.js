@@ -99,33 +99,32 @@ class Login extends Component {
     async componentDidMount() {
         await setfbAsyncInit();
         await fbEnsureInit(async () => {
-            const qs = queryString.parse(window.location.search);
-            if (qs && qs.code) {
-                const redirectUri = window.location.origin + '/login';
-                let result = {
-                    code: qs.code,
-                    redirect_uri: redirectUri,
-                };
-                await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
-            }
-            else {
-                // Automatic login
-                await window.FB.getLoginStatus(async response => {
-                    // This status is important because it is the first status when the user opens the page.
-                    await this.setState({ responseStatus: response.status });
-                    if (response.status === 'connected') {
-                        await window.FB.api('/me?fields=id,name,email,picture,location', async userData => {
-                            let result = {
-                                status: this.state.responseStatus,
-                                facebookLoginStatus: response.status,
-                                authResponse: response.authResponse,
-                                ...userData
-                            };
-                            await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
-                        });
+            // Automatic login
+            await window.FB.getLoginStatus(async response => {
+                // This status is important because it is the first status when the user opens the page.
+                await this.setState({ responseStatus: response.status });
+                if (response && response.status === 'connected') {
+                    await window.FB.api('/me?fields=id,name,email,picture,location', async userData => {
+                        let result = {
+                            status: this.state.responseStatus,
+                            facebookLoginStatus: response.status,
+                            authResponse: response.authResponse,
+                            ...userData
+                        };
+                        await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                    });
+                } else {
+                    const qs = queryString.parse(window.location.search);
+                    if (qs && qs.code) {
+                        const redirectUri = window.location.origin + '/login';
+                        let result = {
+                            code: qs.code,
+                            redirect_uri: redirectUri,
+                        };
+                        await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
                     }
-                });
-            }
+                }
+            });
         });
     }
 
