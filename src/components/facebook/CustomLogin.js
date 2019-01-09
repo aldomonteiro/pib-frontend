@@ -171,7 +171,7 @@ class Login extends Component {
                 }
                 else {
                     // this.props.push("/fb");
-                    const redirectUri = window.location.origin + '/login';
+                    const redirectUri = window.location.origin;
                     const getFacebookOauthUrl = () =>
                         `https://www.facebook.com/v3.2/dialog/oauth?client_id=${process.env.REACT_APP_FACEBOOK_APP_ID}&redirect_uri=${redirectUri}/login&state='{st=state123abc,ds=123456789}'&scope=public_profile,email,manage_pages,pages_messaging,pages_messaging_subscriptions`;
                     window.location.assign(getFacebookOauthUrl());
