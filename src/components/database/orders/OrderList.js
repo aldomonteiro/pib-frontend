@@ -1,20 +1,17 @@
 import React, { Fragment } from 'react';
 import {
     AutocompleteInput,
-    BooleanField,
     Datagrid,
     DateField,
     DateInput,
     EditButton,
     Filter,
     List,
-    NullableBooleanInput,
     NumberField,
     ReferenceInput,
     Responsive,
     SearchInput,
     TextField,
-    TextInput,
 } from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from '@material-ui/icons/AttachMoney';

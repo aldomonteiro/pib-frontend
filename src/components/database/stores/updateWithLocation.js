@@ -17,7 +17,7 @@ class UpdateWithLocationButton extends Component {
     };
 
     render() {
-        const { handleSubmitWithRedirect, updateWithLocation, label, redirect, submitOnEnter } = this.props;
+        const { label, redirect, submitOnEnter } = this.props;
         return (
             <SaveButton
                 handleSubmitWithRedirect={this.handleClick}

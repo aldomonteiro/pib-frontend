@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { propTypes, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
-import { push } from 'react-router-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -26,9 +25,6 @@ import { FaFacebookF } from 'react-icons/fa'
 import { setfbAsyncInit, fbEnsureInit } from '../../util';
 
 import { Notification, translate, userLogin } from 'react-admin';
-
-import queryString from 'query-string';
-
 
 const styles = theme => ({
     main: {
@@ -69,10 +65,10 @@ const styles = theme => ({
     },
     actions: {
         padding: '0 1em 1em 1em',
-        display: 'flex',
-        justifyContent: 'center',
     },
     btnlogin: {
+        display: 'flex',
+        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#4267b2',
         color: 'white',
@@ -88,7 +84,7 @@ class Login extends Component {
         super(props);
         this.state = {
             responseStatus: '', // status when the component mounts
-            checkAccept: false,
+            checkAccept: false
         };
     }
 
@@ -99,33 +95,22 @@ class Login extends Component {
     async componentDidMount() {
         await setfbAsyncInit();
         await fbEnsureInit(async () => {
-            const qs = queryString.parse(window.location.search);
-            if (qs && qs.code) {
-                const redirectUri = window.location.origin + '/login';
-                let result = {
-                    code: qs.code,
-                    redirect_uri: redirectUri,
-                };
-                await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
-            }
-            else {
-                // Automatic login
-                await window.FB.getLoginStatus(async response => {
-                    // This status is important because it is the first status when the user opens the page.
-                    await this.setState({ responseStatus: response.status });
-                    if (response.status === 'connected') {
-                        await window.FB.api('/me?fields=id,name,email,picture,location', async userData => {
-                            let result = {
-                                status: this.state.responseStatus,
-                                facebookLoginStatus: response.status,
-                                authResponse: response.authResponse,
-                                ...userData
-                            };
-                            await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
-                        });
-                    }
-                });
-            }
+            // Automatic login
+            await window.FB.getLoginStatus(async response => {
+                // This status is important because it is the first status when the user opens the page.
+                await this.setState({ responseStatus: response.status });
+                if (response.status === 'connected') {
+                    await window.FB.api('/me?fields=id,name,email,picture,location', async userData => {
+                        let result = {
+                            status: this.state.responseStatus,
+                            facebookLoginStatus: response.status,
+                            authResponse: response.authResponse,
+                            ...userData
+                        };
+                        await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                    });
+                }
+            });
         });
     }
 
@@ -159,10 +144,10 @@ class Login extends Component {
         }
     }
 
-    login = async auth => {
+    login = auth => {
         if (this.state.checkAccept) {
             if (!window.FB) return;
-            await window.FB.getLoginStatus(async response => {
+            window.FB.getLoginStatus((response) => {
                 if (response.status === 'connected') {
                     this.props.userLogin(response, this.props.location.state ? this.props.location.state.nextPathname : '/');
                 }
@@ -170,14 +155,8 @@ class Login extends Component {
                     console.log("WARNING: need to do something about " + response.status);
                 }
                 else {
-                    // this.props.push("/fb");
-                    const redirectUri = window.location.origin + '/login';
-                    const getFacebookOauthUrl = () =>
-                        `https://www.facebook.com/v3.2/dialog/oauth?client_id=${process.env.REACT_APP_FACEBOOK_APP_ID}&redirect_uri=${redirectUri}/login&state='{st=state123abc,ds=123456789}'&scope=public_profile,email,manage_pages,pages_messaging,pages_messaging_subscriptions`;
-                    window.location.assign(getFacebookOauthUrl());
-                    // window.FB.login(this.facebookLoginHandler,
-                    //     { scope: 'public_profile, email, manage_pages, pages_messaging, pages_messaging_subscriptions' });
-
+                    window.FB.login(this.facebookLoginHandler,
+                        { scope: 'public_profile, email, manage_pages, pages_messaging, pages_messaging_subscriptions' });
                 }
             }, true);
         }
@@ -185,6 +164,7 @@ class Login extends Component {
 
     render() {
         const { classes, handleSubmit, isLoading, translate } = this.props;
+
         let environmentTag = process.env.NODE_ENV !== 'production' ?
             (<Typography component="p" color="error">
                 {process.env.NODE_ENV}<br />
@@ -213,57 +193,47 @@ class Login extends Component {
                             <LockIcon />
                         </Avatar>
                     </div>
-                    <CardActions className={classes.actions}>
-                        {/* <Button
-                            variant="raised"
-                            type="submit"
-                            disabled={isLoading}
-                            fullWidth
-                            className={classes.btnlogin}
-                            href={getFacebookOauthUrl()}
-                        >
-                            {isLoading && (
-                                <CircularProgress style={{ color: 'white' }} size={25} thickness={2} />
-                            )}
-                            <IconContext.Provider value={{ size: '1.5em' }}>
-                                <div>
-                                    <FaFacebookF />
-                                </div>
-                            </IconContext.Provider>
-                            {translate('pos.login.continue_with_facebook')}
-                        </Button> */}
-                        <form onSubmit={handleSubmit(this.login)}>
-                            <CardActions className={classes.actions}>
-                                <Button
-                                    variant="raised"
-                                    type="submit"
-                                    disabled={isLoading}
-                                    fullWidth
-                                    className={classes.btnlogin}>
-                                    {isLoading && (
-                                        <CircularProgress style={{ color: 'white' }} size={25} thickness={2} />
-                                    )}
-                                    <IconContext.Provider value={{ size: '1.5em' }}>
-                                        <div>
-                                            <FaFacebookF />
-                                        </div>
-                                    </IconContext.Provider>
-                                    {translate('pos.login.continue_with_facebook')}
-                                </Button>
-                            </CardActions>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={this.state.checkAccept}
-                                        onChange={this.handleChange('checkAccept')}
-                                        value="checkAccept"
-                                        color="primary"
-                                    />
-                                }
-                                label={tos}
-                            />
-                        </form>
-                    </CardActions>
+                    <form onSubmit={handleSubmit(this.login)}>
+                        <CardActions className={classes.actions}>
+                            <Button
+                                variant="raised"
+                                type="submit"
+                                // color="primary"
+                                // style={{
+                                //     backgroundColor: '#4267b2', color: 'white',
+                                //     fontFamily: 'arial,sans-serif'
+                                // }}
+                                disabled={isLoading}
+                                fullWidth
+                                className={classes.btnlogin}
+                            >
+                                {isLoading && (
+                                    <CircularProgress style={{ color: 'white' }} size={25} thickness={2} />
+                                )}
+                                <IconContext.Provider value={{ size: '1.5em' }}>
+                                    <div>
+                                        <FaFacebookF />
+                                    </div>
+                                </IconContext.Provider>
+                                {translate('pos.login.continue_with_facebook')}
+                                {/* <div className="fb-login-button" data-max-rows="1"
+                                    data-size="large" data-button-type="continue_with"
+                                    data-show-faces="false" data-auto-logout-link="false"
+                                    data-use-continue-as="false"></div> */}
+                            </Button>
+                        </CardActions>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.checkAccept}
+                                    onChange={this.handleChange('checkAccept')}
+                                    value="checkAccept"
+                                    color="primary"
+                                />
+                            }
+                            label={tos}
+                        />
+                    </form>
                     <CardContent>
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
                             {translate('pos.login.agree_next')}
@@ -287,7 +257,6 @@ Login.propTypes = {
     previousRoute: PropTypes.string,
     translate: PropTypes.func.isRequired,
     userLogin: PropTypes.func.isRequired,
-    push: PropTypes.func,
 };
 
 const mapStateToProps = state => ({ isLoading: state.admin.loading > 0 });
@@ -310,10 +279,7 @@ const enhance = compose(
     }),
     connect(
         mapStateToProps,
-        {
-            userLogin,
-            push,
-        }
+        { userLogin }
     ),
     withStyles(styles)
 );

@@ -20,7 +20,7 @@ import FlavorIcon from "@material-ui/icons/LocalPizza";
 import ToppingIcon from "@material-ui/icons/Layers";
 import PricingIcon from "@material-ui/icons/MonetizationOn";
 import PagesIcon from "@material-ui/icons/Android";
-import PageListIcon from "@material-ui/icons/Flag";
+import PageListIcon from "@material-ui/icons/Face";
 import BeverageIcon from "@material-ui/icons/LocalDrink";
 import SizeIcon from "@material-ui/icons/Tonality";
 import StoreIcon from "@material-ui/icons/Store";

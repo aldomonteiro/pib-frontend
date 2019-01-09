@@ -1,32 +1,60 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from "react-admin";
-import { setfbAsyncInit, fbEnsureInit, fbGetLoginStatus, fbLogout } from './util';
+import { fbGetLoginStatus, fbLogout } from './util';
 import decodeJwt from 'jwt-decode';
 
 export default async (type, params) => {
   // called when the user attemps to log in
   if (type === AUTH_LOGIN) {
-    const { authResponse, name, email, picture, location } = params;
-    const locationName = location ? location.name : null;
-    const pictureUrl = picture ? picture.data.url : null;
-    const { userID, accessToken } = authResponse;
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const { code, redirect_uri } = params;
+    if (code) {
+      const result = await oauth_code(code, redirect_uri);
+      console.log('oauth_code:', result);
 
-    const user = await auth(userID, accessToken, name, email, pictureUrl, timeZone, locationName);
+      const { access_token } = result;
+      const userData = await window.FB.api('/me?fields=id,name,email,picture,location&access_token=' + access_token);
+      const { id, name, email, picture, location } = userData;
+      const locationName = location ? location.name : null;
+      const pictureUrl = picture ? picture.data.url : null;
 
-    if (user.token) {
-      const decodedToken = decodeJwt(user.token);
-      localStorage.setItem('role', decodedToken.role);
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('userID', userID);
-      localStorage.setItem('name', user.name);
-      localStorage.setItem('email', user.email);
-      if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
-      if (user.activePage) localStorage.setItem('activePage', user.activePage);
+      const user = await auth(id, access_token, name, email, pictureUrl, timeZone, locationName);
+
+
+      if (user.token) {
+        const decodedToken = decodeJwt(user.token);
+        localStorage.setItem('role', decodedToken.role);
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('userID', id);
+        localStorage.setItem('name', user.name);
+        localStorage.setItem('email', user.email);
+        if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
+        if (user.activePage) localStorage.setItem('activePage', user.activePage);
+      }
+
+      return Promise.resolve();
+
+    } else {
+
+      const { authResponse, name, email, picture, location } = params;
+      const locationName = location ? location.name : null;
+      const pictureUrl = picture ? picture.data.url : null;
+      const { userID, accessToken } = authResponse;
+
+      const user = await auth(userID, accessToken, name, email, pictureUrl, timeZone, locationName);
+
+      if (user.token) {
+        const decodedToken = decodeJwt(user.token);
+        localStorage.setItem('role', decodedToken.role);
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('userID', userID);
+        localStorage.setItem('name', user.name);
+        localStorage.setItem('email', user.email);
+        if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
+        if (user.activePage) localStorage.setItem('activePage', user.activePage);
+      }
 
       return Promise.resolve();
     }
-    // }
-    return Promise.reject()
   }
 
   // called when the user clicks on the logout button
@@ -35,7 +63,7 @@ export default async (type, params) => {
     const loginStatusResp = await fbGetLoginStatus();
 
     if (loginStatusResp && loginStatusResp.status === 'connected') {
-      const loginStatusLogout = await fbLogout();
+      await fbLogout();
       localStorage.clear();
     }
     return Promise.resolve();
@@ -100,3 +128,28 @@ const auth = async (userID, accessToken, name, email, pictureUrl, timeZone, loca
       else return Promise.reject("UNKNOWN ERROR!");
     });
 }
+
+const oauth_code = async (code, redirect_uri) => {
+  const request = new Request(process.env.REACT_APP_API_URL + '/users/code', {
+    method: 'POST',
+    body: JSON.stringify({ code, redirect_uri }),
+    headers: new Headers({ 'Content-Type': 'application/json' }),
+  });
+
+  return fetch(request)
+    .then(response => {
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error(response.body);
+      }
+      return response.json();
+    })
+    .then(({ result }) => {
+      return result;
+    })
+    .catch((err) => {
+      if (err.message)
+        return Promise.reject(err.message);
+      else return Promise.reject("UNKNOWN ERROR!");
+    });
+}
+

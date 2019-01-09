@@ -18,9 +18,7 @@ class OrderActions extends React.Component {
         const {
             bulkActions,
             basePath,
-            currentSort,
             displayedFilters,
-            exporter,
             filters,
             filterValues,
             onUnselectItems,

@@ -147,7 +147,7 @@ export default {
             }
         },
         pageslist: {
-            name: 'Página Ativa |||| Páginas Ativas',
+            name: 'Minha Página |||| Minhas Páginas',
             fields: {
                 name: 'Nome',
                 greetingText: 'Saudação do Facebook',
@@ -201,6 +201,8 @@ export default {
                 phone: 'Telefone',
                 address: 'Endereço',
                 distanceFromStore: 'Distância',
+                payment_type: 'Forma de Pagamento',
+                payment_change: 'Levar Troco?',
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",

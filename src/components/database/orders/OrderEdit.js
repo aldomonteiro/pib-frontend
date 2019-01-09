@@ -2,7 +2,6 @@ import React from 'react';
 import {
     translate,
     AutocompleteInput,
-    BooleanInput,
     DateInput,
     EditController,
     ReferenceInput,
@@ -33,7 +32,7 @@ const OrderEdit = ({ classes, ...props }) => (
     <EditController title={<OrderTitle />} {...props}>
         {
             controllerProps => {
-                const { record, defaultTitle, isLoading, ...rest } = controllerProps;
+                const { record, defaultTitle } = controllerProps;
                 return record ? (
                     <div className={classes.root}>
                         <Card className={classes.form}>
@@ -65,6 +64,20 @@ const OrderEdit = ({ classes, ...props }) => (
                                 />
                                 <TextInput source="phone" />
                                 <TextInput source="address" />
+                                <SelectInput
+                                    source="payment_type"
+                                    choices={[
+                                        { id: 'payment_card', name: 'Cartão' },
+                                        { id: 'payment_money', name: 'Dinheiro' },
+                                    ]}
+                                />
+                                <SelectInput
+                                    source="payment_change"
+                                    choices={[
+                                        { id: 'payment_change_yes', name: 'Sim' },
+                                        { id: 'payment_change_no', name: 'Não' },
+                                    ]}
+                                />
                                 {/* <BooleanInput source="returned" /> */}
                             </SimpleForm>
                         </Card>

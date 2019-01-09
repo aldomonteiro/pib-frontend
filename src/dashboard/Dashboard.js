@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { GET_LIST, GET_MANY, Responsive, Title } from 'react-admin';
+import { GET_LIST, GET_MANY, Title } from 'react-admin';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ import Welcome from './Welcome';
 import MonthlyRevenue from './MonthlyRevenue';
 import NbNewOrders from './NbNewOrders';
 import PendingOrders from './PendingOrders';
-import NewCustomers from './NewCustomers';
+// import NewCustomers from './NewCustomers';
 
 
 import Cardapio from './Cardapio';
@@ -108,7 +108,6 @@ class DashBoard extends Component {
 
     render() {
         const { flavors, toppings,
-            nbNewCustomers,
             nbNewOrders,
             pendingOrders,
             pendingOrdersCustomers,

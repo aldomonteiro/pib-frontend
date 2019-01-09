@@ -11,7 +11,7 @@
     "jwt-decode": "^2.2.0",
     "lodash.isempty": "^4.4.0",
     "prop-types": "^15.6.2",
-    "query-string": "^6.1.0",
+    "query-string": "^6.2.0",
     "ra-data-json-server": "^2.3.0",
     "ra-data-simple-rest": "^2.4.0",
     "ra-language-english": "^2.3.0",
