@@ -120,7 +120,7 @@ class Login extends Component {
                 } else {
                     const qs = queryString.parse(window.location.search);
                     if (qs && qs.code) {
-                        const redirectUri = window.location.origin;
+                        const redirectUri = window.location.origin + '/login';
                         let result = {
                             code: qs.code,
                             redirect_uri: redirectUri,
@@ -257,7 +257,7 @@ class Login extends Component {
                             {translate('pos.login.agree_description')}
                         </Typography>
                         <Typography className={classes.version}>
-                            {'V0.91'}
+                            {'V0.92'}
                         </Typography>
                         {environmentTag}
                     </CardContent>
