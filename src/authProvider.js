@@ -8,23 +8,13 @@ export default async (type, params) => {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const { code, redirect_uri } = params;
     if (code) {
-      const result = await oauth_code(code, redirect_uri);
-      console.log('oauth_code:', result);
-
-      const { access_token } = result;
-      const userData = await window.FB.api('/me?fields=id,name,email,picture,location&access_token=' + access_token);
-      const { id, name, email, picture, location } = userData;
-      const locationName = location ? location.name : null;
-      const pictureUrl = picture ? picture.data.url : null;
-
-      const user = await auth(id, access_token, name, email, pictureUrl, timeZone, locationName);
-
-
+      const user = await oauth_code(code, redirect_uri);
+      console.log('oauth_code:', user);
       if (user.token) {
         const decodedToken = decodeJwt(user.token);
         localStorage.setItem('role', decodedToken.role);
         localStorage.setItem('token', user.token);
-        localStorage.setItem('userID', id);
+        localStorage.setItem('userID', user.userID);
         localStorage.setItem('name', user.name);
         localStorage.setItem('email', user.email);
         if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
