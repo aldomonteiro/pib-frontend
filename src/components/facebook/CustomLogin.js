@@ -104,6 +104,7 @@ class Login extends Component {
         await fbEnsureInit(async () => {
             // Automatic login
             await window.FB.getLoginStatus(async response => {
+                console.log(response);
                 // This status is important because it is the first status when the user opens the page.
                 await this.setState({ responseStatus: response.status });
                 if (response && response.status === 'connected') {
@@ -119,7 +120,7 @@ class Login extends Component {
                 } else {
                     const qs = queryString.parse(window.location.search);
                     if (qs && qs.code) {
-                        const redirectUri = window.location.origin + '/login';
+                        const redirectUri = window.location.origin;
                         let result = {
                             code: qs.code,
                             redirect_uri: redirectUri,
