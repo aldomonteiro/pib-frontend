@@ -81,6 +81,9 @@ const styles = theme => ({
     title: {
         fontSize: 14,
     },
+    version: {
+        fontSize: 8,
+    },
 });
 
 class Login extends Component {
@@ -213,24 +216,6 @@ class Login extends Component {
                         </Avatar>
                     </div>
                     <CardActions className={classes.actions}>
-                        {/* <Button
-                            variant="raised"
-                            type="submit"
-                            disabled={isLoading}
-                            fullWidth
-                            className={classes.btnlogin}
-                            href={getFacebookOauthUrl()}
-                        >
-                            {isLoading && (
-                                <CircularProgress style={{ color: 'white' }} size={25} thickness={2} />
-                            )}
-                            <IconContext.Provider value={{ size: '1.5em' }}>
-                                <div>
-                                    <FaFacebookF />
-                                </div>
-                            </IconContext.Provider>
-                            {translate('pos.login.continue_with_facebook')}
-                        </Button> */}
                         <form onSubmit={handleSubmit(this.login)}>
                             <CardActions className={classes.actions}>
                                 <Button
@@ -269,6 +254,9 @@ class Login extends Component {
                         </Typography>
                         <Typography component="p">
                             {translate('pos.login.agree_description')}
+                        </Typography>
+                        <Typography className={classes.version}>
+                            {'V0.9'}
                         </Typography>
                         {environmentTag}
                     </CardContent>
