@@ -257,7 +257,7 @@ class Login extends Component {
                             {translate('pos.login.agree_description')}
                         </Typography>
                         <Typography className={classes.version}>
-                            {'V0.9'}
+                            {'V0.91'}
                         </Typography>
                         {environmentTag}
                     </CardContent>

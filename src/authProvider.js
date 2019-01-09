@@ -133,8 +133,8 @@ const oauth_code = async (code, redirect_uri) => {
       }
       return response.json();
     })
-    .then(({ result }) => {
-      return result;
+    .then(({ user }) => {
+      return user;
     })
     .catch((err) => {
       if (err.message)
