@@ -31,12 +31,10 @@ export default async (type, params) => {
 
       } else {
 
-        const { authResponse, name, email, picture, location } = params;
-        const locationName = location ? location.name : null;
-        const pictureUrl = picture ? picture.data.url : null;
+        const { authResponse } = params;
         const { userID, accessToken } = authResponse;
 
-        const user = await auth(userID, accessToken, name, email, pictureUrl, timeZone, locationName);
+        const user = await auth(userID, accessToken);
 
         if (user.token) {
           const decodedToken = decodeJwt(user.token);
@@ -78,6 +76,8 @@ export default async (type, params) => {
 
   if (type === AUTH_CHECK) {
     const response = await fbGetLoginStatus();
+    console.log('AUTH_CHECK fbGetLoginStatus');
+    console.log(response);
 
     if (response.status === 'connected') {
       if (localStorage.getItem('token')) {
@@ -102,10 +102,10 @@ export default async (type, params) => {
   return Promise.reject("Unknown method: " + type);
 };
 
-const auth = async (userID, accessToken, name, email, pictureUrl, timeZone, locationName) => {
+const auth = async (userID, accessToken) => {
   const request = new Request(process.env.REACT_APP_API_URL + '/users/auth', {
     method: 'POST',
-    body: JSON.stringify({ userID, accessToken, name, email, pictureUrl, timeZone, locationName }),
+    body: JSON.stringify({ userID, accessToken }),
     headers: new Headers({ 'Content-Type': 'application/json' }),
   });
 
