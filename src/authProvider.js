@@ -5,7 +5,7 @@ import decodeJwt from 'jwt-decode';
 export default async (type, params) => {
   // called when the user attemps to log in
   if (type === AUTH_LOGIN) {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const { code, redirect_uri } = params;
     if (code) {
       const user = await oauth_code(code, redirect_uri);
