@@ -84,8 +84,13 @@ export default async (type, params) => {
       }
     }
     else {
-      localStorage.clear();
-      return Promise.reject("pos.auth.login_facebook");
+      if (localStorage.getItem('token')) {
+        return Promise.resolve();
+      }
+      else {
+        localStorage.clear();
+        return Promise.reject("pos.auth.login_facebook");
+      }
     }
   }
 
