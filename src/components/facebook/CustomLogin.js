@@ -118,14 +118,18 @@ class Login extends Component {
                         await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
                     });
                 } else {
-                    const qs = queryString.parse(window.location.search);
-                    if (qs && qs.code) {
-                        const redirectUri = window.location.origin + '/login';
-                        let result = {
-                            code: qs.code,
-                            redirect_uri: redirectUri,
-                        };
-                        await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                    if (localStorage.getItem('token')) {
+                        await this.props.userLogin(response, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                    } else {
+                        const qs = queryString.parse(window.location.search);
+                        if (qs && qs.code) {
+                            const redirectUri = window.location.origin + '/login';
+                            let result = {
+                                code: qs.code,
+                                redirect_uri: redirectUri,
+                            };
+                            await this.props.userLogin(result, this.props.location.state ? this.props.location.state.nextPathname : '/');
+                        }
                     }
                 }
             });
@@ -257,7 +261,7 @@ class Login extends Component {
                             {translate('pos.login.agree_description')}
                         </Typography>
                         <Typography className={classes.version}>
-                            {'V0.93'}
+                            {'V0.94'}
                         </Typography>
                         {environmentTag}
                     </CardContent>
