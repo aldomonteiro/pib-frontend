@@ -5,50 +5,45 @@ import decodeJwt from 'jwt-decode';
 export default async (type, params) => {
   // called when the user attemps to log in
   if (type === AUTH_LOGIN) {
-    console.log('AUTHProvider');
-    console.log(localStorage, params);
-    if (localStorage.getItem('token')) {
-      return Promise.resolve();
-    }
-    else {
-      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const { code, redirect_uri } = params;
-      if (code) {
-        const user = await oauth_code(code, redirect_uri);
-        console.log('oauth_code:', user);
-        if (user.token) {
-          const decodedToken = decodeJwt(user.token);
-          localStorage.setItem('role', decodedToken.role);
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('userID', user.userID);
-          localStorage.setItem('name', user.name);
-          localStorage.setItem('email', user.email);
-          if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
-          if (user.activePage) localStorage.setItem('activePage', user.activePage);
-        }
-
-        return Promise.resolve();
-
-      } else {
-
-        const { authResponse } = params;
-        const { userID, accessToken } = authResponse;
-
-        const user = await auth(userID, accessToken);
-
-        if (user.token) {
-          const decodedToken = decodeJwt(user.token);
-          localStorage.setItem('role', decodedToken.role);
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('userID', userID);
-          localStorage.setItem('name', user.name);
-          localStorage.setItem('email', user.email);
-          if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
-          if (user.activePage) localStorage.setItem('activePage', user.activePage);
-        }
-
-        return Promise.resolve();
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const { code, redirect_uri } = params;
+    if (code) {
+      const user = await oauth_code(code, redirect_uri);
+      console.log('oauth_code:', user);
+      if (user.token) {
+        const decodedToken = decodeJwt(user.token);
+        localStorage.setItem('role', decodedToken.role);
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('userID', user.userID);
+        localStorage.setItem('name', user.name);
+        localStorage.setItem('email', user.email);
+        if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
+        if (user.activePage) localStorage.setItem('activePage', user.activePage);
       }
+
+      return Promise.resolve();
+
+    } else {
+
+      const { authResponse, name, email, picture, location } = params;
+      const { userID, accessToken } = authResponse;
+      const locationName = location ? location.name : null;
+      const pictureUrl = picture ? picture.data.url : null;
+
+      const user = await auth(userID, accessToken, name, email, picture, pictureUrl, locationName);
+
+      if (user.token) {
+        const decodedToken = decodeJwt(user.token);
+        localStorage.setItem('role', decodedToken.role);
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('userID', userID);
+        localStorage.setItem('name', user.name);
+        localStorage.setItem('email', user.email);
+        if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
+        if (user.activePage) localStorage.setItem('activePage', user.activePage);
+      }
+
+      return Promise.resolve();
     }
   }
 
@@ -102,10 +97,10 @@ export default async (type, params) => {
   return Promise.reject("Unknown method: " + type);
 };
 
-const auth = async (userID, accessToken) => {
+const auth = async (userID, accessToken, name, email, picture, pictureUrl, locationName) => {
   const request = new Request(process.env.REACT_APP_API_URL + '/users/auth', {
     method: 'POST',
-    body: JSON.stringify({ userID, accessToken }),
+    body: JSON.stringify({ userID, accessToken, name, email, picture, pictureUrl, locationName }),
     headers: new Headers({ 'Content-Type': 'application/json' }),
   });
 
