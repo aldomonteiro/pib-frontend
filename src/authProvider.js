@@ -5,45 +5,50 @@ import decodeJwt from 'jwt-decode';
 export default async (type, params) => {
   // called when the user attemps to log in
   if (type === AUTH_LOGIN) {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const { code, redirect_uri } = params;
-    if (code) {
-      const user = await oauth_code(code, redirect_uri);
-      console.log('oauth_code:', user);
-      if (user.token) {
-        const decodedToken = decodeJwt(user.token);
-        localStorage.setItem('role', decodedToken.role);
-        localStorage.setItem('token', user.token);
-        localStorage.setItem('userID', user.userID);
-        localStorage.setItem('name', user.name);
-        localStorage.setItem('email', user.email);
-        if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
-        if (user.activePage) localStorage.setItem('activePage', user.activePage);
-      }
-
+    if (localStorage.getItem('token')) {
       return Promise.resolve();
+    }
+    else {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const { code, redirect_uri } = params;
+      if (code) {
+        const user = await oauth_code(code, redirect_uri);
+        console.log('oauth_code:', user);
+        if (user.token) {
+          const decodedToken = decodeJwt(user.token);
+          localStorage.setItem('role', decodedToken.role);
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('userID', user.userID);
+          localStorage.setItem('name', user.name);
+          localStorage.setItem('email', user.email);
+          if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
+          if (user.activePage) localStorage.setItem('activePage', user.activePage);
+        }
 
-    } else {
+        return Promise.resolve();
 
-      const { authResponse, name, email, picture, location } = params;
-      const locationName = location ? location.name : null;
-      const pictureUrl = picture ? picture.data.url : null;
-      const { userID, accessToken } = authResponse;
+      } else {
 
-      const user = await auth(userID, accessToken, name, email, pictureUrl, timeZone, locationName);
+        const { authResponse, name, email, picture, location } = params;
+        const locationName = location ? location.name : null;
+        const pictureUrl = picture ? picture.data.url : null;
+        const { userID, accessToken } = authResponse;
 
-      if (user.token) {
-        const decodedToken = decodeJwt(user.token);
-        localStorage.setItem('role', decodedToken.role);
-        localStorage.setItem('token', user.token);
-        localStorage.setItem('userID', userID);
-        localStorage.setItem('name', user.name);
-        localStorage.setItem('email', user.email);
-        if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
-        if (user.activePage) localStorage.setItem('activePage', user.activePage);
+        const user = await auth(userID, accessToken, name, email, pictureUrl, timeZone, locationName);
+
+        if (user.token) {
+          const decodedToken = decodeJwt(user.token);
+          localStorage.setItem('role', decodedToken.role);
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('userID', userID);
+          localStorage.setItem('name', user.name);
+          localStorage.setItem('email', user.email);
+          if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
+          if (user.activePage) localStorage.setItem('activePage', user.activePage);
+        }
+
+        return Promise.resolve();
       }
-
-      return Promise.resolve();
     }
   }
 
