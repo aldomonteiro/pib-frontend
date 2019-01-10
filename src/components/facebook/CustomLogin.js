@@ -104,7 +104,8 @@ class Login extends Component {
         await fbEnsureInit(async () => {
             // Automatic login
             await window.FB.getLoginStatus(async response => {
-                console.log(response);
+                console.log("CustomLogin");
+                console.log(response, localStorage);
                 // This status is important because it is the first status when the user opens the page.
                 await this.setState({ responseStatus: response.status });
                 if (response && response.status === 'connected') {
@@ -261,7 +262,7 @@ class Login extends Component {
                             {translate('pos.login.agree_description')}
                         </Typography>
                         <Typography className={classes.version}>
-                            {'V0.94'}
+                            {'V0.95'}
                         </Typography>
                         {environmentTag}
                     </CardContent>

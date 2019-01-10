@@ -5,6 +5,8 @@ import decodeJwt from 'jwt-decode';
 export default async (type, params) => {
   // called when the user attemps to log in
   if (type === AUTH_LOGIN) {
+    console.log('AUTHProvider');
+    console.log(localStorage, params);
     if (localStorage.getItem('token')) {
       return Promise.resolve();
     }
