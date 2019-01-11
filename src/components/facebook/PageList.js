@@ -173,7 +173,6 @@ class PageList extends React.Component {
                     }
                 });
             } catch (error) {
-                console.log(accessToken);
                 console.log(error);
             }
         }

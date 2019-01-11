@@ -75,7 +75,8 @@ const MobileGrid = withStyles(listStyles)(
                             {translate('resources.orders.fields.createdAt')}:&nbsp;
                             <DateField
                                 record={data[id]}
-                                source="date"
+                                source="createdAt"
+                                locales='pt-BR'
                                 showTime
                             />
                         </span>

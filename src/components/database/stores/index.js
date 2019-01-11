@@ -74,10 +74,6 @@ export const StoreEdit = withStyles(storeStyles)(({ classes, ...props }) => {
           <TextInput source="city" formClassName={classes.col1} />
           <TextInput source="state" formClassName={classes.col2} />
           <TextInput source="phone" />
-          <NumberInput source="delivery_fee" validate={[number(), minValue(0)]} />
-          <DisabledInput source="location_lat" formClassName={classes.col1} />
-          <DisabledInput source="location_long" formClassName={classes.col2} />
-          <LocationButton />
         </FormTab>
         <FormTab label="resources.stores.tabs.openingtimes">
           <BooleanInput source="sun_is_open" label="resources.stores.fields.sunday" />
@@ -104,6 +100,12 @@ export const StoreEdit = withStyles(storeStyles)(({ classes, ...props }) => {
           <BooleanInput source="hol_is_open" label="resources.stores.fields.holyday" />
           <TimeInput source="hol_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
           <TimeInput source="hol_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+        </FormTab>
+        <FormTab label="resources.stores.tabs.location">
+          <NumberInput source="delivery_fee" validate={[number(), minValue(0)]} />
+          <DisabledInput source="location_lat" formClassName={classes.col1} />
+          <DisabledInput source="location_long" formClassName={classes.col2} />
+          <LocationButton />
         </FormTab>
       </TabbedForm>
     </Edit>

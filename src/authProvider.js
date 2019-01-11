@@ -9,7 +9,6 @@ export default async (type, params) => {
     const { code, redirect_uri } = params;
     if (code) {
       const user = await oauth_code(code, redirect_uri);
-      console.log('oauth_code:', user);
       if (user.token) {
         const decodedToken = decodeJwt(user.token);
         localStorage.setItem('role', decodedToken.role);
@@ -71,8 +70,6 @@ export default async (type, params) => {
 
   if (type === AUTH_CHECK) {
     const response = await fbGetLoginStatus();
-    console.log('AUTH_CHECK fbGetLoginStatus');
-    console.log(response);
 
     if (response.status === 'connected') {
       if (localStorage.getItem('token')) {

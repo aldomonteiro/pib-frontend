@@ -112,6 +112,8 @@ export default {
                 state: 'Estado',
                 phone: 'Telefone',
                 delivery_fee: 'Taxa de Entrega',
+                location_lat: 'Latitude',
+                location_long: 'Longitude',
                 open: 'Abre',
                 close: 'Fecha',
                 sunday: 'Domingo',
@@ -126,6 +128,7 @@ export default {
             tabs: {
                 main: 'Principal',
                 openingtimes: 'Horários de Abertura',
+                location: 'Localização'
             },
         },
         pages: {

@@ -9,6 +9,7 @@ import {
     SimpleForm,
     TitleForRecord,
     TextInput,
+    FormDataConsumer
 } from 'react-admin';
 import Card from '@material-ui/core/Card';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -71,13 +72,20 @@ const OrderEdit = ({ classes, ...props }) => (
                                         { id: 'payment_money', name: 'Dinheiro' },
                                     ]}
                                 />
-                                <SelectInput
-                                    source="payment_change"
-                                    choices={[
-                                        { id: 'payment_change_yes', name: 'Sim' },
-                                        { id: 'payment_change_no', name: 'Não' },
-                                    ]}
-                                />
+                                <FormDataConsumer>
+                                    {
+                                        ({ formData, ...rest }) => formData.payment_type === 'payment_money'
+                                            &&
+                                            <SelectInput
+                                                source="payment_change"
+                                                choices={[
+                                                    { id: 'payment_change_yes', name: 'Sim' },
+                                                    { id: 'payment_change_no', name: 'Não' },
+                                                ]}
+                                                {...rest}
+                                            />
+                                    }
+                                </FormDataConsumer>
                                 {/* <BooleanInput source="returned" /> */}
                             </SimpleForm>
                         </Card>

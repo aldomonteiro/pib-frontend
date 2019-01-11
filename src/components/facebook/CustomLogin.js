@@ -77,6 +77,9 @@ const styles = theme => ({
     title: {
         fontSize: 14,
     },
+    version: {
+        fontSize: 8,
+    },
 });
 
 class Login extends Component {
@@ -240,6 +243,9 @@ class Login extends Component {
                         </Typography>
                         <Typography component="p">
                             {translate('pos.login.agree_description')}
+                        </Typography>
+                        <Typography className={classes.version}>
+                            {'V0.9'}
                         </Typography>
                         {environmentTag}
                     </CardContent>

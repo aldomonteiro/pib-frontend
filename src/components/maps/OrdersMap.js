@@ -130,8 +130,6 @@ class OrdersMap extends Component {
     const { classes, translate } = this.props;
     const { orders, customers, stores } = this.state;
     const map_center = (stores && stores.length) ? [stores[0].location_lat, stores[0].location_long] : MAP_CENTER;
-    console.log(stores[0]);
-    console.log({ map_center });
     return (
       this.state.loading ? <LoadingPage className={classes.divloader} /> :
         <Card>
