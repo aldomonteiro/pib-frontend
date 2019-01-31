@@ -26,7 +26,7 @@ const MonthlyRevenue = ({ value, translate, classes }) => (
         <CardIcon Icon={DollarIcon} bgColor="#31708f" />
         <Card className={classes.card}>
             <Typography className={classes.title} color="textSecondary">
-                {translate('pos.dashboard.monthly_revenue')}
+                {translate('pos.dashboard.stats.monthly_revenue')}
             </Typography>
             <Typography variant="headline" component="h2">
                 {value}

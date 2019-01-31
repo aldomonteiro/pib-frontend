@@ -31,7 +31,6 @@ export default {
             new_orders: 'Novos Pedidos',
             new_customers: 'Novos Clientes',
             pending_orders: 'Pedidos pendentes',
-            monthly_revenue: 'Receita mensal',
             order: {
                 items:
                     'por %{customer_name}, um item |||| por %{customer_name}, %{nb_items} itens',
@@ -43,6 +42,19 @@ export default {
                 aor_button: 'Site do pizzaibot',
                 demo_button: 'Source for this demo',
             },
+            chart: {
+                title: 'Comparativo Semanal',
+                pw: 'Semana Passada',
+                tw: 'Semana Atual'
+            },
+            stats: {
+                monthly_revenue: 'Receita mensal',
+                weekly_revenue: 'Receita semanal',
+                monthly_orders: 'Pedidos mês',
+                weekly_orders: 'Pedidos semana',
+                monthly_pizzas: 'Pizzas mês',
+                weekly_pizzas: 'Pizzas semana'
+            }
         },
         login: {
             connect: "Conecte sua conta Facebook",
@@ -54,7 +66,24 @@ export default {
             continue_with_facebook: "Continuar com Facebook"
         },
         orders: {
+            todayOrders: "Pedidos de hoje",
+            rejecting: "Rejeitando o pedido",
             map: "Ver no mapa",
+            report: "Lista de Pedidos",
+            print: "Imprimir",
+            accept: "Aceitar o pedido",
+            reject: "Rejeitar o pedido",
+            deliver: "Enviar pedido para entrega",
+            defaultRejectionReason: "Infelizmente seu endereço está fora da nossa área de atendimento.",
+            status: {
+                pending: "Pendente",
+                confirmed: "Aguard. Análise",
+                accepted: "Aceito - Pend.",
+                printed: "Impresso",
+                delivered: "Entregue",
+                rejected: "Rejeitado",
+                cancelled: "Cancelled"
+            }
         },
         ordersmap: {
             title: "Pedidos no mapa",
@@ -124,11 +153,13 @@ export default {
                 friday: 'Sexta-feira',
                 saturday: 'Sábado',
                 holyday: 'Feriados',
+                printer: 'Impressora',
             },
             tabs: {
                 main: 'Principal',
                 openingtimes: 'Horários de Abertura',
-                location: 'Localização'
+                location: 'Localização',
+                customizing: 'Configurações'
             },
         },
         pages: {
@@ -196,6 +227,7 @@ export default {
         orders: {
             name: "Pedido |||| Pedidos",
             fields: {
+                id: 'ID',
                 customer: 'Cliente',
                 customerId: 'Cliente',
                 status2: 'Status',
@@ -204,8 +236,15 @@ export default {
                 phone: 'Telefone',
                 address: 'Endereço',
                 distanceFromStore: 'Distância',
-                payment_type: 'Forma de Pagamento',
+                payment_type: {
+                    field_name: 'Forma de Pagamento',
+                    payment_money: 'Dinheiro',
+                    payment_card: 'Cartão',
+                    undefined: 'Não informado'
+                },
                 payment_change: 'Levar Troco?',
+                comments: 'Observações',
+                confirmed_at: 'Data pedido',
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
@@ -213,6 +252,13 @@ export default {
                     sum: "Soma",
                     total: "Total",
                 },
+            },
+            messages: {
+                warningBeforeReject: "Ao executar essa ação, o cliente receberá um aviso que o pedido não será atendido. Por favor informe o motivo que será enviado ao cliente.",
+                successfulAcceptedOrder: "Pedido aceito com sucesso.",
+                successfulPrintedOrder: "Pedido impresso com sucesso.",
+                successfulDeliveredOrder: "Pedido atualizado como entregue com sucesso.",
+                successfullRejectedOrder: "Pedido rejeitado."
             }
         }
     },

@@ -7,7 +7,8 @@ import { BeverageList, BeverageEdit, BeverageCreate } from "./components/databas
 import { SizeList, SizeEdit, SizeCreate } from "./components/database/sizes";
 import { StoreList, StoreEdit, StoreCreate } from "./components/database/stores";
 import { PageResourceList, PageResourceEdit } from "./components/database/pages";
-import { OrderList, OrderEdit, OrderIcon } from './components/database/orders';
+import { OrderEdit } from './components/database/orders';
+import { OrderListAside, OrderIconAside } from './components/database/ordersAside';
 import {
   VisitorList,
   VisitorEdit,
@@ -34,7 +35,10 @@ import Dashboard from './dashboard';
 import customRoutes from './routes/customRoutes';
 import pagesReducer from './reducers/pages';
 import locationReducer from './reducers/location';
+import ordersReducer from './reducers/order';
 import simpleRestProvider from 'ra-data-simple-rest';
+// import OrderShow from "./components/database/ordersAside/OrderShow";
+// import myTheme from "./Theme";
 
 // Addim Custom Header
 // https://marmelab.com/react-admin/DataProviders.html#adding-custom-headers
@@ -57,7 +61,7 @@ const i18nProvider = locale => messages[locale];
 
 const App = () => (
   <Admin
-    customReducers={{ pagesReducer, locationReducer }}
+    customReducers={{ pagesReducer, locationReducer, ordersReducer }}
     dashboard={Dashboard}
     loginPage={CustomLogin}
     authProvider={authProvider}
@@ -65,13 +69,14 @@ const App = () => (
     customRoutes={customRoutes}
     locale={resolveBrowserLocale()}
     i18nProvider={i18nProvider}
+  // theme={myTheme}
   >
     {permissions => [
       <Resource
         name="orders"
-        list={OrderList}
+        list={OrderListAside}
+        icon={OrderIconAside}
         edit={OrderEdit}
-        icon={OrderIcon}
       />,
       <Resource
         name="customers"

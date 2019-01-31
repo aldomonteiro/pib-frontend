@@ -58,8 +58,12 @@ const OrderEdit = ({ classes, ...props }) => (
                                 <SelectInput
                                     source="status2"
                                     choices={[
+                                        { id: 'pending', name: 'Pendente' },
+                                        { id: 'confirmed', name: 'Aguard. Análise' },
+                                        { id: 'accepted', name: 'Aceito - Pend.' },
+                                        { id: 'printed', name: 'Impresso' },
                                         { id: 'delivered', name: 'Entregue' },
-                                        { id: 'ordered', name: 'Pendente' },
+                                        { id: 'rejected', name: 'Rejeitado' },
                                         { id: 'cancelled', name: 'Cancelado' },
                                     ]}
                                 />

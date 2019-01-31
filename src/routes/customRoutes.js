@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import PageList from "../components/facebook/PageList";
 import OrdersMap from '../components/maps/OrdersMap';
+import OrderList from '../components/database/orders/OrderList';
 
 const getFacebookOauthUrl = () => {
     const rUri = window.location.origin + '/fb';
@@ -12,5 +13,6 @@ const getFacebookOauthUrl = () => {
 export default [
     <Route exact path="/pagelist" component={PageList} noLayout />,
     <Route exact path="/ordersmap" component={OrdersMap} />,
+    <Route exact path="/orderslist" component={OrderList} />,
     <Route exact path='/fb' component={() => { window.location = getFacebookOauthUrl(); return null; }} />
 ];

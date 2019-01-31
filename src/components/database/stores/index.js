@@ -4,17 +4,11 @@ import {
   Edit,
   Create,
   Datagrid,
-  TextField,
-  NumberField,
+  TextField, NumberField,
   EditButton,
-  DisabledInput,
-  BooleanInput,
-  NumberInput,
-  TextInput,
-  number,
-  minValue,
-  TabbedForm,
-  FormTab,
+  DisabledInput, BooleanInput, NumberInput, TextInput, SelectInput,
+  number, minValue,
+  TabbedForm, FormTab,
   Toolbar
 } from "react-admin";
 import { TimeInput } from 'react-admin-date-inputs';
@@ -22,6 +16,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import LocationButton from './locationButton';
 import { CreateWithLocation } from './createWithLocation';
 import { UpdateWithLocation } from './updateWithLocation';
+import { Grid } from "@material-ui/core";
+import shajs from 'sha.js';
+import qz from 'qz-tray';
+
+import StoreEdit from './StoreEdit';
+
+export { StoreEdit };
 
 const storeStyles = {
   address: { maxWidth: 400 },
@@ -31,11 +32,6 @@ const storeStyles = {
   col1of3: { display: 'inline-block', width: '10em', maxWidth: '10em', marginLeft: 1 },
   col2of3: { display: 'inline-block', width: '10em', maxWidth: '10em', marginLeft: 100 },
   col3of3: { display: 'inline-block', width: '10em', maxWidth: '10em', marginLeft: 200 },
-};
-
-
-const StoreTitle = ({ record }) => {
-  return <span>{record ? `${record.name}` : ""}</span>;
 };
 
 export const StoreList = props => (
@@ -53,65 +49,6 @@ export const StoreList = props => (
   </List>
 );
 
-const StoreUpdateToolbar = props => (
-  <Toolbar {...props}>
-    <UpdateWithLocation
-      label="ra.action.save"
-      redirect="list"
-      submitOnEnter={false}
-    />
-  </Toolbar>
-);
-
-export const StoreEdit = withStyles(storeStyles)(({ classes, ...props }) => {
-  return (
-    <Edit title={<StoreTitle />} {...props}>
-      <TabbedForm toolbar={<StoreUpdateToolbar />} >
-        <FormTab label="resources.stores.tabs.main">
-          <DisabledInput source="id" />
-          <TextInput source="name" />
-          <TextInput source="address" formClassName={classes.address} />
-          <TextInput source="city" formClassName={classes.col1} />
-          <TextInput source="state" formClassName={classes.col2} />
-          <TextInput source="phone" />
-        </FormTab>
-        <FormTab label="resources.stores.tabs.openingtimes">
-          <BooleanInput source="sun_is_open" label="resources.stores.fields.sunday" />
-          <TimeInput source="sun_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="sun_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-          <BooleanInput source="mon_is_open" label="resources.stores.fields.monday" />
-          <TimeInput source="mon_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="mon_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-          <BooleanInput source="tue_is_open" label="resources.stores.fields.tuesday" />
-          <TimeInput source="tue_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="tue_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-          <BooleanInput source="wed_is_open" label="resources.stores.fields.wednesday" />
-          <TimeInput source="wed_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="wed_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-          <BooleanInput source="thu_is_open" label="resources.stores.fields.thursday" />
-          <TimeInput source="thu_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="thu_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-          <BooleanInput source="fri_is_open" label="resources.stores.fields.friday" />
-          <TimeInput source="fri_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="fri_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-          <BooleanInput source="sat_is_open" label="resources.stores.fields.saturday" />
-          <TimeInput source="sat_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="sat_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-          <BooleanInput source="hol_is_open" label="resources.stores.fields.holyday" />
-          <TimeInput source="hol_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-          <TimeInput source="hol_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        </FormTab>
-        <FormTab label="resources.stores.tabs.location">
-          <NumberInput source="delivery_fee" validate={[number(), minValue(0)]} />
-          <DisabledInput source="location_lat" formClassName={classes.col1} />
-          <DisabledInput source="location_long" formClassName={classes.col2} />
-          <LocationButton />
-        </FormTab>
-      </TabbedForm>
-    </Edit>
-  )
-});
-
 const StoreCreateToolbar = props => (
   <Toolbar {...props}>
     <CreateWithLocation
@@ -123,45 +60,47 @@ const StoreCreateToolbar = props => (
   </Toolbar>
 );
 
-export const StoreCreate = withStyles(storeStyles)(({ classes, ...props }) => (
-  <Create {...props}>
-    <TabbedForm toolbar={<StoreCreateToolbar />} >
-      <FormTab label="resources.stores.tabs.main">
-        <TextInput source="id" />
-        <TextInput source="name" />
-        <TextInput source="address" formClassName={classes.address} />
-        <TextInput source="city" formClassName={classes.col1} />
-        <TextInput source="state" formClassName={classes.col2} />
-        <TextInput source="phone" />
-        <NumberInput source="delivery_fee" validate={[number(), minValue(0)]} />
-        <LocationButton />
-      </FormTab>
-      <FormTab label="resources.stores.tabs.openingtimes">
-        <BooleanInput source="sun_is_open" label="resources.stores.fields.sunday" />
-        <TimeInput source="sun_open" isRequired={true} label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="sun_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        <BooleanInput source="mon_is_open" label="resources.stores.fields.monday" />
-        <TimeInput source="mon_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="mon_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        <BooleanInput source="tue_is_open" label="resources.stores.fields.tuesday" />
-        <TimeInput source="tue_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="tue_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        <BooleanInput source="wed_is_open" label="resources.stores.fields.wednesday" />
-        <TimeInput source="wed_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="wed_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        <BooleanInput source="thu_is_open" label="resources.stores.fields.thursday" />
-        <TimeInput source="thu_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="thu_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        <BooleanInput source="fri_is_open" label="resources.stores.fields.friday" />
-        <TimeInput source="fri_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="fri_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        <BooleanInput source="sat_is_open" label="resources.stores.fields.saturday" />
-        <TimeInput source="sat_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="sat_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-        <BooleanInput source="hol_is_open" label="resources.stores.fields.holyday" />
-        <TimeInput source="hol_open" label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
-        <TimeInput source="hol_close" label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
-      </FormTab>
-    </TabbedForm>
-  </Create>
-));
+export const StoreCreate = withStyles(storeStyles)(({ classes, ...props }) => {
+  const _res = 'resources.stores.fields.';
+  const days = [{ source1: 'sun_is_open', source2: 'sun_open', source3: 'sun_close', label: _res + 'sunday' },
+  { source1: 'mon_is_open', source2: 'mon_open', source3: 'mon_close', label: _res + 'monday' },
+  { source1: 'tue_is_open', source2: 'tue_open', source3: 'tue_close', label: _res + 'tuesday' },
+  { source1: 'wed_is_open', source2: 'wed_open', source3: 'wed_close', label: _res + 'wednesday' },
+  { source1: 'thu_is_open', source2: 'thu_open', source3: 'thu_close', label: _res + 'thursday' },
+  { source1: 'fri_is_open', source2: 'fri_open', source3: 'fri_close', label: _res + 'friday' },
+  { source1: 'sat_is_open', source2: 'sat_open', source3: 'sat_close', label: _res + 'saturday' },
+  { source1: 'hol_is_open', source2: 'hol_open', source3: 'hol_close', label: _res + 'holyday' }];
+
+  return (
+    <Create {...props}>
+      <TabbedForm toolbar={<StoreCreateToolbar />} >
+        <FormTab label="resources.stores.tabs.main">
+          <TextInput source="id" />
+          <TextInput source="name" />
+          <TextInput source="address" formClassName={classes.address} />
+          <TextInput source="city" formClassName={classes.col1} />
+          <TextInput source="state" formClassName={classes.col2} />
+          <TextInput source="phone" />
+          <NumberInput source="delivery_fee" validate={[number(), minValue(0)]} />
+          <LocationButton />
+        </FormTab>
+        <FormTab label="resources.stores.tabs.openingtimes">
+          {days.map(day =>
+            (<Grid key={day.source1} container alignItems='center'>
+              <Grid item xs={4}>
+                <BooleanInput source={day.source1} label={day.label} />
+              </Grid>
+              <Grid item xs={4}>
+                <TimeInput source={day.source2} label="resources.stores.fields.open" options={{ format: 'HH:mm', ampm: false }} />
+              </Grid>
+              <Grid item xs={4}>
+                <TimeInput source={day.source3} label="resources.stores.fields.close" options={{ format: 'HH:mm', ampm: false }} />
+              </Grid>
+            </Grid>
+            )
+          )}
+        </FormTab>
+      </TabbedForm>
+    </Create>
+  )
+});

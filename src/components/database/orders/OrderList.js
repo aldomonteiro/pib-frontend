@@ -24,6 +24,16 @@ import CustomerReferenceField from '../customers/CustomerReferenceField';
 import MobileGrid from './MobileGrid';
 import OrderActions from './OrderActions';
 
+import {
+    ORDERSTATUS_PENDING,
+    ORDERSTATUS_CONFIRMED,
+    ORDERSTATUS_ACCEPTED,
+    ORDERSTATUS_PRINTED,
+    ORDERSTATUS_DELIVERED,
+    ORDERSTATUS_REJECTED,
+    ORDERSTATUS_CANCELLED
+} from '../../../util'
+
 export const OrderIcon = Icon;
 
 const filterStyles = {
@@ -40,7 +50,7 @@ const OrderFilter = withStyles(filterStyles)(({ classes, ...props }) => (
                 }
             />
         </ReferenceInput>
-        <DateInput source="createdAt" />
+        <DateInput source="confirmed_at" />
     </Filter>
 ));
 
@@ -50,7 +60,7 @@ const datagridStyles = {
 
 class TabbedDatagrid extends React.Component {
     tabs = [
-        { id: 'ordered', name: 'Pendente' },
+        { id: 'pending', name: 'Pendente' },
         { id: 'delivered', name: 'Entregue' },
         { id: 'cancelled', name: 'Cancelado' },
     ];
@@ -58,15 +68,15 @@ class TabbedDatagrid extends React.Component {
     state = { ordered: [], delivered: [], cancelled: [] };
 
     static getDerivedStateFromProps(props, state) {
-        if (props.ids !== state[props.filterValues.status2]) {
-            return { ...state, [props.filterValues.status2]: props.ids };
+        if (props.ids !== state[props.filterValues.status3]) {
+            return { ...state, [props.filterValues.status3]: props.ids };
         }
         return null;
     }
 
     handleChange = (event, value) => {
         const { filterValues, setFilters } = this.props;
-        setFilters({ ...filterValues, status2: value });
+        setFilters({ ...filterValues, status3: value });
     };
 
     render() {
@@ -76,7 +86,7 @@ class TabbedDatagrid extends React.Component {
                 <Tabs
                     fullWidth
                     centered
-                    value={filterValues.status2}
+                    value={filterValues.status3}
                     indicatorColor="primary"
                     onChange={this.handleChange}
                 >
@@ -93,17 +103,17 @@ class TabbedDatagrid extends React.Component {
                     xsmall={
                         <MobileGrid
                             {...props}
-                            ids={this.state[filterValues.status2]}
+                            ids={this.state[filterValues.status3]}
                         />
                     }
                     medium={
                         <div>
-                            {filterValues.status2 === 'ordered' && (
+                            {filterValues.status3 === 'pending' && (
                                 <Datagrid
                                     {...props}
-                                    ids={this.state['ordered']}
+                                    ids={this.state['pending']}
                                 >
-                                    <DateField source="createdAt" showTime locales="pt-BR" />
+                                    <DateField source="confirmed_at" showTime locales="pt-BR" />
                                     <TextField source="id" />
                                     <CustomerReferenceField />
                                     <TextField source="phone" />
@@ -121,12 +131,12 @@ class TabbedDatagrid extends React.Component {
                                     <EditButton />
                                 </Datagrid>
                             )}
-                            {filterValues.status2 === 'delivered' && (
+                            {filterValues.status3 === 'delivered' && (
                                 <Datagrid
                                     {...props}
                                     ids={this.state['delivered']}
                                 >
-                                    <DateField source="createdAt" showTime locales="pt-BR" />
+                                    <DateField source="confirmed_at" showTime locales="pt-BR" />
                                     <TextField source="id" />
                                     <CustomerReferenceField />
                                     <NbItemsField />
@@ -142,12 +152,12 @@ class TabbedDatagrid extends React.Component {
                                     <EditButton />
                                 </Datagrid>
                             )}
-                            {filterValues.status2 === 'cancelled' && (
+                            {filterValues.status3 === 'cancelled' && (
                                 <Datagrid
                                     {...props}
                                     ids={this.state['cancelled']}
                                 >
-                                    <DateField source="createdAt" showTime locales="pt-BR" />
+                                    <DateField source="confirmed_at" showTime locales="pt-BR" />
                                     <TextField source="id" />
                                     <CustomerReferenceField />
                                     <NbItemsField />
@@ -173,17 +183,28 @@ class TabbedDatagrid extends React.Component {
 
 const StyledTabbedDatagrid = withStyles(datagridStyles)(TabbedDatagrid);
 
-const OrderList = ({ classes, ...props }) => (
-    <List
-        {...props}
-        actions={<OrderActions />}
-        filterDefaultValues={{ status2: 'ordered' }}
-        sort={{ field: 'createdAt', order: 'DESC' }}
-        perPage={25}
-        filters={<OrderFilter />}
-    >
-        <StyledTabbedDatagrid />
-    </List>
-);
+const OrderList = ({ classes, ...props }) => {
+    const newProps = {
+        basePath: "/orders",
+        hasCreate: false,
+        hasEdit: true,
+        hasList: true,
+        hasShow: true,
+        permissions: "admin",
+        resource: "orders",
+        ...props
+    };
+    return (
+        <List
+            {...newProps}
+            actions={<OrderActions />}
+            sort={{ field: 'confirmed_at', order: 'DESC' }}
+            perPage={25}
+            filters={<OrderFilter />}
+        >
+            <StyledTabbedDatagrid />
+        </List>
+    )
+};
 
 export default OrderList;

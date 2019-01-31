@@ -104,3 +104,13 @@ export const distanceBetweenCoordinates = (lat1, lon1, lat2, lon2) => {
 
     return earthRadiusKm * c;
 }
+
+export const onlyHour = date => new Intl.DateTimeFormat('pt-BR').format(date);
+
+export const ORDERSTATUS_PENDING = 0;
+export const ORDERSTATUS_CONFIRMED = 1;
+export const ORDERSTATUS_ACCEPTED = 2;
+export const ORDERSTATUS_PRINTED = 3;
+export const ORDERSTATUS_DELIVERED = 4;
+export const ORDERSTATUS_REJECTED = 8;
+export const ORDERSTATUS_CANCELLED = 9;

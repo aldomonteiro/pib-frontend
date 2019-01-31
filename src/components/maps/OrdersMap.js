@@ -87,18 +87,13 @@ class OrdersMap extends Component {
   }
 
   componentDidMount() {
-    dataProviderFactory(GET_LIST, 'orders', {
-      // filter: { date_gte: aMonthAgo.toISOString() },
-      sort: { field: 'createdAt', order: 'DESC' },
-      pagination: { page: 1, perPage: 10 },
-    })
-      .then(response => { return response.data.filter(order => order.status === 1 && order.location_lat && order.location_long) })
+    dataProviderFactory(GET_MANY, 'orders', {
+      ids: this.props.ordersList,
+    }).then(response => response.data)
       .then(orders => {
-        this.setState({ orders: orders });
-        return orders;
-      })
-      .then(orders =>
-        orders.map(order => order.customerId)
+        this.setState({ orders: orders })
+        return orders.map(order => order.customerId)
+      }
       )
       .then(customerIds =>
         dataProviderFactory(GET_MANY, 'customers', {
@@ -123,6 +118,43 @@ class OrdersMap extends Component {
           .then(response => response.data)
           .then(stores => this.setState({ stores: stores, loading: false }))
       });
+
+    // dataProviderFactory(GET_LIST, 'orders', {
+    //   // filter: { date_gte: aMonthAgo.toISOString() },
+    //   sort: { field: 'createdAt', order: 'DESC' },
+    //   pagination: { page: 1, perPage: 10 },
+    // })
+    //   .then(response => { return response.data.filter(order => order.status === 1 && order.location_lat && order.location_long) })
+    //   .then(orders => {
+    //     this.setState({ orders: orders });
+    //     return orders;
+    //   })
+    //   .then(orders =>
+    //     orders.map(order => order.customerId)
+    //   )
+    //   .then(customerIds =>
+    //     dataProviderFactory(GET_MANY, 'customers', {
+    //       ids: customerIds,
+    //     })
+    //   )
+    //   .then(response => response.data)
+    //   .then(customers =>
+    //     customers.reduce((prev, customer) => {
+    //       prev[customer.id] = customer; // eslint-disable-line no-param-reassign
+    //       return prev;
+    //     }, {})
+    //   )
+    //   .then(customers => {
+    //     this.setState({ customers: customers });
+
+    //     dataProviderFactory(GET_LIST, 'stores', {
+    //       // filter: { date_gte: aMonthAgo.toISOString() },
+    //       sort: { field: 'createdAt', order: 'DESC' },
+    //       pagination: { page: 1, perPage: 10 },
+    //     })
+    //       .then(response => response.data)
+    //       .then(stores => this.setState({ stores: stores, loading: false }))
+    //   });
 
   }
 
@@ -184,6 +216,7 @@ const enhance = compose(
   connect((state, props) => ({
     initialValues: getDefaultValues(state, props),
     isLoading: state.admin.loading > 0,
+    ordersList: state.ordersReducer,
   })),
   withStyles(styles)
 );
