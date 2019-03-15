@@ -2,7 +2,6 @@ import portugueseMessages from 'ra-language-portuguese';
 
 export default {
     ...portugueseMessages,
-    'Successfull page update': 'Página atualizada com sucesso!',
     pos: {
         search: 'Search',
         configuration: 'Configuration',
@@ -65,6 +64,12 @@ export default {
             agree_description: "Nós vamos precisar de algumas permissões para gerenciar a sua Página e automatizar as suas respostas. Agora você será direcionado para o Facebook, mas não se preocupe! Você estará de volta ao nosso site assim que as permissões solicitadas forem concedidas.",
             continue_with_facebook: "Continuar com Facebook"
         },
+        menu: {
+            catalog: 'Cardápio',
+            orders: 'Pedidos',
+            admin: 'Administração',
+            pizza: 'Pizzas'
+        },
         orders: {
             todayOrders: "Pedidos de hoje",
             rejecting: "Rejeitando o pedido",
@@ -77,13 +82,24 @@ export default {
             defaultRejectionReason: "Infelizmente seu endereço está fora da nossa área de atendimento.",
             status: {
                 pending: "Pendente",
+                viewed: "Aguard. Análise",
                 confirmed: "Aguard. Análise",
                 accepted: "Aceito - Pend.",
                 printed: "Impresso",
                 delivered: "Entregue",
                 rejected: "Rejeitado",
                 cancelled: "Cancelled"
-            }
+            },
+            new: {
+                title: "Novo Pedido",
+                chooseSize: "Tamanho",
+                chooseFlavor: "Produto",
+                chooseBeverage: "Bebida",
+            },
+            deliveryTime: 'Tempo de Entrega',
+            pickupTime: 'Tempo de Reirada',
+            selectAnOrder: 'Selecione um pedido na lista de pedidos',
+            newOrders: 'Novos Pedidos',
         },
         ordersmap: {
             title: "Pedidos no mapa",
@@ -93,20 +109,49 @@ export default {
             select_facebook_page: "Selecione a página que será conectada ao bot",
             back: "Voltar",
             confirm: "Confirmar",
+            updatePageSuccess: 'Página atualizada com sucesso!',
         },
         customer: {
             messages: {
                 no_customer_found: "Cliente não foi encontrado."
             }
-        }
+        },
+        stores: {
+            updateDeliveryTimeSuccess: 'Tempo de entrega atualizado com sucesso!',
+            updatePickupTimeSuccess: 'Tempo de retirada atualizado com sucesso!',
+            messages: {
+                whatsapp: 'Informe o número que será conectado ao Whatsapp'
+            }
+        },
+        flavors: {
+            messages: {
+                priceNotAllowed: 'Náo informe preço nesse produto, pois a categoria informada possui preço.'
+            }
+        },
+        configuration: {
+            title: 'Dados Financeiros',
+            creditCardHeader: 'Informe o número do seu Cartão de Crédito',
+            paymentMethod: 'Forma de Pagamento',
+            creditCard: 'Número do Cartão',
+            creditCardName: 'Nome Impresso no Cartão',
+            dueDate: 'Válido até',
+            cvc: 'Cód.',
+            updateSuccess: 'Dados financeiros atualizados com sucesso!',
+            updateFailues: 'Houve um erro durante a atualização dos seus dados financeiros',
+            messages: {
+                invalidCreditCard: 'O número de cartão de crédito informado é inválido'
+            }
+        },
     },
     resources: {
         flavors: {
-            name: 'Sabor |||| Sabores',
+            name: 'Produto |||| Produtos',
             fields: {
-                flavor: 'Sabor',
-                kind: 'Tipo',
+                flavor: 'Produto',
+                categoryId: 'Categoria',
                 toppings: 'Ingredientes',
+                price: 'Preço',
+                price_by_size: 'Preço por Tamanho?',
             },
         },
         toppings: {
@@ -119,8 +164,8 @@ export default {
         pricings: {
             name: 'Preço |||| Preços',
             fields: {
-                kind: 'Tipo',
-                size: 'Tamanho',
+                categoryId: 'Categoria',
+                sizeId: 'Tamanho',
                 price: 'Preço',
             },
         },
@@ -140,6 +185,7 @@ export default {
                 city: 'Cidade',
                 state: 'Estado',
                 phone: 'Telefone',
+                phone_whatsapp: 'Telefone/Whatsapp',
                 delivery_fee: 'Taxa de Entrega',
                 location_lat: 'Latitude',
                 location_long: 'Longitude',
@@ -224,6 +270,15 @@ export default {
             }
 
         },
+        categories: {
+            name: 'Categoria |||| Categorias',
+            fields: {
+                category: 'Categoria',
+                name: 'Categoria',
+                price_by_size: 'Preço por tamanho?',
+                is_pizza: 'É pizza?',
+            },
+        },
         orders: {
             name: "Pedido |||| Pedidos",
             fields: {
@@ -242,6 +297,7 @@ export default {
                     payment_card: 'Cartão',
                     undefined: 'Não informado'
                 },
+                delivery_type: 'Entrega/Retira',
                 payment_change: 'Levar Troco?',
                 comments: 'Observações',
                 confirmed_at: 'Data pedido',
@@ -258,7 +314,8 @@ export default {
                 successfulAcceptedOrder: "Pedido aceito com sucesso.",
                 successfulPrintedOrder: "Pedido impresso com sucesso.",
                 successfulDeliveredOrder: "Pedido atualizado como entregue com sucesso.",
-                successfullRejectedOrder: "Pedido rejeitado."
+                successfullRejectedOrder: "Pedido rejeitado.",
+                errorViewing: 'Houve um erro ao tentar atualizar a base de dados, tente novamente.'
             }
         }
     },

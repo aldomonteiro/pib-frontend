@@ -4,11 +4,7 @@ import { GET_LIST, GET_MANY, Title, Responsive, resolveBrowserLocale, translate 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-// import Welcome from './Welcome';
-import MonthlyRevenue from './MonthlyRevenue';
-import NbNewOrders from './NbNewOrders';
 import PendingOrders from './PendingOrders';
-// import NewCustomers from './NewCustomers';
 import { FullStats, MinimalStats } from './FullStats';
 
 import Cardapio from './Cardapio';
@@ -16,6 +12,13 @@ import dataProviderFactory from '../dataProvider';
 import moment from 'moment';
 import WeeklyOrders from './WeeklyOrders';
 import { compose } from 'redux';
+
+import {
+    ORDERSTATUS_PENDING,
+    ORDERSTATUS_CONFIRMED,
+    ORDERSTATUS_DELIVERED,
+    ORDERSTATUS_REJECTED
+} from '../util';
 
 const styles = {
     flex: { display: 'flex' },
@@ -25,6 +28,8 @@ const styles = {
     rightCol: { flex: 1, marginLeft: '1em' },
     singleCol: { marginTop: '2em', marginBottom: '2em' },
 };
+
+
 
 class DashBoard extends Component {
     state = {};
@@ -49,27 +54,30 @@ class DashBoard extends Component {
 
             moment.locale(resolveBrowserLocale())
             const iniMonth = moment().startOf('month').toDate();
-            const iniPastWeek = moment().startOf('isoWeek').subtract(7, 'd');
-            const endPastWeek = moment().endOf('isoWeek').endOf('day').subtract(7, 'd');
+            const iniPastWeek = moment().startOf('week').subtract(7, 'd');
+            const endPastWeek = moment().endOf('week').endOf('day').subtract(7, 'd');
             const today = moment().endOf('day');
+
+            // When iniPastWeek is sooner than iniMonth, select iniPastWeek
+            const filterDate = iniPastWeek.isBefore(iniMonth) ? iniPastWeek : iniMonth;
 
             // List Orders
             dataProviderFactory(GET_LIST, 'orders', {
-                filter: { confirmed_at: [iniMonth, today] },
+                filter: { confirmed_at: [filterDate, today] },
                 sort: { field: 'createdAt', order: 'DESC' },
-                pagination: { page: 1, perPage: 10 },
+                pagination: { page: 1, perPage: 9000 },
             })
                 .then(response =>
                     response.data
-                        .filter(order => order.status !== 0)
+                        .filter(order => order.status !== ORDERSTATUS_PENDING)
                         .reduce(
                             (stats, order) => {
-                                if (order.status > 0 && order.status < 8) {
+                                if (order.status > ORDERSTATUS_PENDING && order.status < ORDERSTATUS_REJECTED) {
                                     stats.revenue += order.total;
                                     stats.nbNewOrders++;
                                     stats.allOrders.push(order);
                                 }
-                                if (order.status > 0 && order.status < 4) {
+                                if (order.status > ORDERSTATUS_PENDING && order.status < ORDERSTATUS_DELIVERED) {
                                     stats.pendingOrders.push(order);
                                 }
                                 return stats;
@@ -96,19 +104,22 @@ class DashBoard extends Component {
                         const mDate = moment(order.confirmed_at);
                         const orderWeekDay = moment(order.confirmed_at).weekday();
 
-                        revenueMonth += order.total;
-                        quantityMonth++;
+                        if (mDate.isAfter(iniMonth)) {
+                            revenueMonth += order.total;
+                            quantityMonth++;
+                        }
 
-                        if (mDate.isBetween(iniPastWeek, endPastWeek))
+
+                        if (mDate.isBetween(iniPastWeek, endPastWeek)) {
                             pastWeekOrders[orderWeekDay]++;
+                        }
                         else if (mDate.isAfter(endPastWeek)) {
                             thisWeekOrders[orderWeekDay]++;
                             revenueWeek += order.total;
                             quantityWeek++;
                         }
+                        return true;
                     });
-
-                    console.log(revenueMonth, revenueWeek, quantityMonth, quantityWeek);
 
                     const pw = translate('pos.dashboard.chart.pw');
                     const tw = translate('pos.dashboard.chart.tw');
@@ -175,10 +186,8 @@ class DashBoard extends Component {
 
     render() {
         const { flavors, toppings,
-            nbNewOrders,
             pendingOrders,
             pendingOrdersCustomers,
-            revenue,
             chartDataQty,
             revenueMonth,
             revenueWeek,
@@ -187,7 +196,6 @@ class DashBoard extends Component {
         } = this.state;
 
         const stats = { revenueMonth, revenueWeek, quantityMonth, quantityWeek };
-        console.log({ stats });
         return (
             <Fragment>
                 <Title title="pizzAIbot admin" />

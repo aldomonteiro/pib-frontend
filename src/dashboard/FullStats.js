@@ -14,7 +14,7 @@ const styles = {
         flexGrow: 1,
     },
     paper: {
-        width: 125,
+        width: 180,
     },
     title: {
         fontSize: '10px',
@@ -33,7 +33,7 @@ const enhanced = compose(
 );
 
 const StatCard = enhanced(({ classes, translate, stat_title, stat_content, icon }) => (
-    <Grid item justify="center">
+    <Grid item>
         <Paper className={classes.paper}>
             <Card>
                 <Typography className={classes.title}>

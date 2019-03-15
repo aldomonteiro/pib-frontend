@@ -14,7 +14,7 @@ export const updatePage = (operation, id, data, basePath) => ({
         onSuccess: {
             notification: {
                 // body: 'resources.comments.notification.approved_success',
-                body: 'Successfull page update',
+                body: 'pos.pageList.updatePageSuccess',
                 level: 'info',
             },
             redirectTo: '/',

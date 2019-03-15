@@ -6,6 +6,7 @@ export const PRINT_ORDER = 'PRINT_ORDER';
 export const DELIVER_ORDER = 'DELIVER_ORDER';
 export const UPDATE_PRINTER = 'UPDATE_PRINTER';
 export const UPDATE_ORDERSLIST = 'UPDATE_ORDERSLIST';
+export const VIEW_ORDER = 'VIEW_ORDER';
 
 
 export const accept_order = (operation, id, data, basePath) => ({
@@ -96,6 +97,27 @@ export const deliver_order = (operation, id, data, basePath) => ({
     }
 });
 
+export const view_order = (id, data, basePath) => ({
+    type: VIEW_ORDER,
+    payload: { id, data: { ...data, operation: 'VIEW' } },
+    meta: {
+        fetch: UPDATE,
+        resource: 'orders',
+        // onSuccess: {
+        //     notification: {
+        //         body: 'resources.orders.messages.successfulAcceptedOrder',
+        //         level: 'info',
+        //     },
+        //     basePath,
+        // },
+        onFailure: {
+            notification: {
+                body: 'resources.orders.messages.errorViewing',
+                level: 'warning',
+            },
+        },
+    }
+});
 
 
 export const update_printer = (printer) => ({
@@ -103,7 +125,19 @@ export const update_printer = (printer) => ({
     payload: { printer },
 });
 
-export const update_orders_list = (ids) => ({
+export const update_orders_list = (lastOrders) => ({
     type: UPDATE_ORDERSLIST,
-    payload: { ids },
+    payload: { lastOrders },
+});
+
+export const UPDATE_LAST_ORDER = 'UPDATE_LAST_ORDER';
+export const update_last_order = (lastOrderId) => ({
+    type: UPDATE_LAST_ORDER,
+    payload: { lastOrderId },
+});
+
+export const UPDATE_SEEN_IDS = 'UPDATE_SEEN_IDS';
+export const update_seen_ids = (seenIds) => ({
+    type: UPDATE_SEEN_IDS,
+    payload: { seenIds },
 });

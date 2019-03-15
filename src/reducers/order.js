@@ -1,12 +1,12 @@
-import { UPDATE_PRINTER, UPDATE_ORDERSLIST } from '../actions/orderActions';
+import { UPDATE_ORDERSLIST, UPDATE_LAST_ORDER } from '../actions/orderActions';
 
 const ordersReducerDefaultState = [];
 
 export default (previousState = ordersReducerDefaultState, { type, payload }) => {
-    if (type === UPDATE_PRINTER)
-        return payload.printer;
-    else if (type === UPDATE_ORDERSLIST)
-        return payload.ids;
+    if (type === UPDATE_ORDERSLIST)
+        return { ...previousState, lastOrders: payload.lastOrders };
+    else if (type === UPDATE_LAST_ORDER)
+        return { ...previousState, lastOrderId: payload.lastOrderId };
     else
         return previousState;
 }

@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 // import HomeIcon from '@material-ui/icons/Home';
 import { withStyles } from '@material-ui/core/styles';
-import { BarChart, Bar, Cell, XAxis, ResponsiveContainer, CartesianGrid, Tooltip, LabelList, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, ResponsiveContainer, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 import { translate } from 'react-admin';
