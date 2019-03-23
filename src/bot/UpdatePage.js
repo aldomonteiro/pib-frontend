@@ -9,22 +9,18 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 class UpdatePage extends Component {
     handleClick = () => {
-        const { record, picture } = this.props;
-        const data = { ...record, picture };
-        this.props.updatePage('UPDATE', record.id, data);
+        const { record } = this.props;
+        this.props.updatePage('UPDATE', record.id, record);
         this.props.confirmUpdate();
     }
 
     render() {
         const { translate, isLoading } = this.props;
-        return <Button variant="raised"
-            type="submit"
-            color="primary"
-            disabled={this.props.disabled} onClick={this.handleClick}>
+        return <Button type="submit" onClick={this.handleClick}>
             {isLoading && (
                 <CircularProgress style={{ color: 'white' }} size={25} thickness={2} />
             )}
-            {translate('pos.pageList.confirm')}</Button>;
+            {translate('pos.pages.select')}</Button>;
     }
 }
 

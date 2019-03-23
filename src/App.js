@@ -12,6 +12,8 @@ import beverages from './catalog/beverages';
 import categories from './catalog/categories';
 import toppings from './catalog/toppings';
 import bots from './bot';
+import reportOrders from './reportOrders';
+import reportFlavors from './reports/flavors';
 
 import { Layout, Menu } from './layout';
 
@@ -104,8 +106,14 @@ const App = () => (
                 name="pages" {...bots}
             />,
             <Resource
-                name="accounts"
+                name="reportOrders" {...reportOrders}
             />,
+            <Resource
+                name="reportFlavors" {...reportFlavors}
+            />,
+            <Resource
+                name="accounts"
+            />
         ]}
 
         {/* <Resource name="users" list={UserList} icon={UserIcon} /> */}

@@ -39,22 +39,22 @@ class Basket extends Component {
                         <TableRow>
                             <TableCell>
                                 {translate(
-                                    'resources.orders.fields.basket.reference'
+                                    'resources.reportOrders.fields.basket.reference'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
                                 {translate(
-                                    'resources.orders.fields.basket.unit_price'
+                                    'resources.reportOrders.fields.basket.unit_price'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
                                 {translate(
-                                    'resources.orders.fields.basket.quantity'
+                                    'resources.reportOrders.fields.basket.quantity'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
                                 {translate(
-                                    'resources.orders.fields.basket.total'
+                                    'resources.reportOrders.fields.basket.total'
                                 )}
                             </TableCell>
                         </TableRow>
@@ -112,7 +112,7 @@ class Basket extends Component {
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.orders.fields.basket.sum'
+                                    'resources.reportOrders.fields.basket.sum'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
@@ -126,7 +126,7 @@ class Basket extends Component {
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.orders.fields.basket.delivery'
+                                    'resources.reportOrders.fields.basket.delivery'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
@@ -140,7 +140,7 @@ class Basket extends Component {
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.orders.fields.basket.tax_rate'
+                                    'resources.reportOrders.fields.basket.tax_rate'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
@@ -153,7 +153,7 @@ class Basket extends Component {
                             <TableCell colSpan={2} />
                             <TableCell className={classes.boldCell}>
                                 {translate(
-                                    'resources.orders.fields.basket.total'
+                                    'resources.reportOrders.fields.basket.total'
                                 )}
                             </TableCell>
                             <TableCell

@@ -126,6 +126,7 @@ class Login extends Component {
         // first status when the page was loaded.
         // await this.setState({ responseStatus: response.status });
 
+        console.log(response);
         if (response.status === 'connected') {
             window.FB.api('/me?fields=id,name,email,picture,location', userData => {
                 let result = {
@@ -143,6 +144,7 @@ class Login extends Component {
             });
         }
         else {
+
             // TODO: here the login was not successfull.
         }
     }

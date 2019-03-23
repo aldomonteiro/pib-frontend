@@ -74,6 +74,7 @@ class PageList extends React.Component {
         openSnackError: false,
         openSnackOk: false,
         confirmEnabled: false,
+        selectedPagePicture: null,
     };
 
     componentDidMount() {
@@ -91,21 +92,26 @@ class PageList extends React.Component {
     /*
     * When the user 'toggles' the page option
     */
-    handleToggle = (value) => {
+    handleToggle = async (value) => {
         const { checked } = this.state;
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
 
+        console.log(currentIndex);
         // No page selected (checked.length) and the user is selecting a new toggle (currentIndex===-1)
         if (checked.length === 0 && currentIndex === -1) {
             newChecked.push(value);
-            const checkedPage = this.state.pages.filter((page) =>
+            const checkedPage = await this.state.pages.filter((page) =>
                 page.name === newChecked[0]
             );
+            const pagePictureArr = await this.state.pagePictures.filter(pagePicture => pagePicture.id === checkedPage[0].id);
+            const selectedPagePicture = pagePictureArr && pagePictureArr.length ? pagePictureArr[0] : null;
+            console.log('selectedPagePicture:', selectedPagePicture)
             this.setState({
                 checked: newChecked,
                 checkedPage: checkedPage,
-                confirmEnabled: true
+                confirmEnabled: true,
+                selectedPagePicture: selectedPagePicture,
             });
         } else if (checked.length === 1) {
             if (currentIndex !== -1) {
@@ -215,6 +221,7 @@ class PageList extends React.Component {
                         <UpdatePage
                             disabled={!this.state.confirmEnabled || this.state.checked.length === 0}
                             record={this.state.checkedPage[0]}
+                            picture={this.state.selectedPagePicture}
                             confirmUpdate={this.handleConfirmUpdate}
                             isLoading={isLoading}
                         />

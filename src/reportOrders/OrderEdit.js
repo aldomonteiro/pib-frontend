@@ -18,7 +18,7 @@ import Basket from './Basket';
 
 const OrderTitle = translate(({ record, translate }) => (
     <span>
-        {translate('resources.orders.name', { smart_count: 1 })} #{
+        {translate('resources.reportOrders.name', { smart_count: 1 })} #{
             record.reference
         }
     </span>

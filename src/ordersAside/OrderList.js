@@ -7,9 +7,12 @@ import OrderActions from './OrderActions';
 const OrderFilter = (props) => {
     // This filter is set in the old orderList, and it does not exist
     // in the component orderListAside, so, I am explicitly removing it.
-    if (props.filterValues && props.filterValues.status3 !== '') {
+    if (props.filterValues) {
         const { filterValues, ...rest } = props;
-        const { status3, ...newFilters } = filterValues;
+        let { status3, confirmed_at_rangestart, confirmed_at_rangeend, ...newFilters } = filterValues;
+        if (!newFilters || Object.keys(newFilters).length === 0)
+            newFilters = { confirmed_at: new Date() };
+
         return (
             <Filter filterValues={newFilters} {...rest}>
                 <DateInput source="confirmed_at" alwaysOn />

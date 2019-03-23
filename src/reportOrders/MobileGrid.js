@@ -45,7 +45,7 @@ const MobileGrid = withStyles(listStyles)(
                         title={
                             <div className={classes.cardTitleContent}>
                                 <span>
-                                    {translate('resources.orders.name', 1)}:&nbsp;
+                                    {translate('resources.reportOrders.name', 1)}:&nbsp;
                                     <TextField
                                         record={data[id]}
                                         source="id"
@@ -68,11 +68,11 @@ const MobileGrid = withStyles(listStyles)(
                             />
                         </span>
                         <span className={classes.cardContentRow}>
-                            {translate('resources.orders.fields.phone', 1)}:&nbsp;
+                            {translate('resources.reportOrders.fields.phone', 1)}:&nbsp;
                             <TextField source="phone" record={data[id]} />
                         </span>
                         <span className={classes.cardContentRow}>
-                            {translate('resources.orders.fields.createdAt')}:&nbsp;
+                            {translate('resources.reportOrders.fields.createdAt')}:&nbsp;
                             <DateField
                                 record={data[id]}
                                 source="createdAt"
@@ -82,7 +82,7 @@ const MobileGrid = withStyles(listStyles)(
                         </span>
                         <span className={classes.cardContentRow}>
                             {translate(
-                                'resources.orders.fields.basket.total'
+                                'resources.reportOrders.fields.basket.total'
                             )}:&nbsp;
                             <NumberField
                                 record={data[id]}
@@ -92,11 +92,11 @@ const MobileGrid = withStyles(listStyles)(
                             />
                         </span>
                         <span className={classes.cardContentRow}>
-                            {translate('resources.orders.fields.distanceFromStore', 1)}:&nbsp;
+                            {translate('resources.reportOrders.fields.distanceFromStore', 1)}:&nbsp;
                             <TextField source="distanceFromStore" record={data[id]} />
                         </span>
                         <span className={classes.cardContentRow}>
-                            {translate('resources.orders.fields.status2')}:&nbsp;
+                            {translate('resources.reportOrders.fields.status2')}:&nbsp;
                             <SelectField
                                 source="status2"
                                 record={data[id]}

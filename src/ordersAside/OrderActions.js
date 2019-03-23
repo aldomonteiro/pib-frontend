@@ -38,7 +38,7 @@ class OrderActions extends React.Component {
         newOrders: false,
     }
 
-    componentDidMount() {
+    componentDidMount () {
         console.log('componentDidMount', this.state.response)
         dataProviderFactory(GET_LIST, 'stores', {
             sort: { field: 'id', order: 'ASC' },
@@ -69,7 +69,7 @@ class OrderActions extends React.Component {
         });
     }
 
-    async componentDidUpdate() {
+    async componentDidUpdate () {
         if (this.state.ordersIds.length !== this.props.ids.length) {
             this.setState({
                 ordersIds: this.props.ids,
@@ -88,10 +88,10 @@ class OrderActions extends React.Component {
     }
 
     handleClickReport = () => {
-        this.props.push("/orderslist");
+        this.props.push("/reportOrders");
     }
 
-    render() {
+    render () {
         const {
             bulkActions,
             basePath,
@@ -133,7 +133,7 @@ class OrderActions extends React.Component {
                     {!this.state.newOrders && (<RefreshButton />)}
 
                     {/* Add your custom actions */}
-                    <OrderDialog />
+                    {/* <OrderDialog /> */}
                     <Button
                         onClick={this.handleClickMaps}
                         label={translate('pos.orders.map')}>

@@ -13,11 +13,13 @@ import {
     SearchInput,
     TextField,
 } from 'react-admin';
+import moment from 'moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from '@material-ui/icons/AttachMoney';
 import Divider from '@material-ui/core/Divider';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
 import NbItemsField from './NbItemsField';
 import CustomerReferenceField from '../customers/CustomerReferenceField';
@@ -40,9 +42,10 @@ const filterStyles = {
     status: { width: 150 },
 };
 
+const iniMonth = moment().startOf('month').toDate();
+
 const OrderFilter = withStyles(filterStyles)(({ classes, ...props }) => (
     <Filter {...props}>
-        <SearchInput source="q" alwaysOn />
         <ReferenceInput source="customerId" reference="customers">
             <AutocompleteInput
                 optionText={choice =>
@@ -50,7 +53,10 @@ const OrderFilter = withStyles(filterStyles)(({ classes, ...props }) => (
                 }
             />
         </ReferenceInput>
-        <DateInput source="confirmed_at" />
+        <DateInput
+            source="confirmed_at_rangestart"
+            alwaysOn />
+        <DateInput source="confirmed_at_rangeend" alwaysOn />
     </Filter>
 ));
 
@@ -183,6 +189,25 @@ class TabbedDatagrid extends React.Component {
 
 const StyledTabbedDatagrid = withStyles(datagridStyles)(TabbedDatagrid);
 
+const Aside = ({ data, ids }) => (
+    <div style={{ width: '15vw', minWidth: 160, maxWidth: 200, margin: '1em' }}>
+        <Typography variant="title">Totais</Typography>
+        <Typography variant="body2" gutterBottom>
+            {/* This only shows values from the paginated list. I am using workaround and calculating it in the server side.
+                Valor Total: {ids.length > 0 ? ids.map(id => data[id].total).reduce((sum, total) => sum + total).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+            }) : 0} */}
+            Valor Total: {ids.length > 0 ? data[ids[0]].asideTotalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 0}
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            {/* This only shows values from the paginated list. I am using workaround and calculating it in the server side.
+            Nro.Pedidos: {ids.length} */}
+            Nro. Pedidos: {ids.length > 0 ? data[ids[0]].asideTotalItems : 0}
+        </Typography>
+    </div>
+);
+
 const OrderList = ({ classes, ...props }) => {
     const newProps = {
         basePath: "/orders",
@@ -200,6 +225,8 @@ const OrderList = ({ classes, ...props }) => {
             actions={<OrderActions />}
             sort={{ field: 'confirmed_at', order: 'DESC' }}
             perPage={25}
+            aside={<Aside />}
+            filterDefaultValues={{ confirmed_at_rangestart: iniMonth, confirmed_at_rangeend: new Date(), status3: 'pending' }}
             filters={<OrderFilter />}
         >
             <StyledTabbedDatagrid />

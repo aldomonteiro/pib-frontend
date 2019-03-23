@@ -67,6 +67,7 @@ export default {
         menu: {
             catalog: 'Cardápio',
             orders: 'Pedidos',
+            reports: 'Relatórios',
             admin: 'Administração',
             pizza: 'Pizzas'
         },
@@ -127,6 +128,9 @@ export default {
             messages: {
                 priceNotAllowed: 'Náo informe preço nesse produto, pois a categoria informada possui preço.'
             }
+        },
+        pages: {
+            select: 'Selecionar',
         },
         configuration: {
             title: 'Dados Financeiros',
@@ -301,6 +305,8 @@ export default {
                 payment_change: 'Levar Troco?',
                 comments: 'Observações',
                 confirmed_at: 'Data pedido',
+                confirmed_at_rangestart: 'Início',
+                confirmed_at_rangeend: 'Fim',
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
@@ -317,6 +323,53 @@ export default {
                 successfullRejectedOrder: "Pedido rejeitado.",
                 errorViewing: 'Houve um erro ao tentar atualizar a base de dados, tente novamente.'
             }
+        },
+        reportOrders: {
+            name: "Pedido |||| Pedidos",
+            fields: {
+                id: 'ID',
+                customer: 'Cliente',
+                customerId: 'Cliente',
+                status2: 'Status',
+                createdAt: 'Data Criação',
+                updatedAt: 'Data Atualização',
+                phone: 'Telefone',
+                address: 'Endereço',
+                distanceFromStore: 'Distância',
+                payment_type: {
+                    field_name: 'Forma de Pagamento',
+                    payment_money: 'Dinheiro',
+                    payment_card: 'Cartão',
+                    undefined: 'Não informado'
+                },
+                delivery_type: 'Entrega/Retira',
+                payment_change: 'Levar Troco?',
+                comments: 'Observações',
+                confirmed_at: 'Data pedido',
+                confirmed_at_rangestart: 'Início',
+                confirmed_at_rangeend: 'Fim',
+                basket: {
+                    reference: "Referência",
+                    unit_price: "Preço Unit.",
+                    quantity: "Qtde.",
+                    sum: "Soma",
+                    total: "Total",
+                },
+            },
+        },
+        reportFlavors: {
+            name: "Produto |||| Produtos",
+            fields: {
+                id: 'ID',
+                flavor: 'Produto',
+                confirmed_at_rangestart: 'Início',
+                confirmed_at_rangeend: 'Fim',
+                categoryId: 'Categoria',
+                amountSold: 'Total Vendido',
+                itemsSold: 'Itens Vendidos',
+                firstSale: 'Primeiro Pedido',
+                lastSale: 'Último Pedido',
+            },
         }
     },
 };

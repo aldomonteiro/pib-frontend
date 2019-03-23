@@ -135,7 +135,7 @@ class DashBoard extends Component {
                     ];
 
                     this.setState({
-                        revenue: revenue.toLocaleString(undefined, {
+                        revenue: revenue.toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
                             minimumFractionDigits: 0,
@@ -144,13 +144,13 @@ class DashBoard extends Component {
                         nbNewOrders,
                         pendingOrders,
                         chartDataQty: data,
-                        revenueMonth: revenueMonth.toLocaleString(undefined, {
+                        revenueMonth: revenueMonth.toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0,
                         }),
-                        revenueWeek: revenueWeek.toLocaleString(undefined, {
+                        revenueWeek: revenueWeek.toLocaleString('pt-BR', {
                             style: 'currency',
                             currency: 'BRL',
                             minimumFractionDigits: 0,
@@ -213,12 +213,12 @@ class DashBoard extends Component {
                                     <MonthlyRevenue value={revenue} />
                                     <NbNewOrders value={nbNewOrders} />
                                 </div> */}
-                                <div style={styles.singleCol}>
+                                {/* <div style={styles.singleCol}>
                                     <PendingOrders
                                         orders={pendingOrders}
                                         customers={pendingOrdersCustomers}
                                     />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     }
@@ -234,12 +234,12 @@ class DashBoard extends Component {
                                 <MonthlyRevenue value={revenue} />
                                 <NbNewOrders value={nbNewOrders} />
                             </div> */}
-                            <div style={styles.singleCol}>
+                            {/* <div style={styles.singleCol}>
                                 <PendingOrders
                                     orders={pendingOrders}
                                     customers={pendingOrdersCustomers}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     }
                     medium={
@@ -264,14 +264,14 @@ class DashBoard extends Component {
                                         />
                                     </div>
                                 </div>
-                                <div style={styles.rightCol}>
+                                {/* <div style={styles.rightCol}>
                                     <div style={styles.flex}>
                                         <Cardapio
                                             fl={flavors}
                                             top={toppings}
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>} />
 
