@@ -184,7 +184,7 @@ const FlavorEdit = withStyles(editStyles)(({ classes, ...props }) => (
                                     <SelectInput optionText="name" {...props} />
                                 </ReferenceInput>
                                 <BooleanField source="price_by_size" />
-                                <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
+                                <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }} perPage={40}>
                                     <SelectArrayInput optionText="topping">
                                         <ChipField source="id" />
                                     </SelectArrayInput>
@@ -214,7 +214,7 @@ const FlavorCreate = props => (
             <ReferenceInput source="categoryId" reference="categories">
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
+            <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }} perPage={40}>
                 <SelectArrayInput optionText="topping" >
                     <ChipField source="id" />
                 </SelectArrayInput>
