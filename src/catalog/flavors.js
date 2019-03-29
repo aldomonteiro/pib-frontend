@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import {
     BooleanField,
     BulkDeleteButton,
+    Button,
     ChipField,
     Create,
     Datagrid,
@@ -11,6 +12,7 @@ import {
     EditController,
     Filter,
     List,
+    Link,
     NumberField,
     NumberInput,
     ReferenceArrayInput,
@@ -31,6 +33,11 @@ import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles';
 import FlavorIcon from "@material-ui/icons/RestaurantMenu";
 import InputAdornment from '@material-ui/core/InputAdornment';
+import MUIButton from '@material-ui/core/Button';
+import CloneIcon from "@material-ui/icons/ContentCopy";
+
+// import { Link } from 'react-router-dom';
+
 import dataProviderFactory from '../dataProvider';
 import { GET_ONE } from "ra-core/lib/dataFetchActions";
 import ChangeCategoryButton from './changeCategoryButton';
@@ -58,6 +65,20 @@ const FlavorBulkActionButtons = translate(props => (
     </Fragment>
 ));
 
+const CreateRelatedFlavor = translate(({ translate, record }) => (
+    <MUIButton
+        component={Link}
+        to={{
+            pathname: '/flavors/create',
+            state: { record: { flavor: record.flavor, categoryId: record.categoryId, toppings: record.toppings } },
+        }}
+    >
+        <Button label={translate('pos.flavors.clone')} >
+            <CloneIcon />
+        </Button>
+    </MUIButton>
+));
+
 
 const FlavorList = props => (
     <List filters={<FlavorFilter />} bulkActionButtons={<FlavorBulkActionButtons />} {...props}>
@@ -69,6 +90,7 @@ const FlavorList = props => (
             </ReferenceField>
             <NumberField source="price" locales="pt-BR" options={{ style: 'currency', currency: 'BRL' }} />
             <EditButton />
+            <CreateRelatedFlavor />
         </Datagrid>
     </List>
 );
@@ -131,50 +153,53 @@ const asyncValidate = async (values, dispatch, props, field) => {
 
 const FlavorEdit = withStyles(editStyles)(({ classes, ...props }) => (
     <EditController {...props}>
-        {({ resource, record, redirect, save, basePath, version }) => (
-            <div className="edit-page">
-                <Title defaultTitle={`#${record ? record.id : ''}`} />
-                <div className={classes.actions}>
-                    <EditActions
-                        basePath={basePath}
-                        resource={resource}
-                        data={record}
-                        hasList
-                    />
-                </div>
-                <Card className={classes.card}>
-                    {record && (
-                        <SimpleForm
+        {({ resource, record, redirect, save, basePath, version }) => {
+            console.log(record);
+            return (
+                <div className="edit-page">
+                    <Title defaultTitle={`#${record ? record.id : ''}`} />
+                    <div className={classes.actions}>
+                        <EditActions
                             basePath={basePath}
-                            redirect="list"
                             resource={resource}
-                            record={record}
-                            save={save}
-                            version={version}
-                            asyncValidate={asyncValidate}
-                            asyncBlurFields={['price', 'categoryId']}>
+                            data={record}
+                            hasList
+                        />
+                    </div>
+                    <Card className={classes.card}>
+                        {record && (
+                            <SimpleForm
+                                basePath={basePath}
+                                redirect="list"
+                                resource={resource}
+                                record={record}
+                                save={save}
+                                version={version}
+                                asyncValidate={asyncValidate}
+                                asyncBlurFields={['price', 'categoryId']}>
 
-                            <DisabledInput source="id" />
-                            <TextInput source="flavor" />
-                            <ReferenceInput source="categoryId" reference="categories" validate={[required()]}>
-                                <SelectInput optionText="name" {...props} />
-                            </ReferenceInput>
-                            <BooleanField source="price_by_size" />
-                            <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
-                                <SelectArrayInput optionText="topping">
-                                    <ChipField source="id" />
-                                </SelectArrayInput>
-                            </ReferenceArrayInput>
-                            <NumberInput source="price" validate={[number(), minValue(0)]}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">R$</InputAdornment>)
-                                }} />
-                        </SimpleForm>
-                    )}
-                </Card>
-            </div>
-        )}
+                                <DisabledInput source="id" />
+                                <TextInput source="flavor" />
+                                <ReferenceInput source="categoryId" reference="categories" validate={[required()]}>
+                                    <SelectInput optionText="name" {...props} />
+                                </ReferenceInput>
+                                <BooleanField source="price_by_size" />
+                                <ReferenceArrayInput reference="toppings" source="toppings" sort={{ field: 'topping', order: 'ASC' }}>
+                                    <SelectArrayInput optionText="topping">
+                                        <ChipField source="id" />
+                                    </SelectArrayInput>
+                                </ReferenceArrayInput>
+                                <NumberInput source="price" validate={[number(), minValue(0)]}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">R$</InputAdornment>)
+                                    }} />
+                            </SimpleForm>
+                        )}
+                    </Card>
+                </div>
+            )
+        }}
     </EditController>
 ));
 

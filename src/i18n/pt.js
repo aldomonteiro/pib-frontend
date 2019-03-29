@@ -65,6 +65,7 @@ export default {
         },
         flavors: {
             changePrice: 'Alterar Preços em Massa',
+            clone: 'Clonar',
             typePrice: 'Informe o novo preço',
             messages: {
                 priceNotAllowed: 'Náo informe preço nesse produto, pois a categoria informada possui preço.'
