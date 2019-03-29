@@ -30,6 +30,7 @@
     "react-dom": "^16.7.0",
     "react-geolocated": "^2.4.0",
     "react-icons": "^3.2.2",
+    "react-number-format": "^4.0.7",
     "react-scripts": "2.0.4",
     "react-step-wizard": "^5.0.0",
     "react-text-mask": "^5.4.3",

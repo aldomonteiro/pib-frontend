@@ -5,18 +5,25 @@ import { connect } from 'react-redux';
 import { crudUpdate, SaveButton } from 'react-admin';
 
 const updateWithLocation = (values, lat, long, basePath, redirectTo) => {
-    return crudUpdate('stores', values.id, { ...values, location_lat: lat, location_long: long }, { ...values }, basePath, redirectTo);
+    if (!lat && !long) {
+        return crudUpdate('stores', values.id, { ...values }, { ...values }, basePath, redirectTo);
+    } else {
+        const { location_lat, location_long, ...rest } = values
+        return crudUpdate('stores', values.id, { ...rest, location_lat: lat, location_long: long }, { ...values }, basePath, redirectTo);
+    }
 }
 
 class UpdateWithLocationButton extends Component {
     handleClick = () => {
         const { basePath, handleSubmit, redirect, updateWithLocation, geoLocation } = this.props;
         return handleSubmit((values) => {
-            updateWithLocation(values, geoLocation.lat, geoLocation.long, basePath, redirect);
+            console.log(values);
+            if (geoLocation) updateWithLocation(values, geoLocation.lat, geoLocation.long, basePath, redirect);
+            else updateWithLocation(values, null, null, basePath, redirect);
         });
     };
 
-    render() {
+    render () {
         const { label, redirect, submitOnEnter } = this.props;
         return (
             <SaveButton

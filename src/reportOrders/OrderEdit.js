@@ -1,18 +1,20 @@
 import React from 'react';
 import {
-    translate,
     AutocompleteInput,
     DateInput,
     EditController,
+    FormDataConsumer,
+    NumberInput,
     ReferenceInput,
     SelectInput,
     SimpleForm,
     TitleForRecord,
     TextInput,
-    FormDataConsumer
+    number, minValue, translate,
 } from 'react-admin';
 import Card from '@material-ui/core/Card';
 import withStyles from '@material-ui/core/styles/withStyles';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Basket from './Basket';
 
@@ -69,13 +71,19 @@ const OrderEdit = ({ classes, ...props }) => (
                                 />
                                 <TextInput source="phone" />
                                 <TextInput source="address" />
-                                <SelectInput
-                                    source="payment_type"
-                                    choices={[
-                                        { id: 'payment_card', name: 'Cartão' },
-                                        { id: 'payment_money', name: 'Dinheiro' },
-                                    ]}
-                                />
+                                <TextInput source="payment_type" />
+                                <NumberInput source="surcharge_percent" validate={[number(), minValue(0)]}
+                                    label="resources.stores.fields.payment_types_surcharge_percent"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">%</InputAdornment>)
+                                    }} />
+                                <NumberInput source="surcharge_amount" validate={[number(), minValue(0)]}
+                                    label="resources.stores.fields.payment_types_surcharge_amount"
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">R$</InputAdornment>)
+                                    }} />
                                 <FormDataConsumer>
                                     {
                                         ({ formData, ...rest }) => formData.payment_type === 'payment_money'

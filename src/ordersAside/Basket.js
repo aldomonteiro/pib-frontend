@@ -19,7 +19,7 @@ const styles = {
 };
 
 class Basket extends Component {
-    componentDidMount() {
+    componentDidMount () {
         // this.fetchData();
     }
     // fetchData() {
@@ -29,7 +29,7 @@ class Basket extends Component {
     //     } = this.props;
     //     crudGetMany('flavors', items.map(item => item.flavorId));
     // }
-    render() {
+    render () {
         const { classes, record, translate } = this.props;
         const { items } = record;
         return (
@@ -114,39 +114,55 @@ class Basket extends Component {
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
-                                {record.total.toLocaleString(
+                                {items.map(item => item.price).reduce((acc, val) => acc + val).toLocaleString(
                                     undefined,
                                     { style: 'currency', currency: 'BRL' }
                                 )}
                             </TableCell>
                         </TableRow>
-                        {/* <TableRow>
+                        <TableRow>
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.orders.fields.basket.delivery'
+                                    'resources.orders.fields.delivery_fee'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
-                                {record.delivery_fees.toLocaleString(
+                                {record.delivery_fee.toLocaleString(
                                     undefined,
                                     { style: 'currency', currency: 'BRL' }
                                 )}
                             </TableCell>
-                        </TableRow> */}
-                        {/* <TableRow>
+                        </TableRow>
+                        {record.surcharge_percent > 0 && (<TableRow>
                             <TableCell colSpan={2} />
                             <TableCell>
                                 {translate(
-                                    'resources.orders.fields.basket.tax_rate'
+                                    'resources.orders.fields.surcharge_percent'
                                 )}
                             </TableCell>
                             <TableCell className={classes.rightAlignedCell}>
-                                {record.tax_rate.toLocaleString(undefined, {
+                                {record.surcharge_percent.toLocaleString(undefined, {
                                     style: 'percent',
                                 })}
                             </TableCell>
-                        </TableRow> */}
+                        </TableRow>
+                        )}
+                        {record.surcharge_amount > 0 && (<TableRow>
+                            <TableCell colSpan={2} />
+                            <TableCell>
+                                {translate(
+                                    'resources.orders.fields.surcharge_amount'
+                                )}
+                            </TableCell>
+                            <TableCell className={classes.rightAlignedCell}>
+                                {record.surcharge_amount.toLocaleString(
+                                    undefined,
+                                    { style: 'currency', currency: 'BRL' }
+                                )}
+                            </TableCell>
+                        </TableRow>
+                        )}
                         <TableRow>
                             <TableCell colSpan={2} />
                             <TableCell className={classes.boldCell}>

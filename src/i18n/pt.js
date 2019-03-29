@@ -125,6 +125,9 @@ export default {
             }
         },
         flavors: {
+            changeCategory: 'Alterar Categorias em Massa',
+            changePrice: 'Alterar Preços em Massa',
+            typePrice: 'Informe o novo preço',
             messages: {
                 priceNotAllowed: 'Náo informe preço nesse produto, pois a categoria informada possui preço.'
             }
@@ -191,6 +194,10 @@ export default {
                 phone: 'Telefone',
                 phone_whatsapp: 'Telefone/Whatsapp',
                 delivery_fee: 'Taxa de Entrega',
+                delivery_fees: 'Taxas de Entrega',
+                delivery_fees_from: 'Km - De',
+                delivery_fees_to: 'Km - Até',
+                delivery_fees_fee: 'Taxa',
                 location_lat: 'Latitude',
                 location_long: 'Longitude',
                 open: 'Abre',
@@ -204,12 +211,19 @@ export default {
                 saturday: 'Sábado',
                 holyday: 'Feriados',
                 printer: 'Impressora',
+                catalog_url1: 'URL do Cardápio 1',
+                catalog_url2: 'URL do Cardápio 2',
+                payment_types: 'Formas de Pagamento',
+                payment_types_type: 'Forma de Pagamento',
+                payment_types_surcharge_percent: 'Acréscimo %',
+                payment_types_surcharge_amount: 'Acréscimo Fixo',
             },
             tabs: {
                 main: 'Principal',
                 openingtimes: 'Horários de Abertura',
                 location: 'Localização',
-                customizing: 'Configurações'
+                customizing: 'Configurações',
+                deliveryFees: 'Taxas de Entrega'
             },
         },
         pages: {
@@ -295,18 +309,16 @@ export default {
                 phone: 'Telefone',
                 address: 'Endereço',
                 distanceFromStore: 'Distância',
-                payment_type: {
-                    field_name: 'Forma de Pagamento',
-                    payment_money: 'Dinheiro',
-                    payment_card: 'Cartão',
-                    undefined: 'Não informado'
-                },
+                payment_type: 'Forma de Pagamento',
                 delivery_type: 'Entrega/Retira',
                 payment_change: 'Levar Troco?',
                 comments: 'Observações',
                 confirmed_at: 'Data pedido',
                 confirmed_at_rangestart: 'Início',
                 confirmed_at_rangeend: 'Fim',
+                delivery_fee: 'Taxa de Entrega',
+                surcharge_percent: '% Forma de Pagto.',
+                surcharge_amount: 'Acréscimo Forma de Pagto.',
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
@@ -336,12 +348,7 @@ export default {
                 phone: 'Telefone',
                 address: 'Endereço',
                 distanceFromStore: 'Distância',
-                payment_type: {
-                    field_name: 'Forma de Pagamento',
-                    payment_money: 'Dinheiro',
-                    payment_card: 'Cartão',
-                    undefined: 'Não informado'
-                },
+                payment_type: 'Forma de Pagamento',
                 delivery_type: 'Entrega/Retira',
                 payment_change: 'Levar Troco?',
                 comments: 'Observações',

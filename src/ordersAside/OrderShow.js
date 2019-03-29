@@ -97,7 +97,7 @@ const OrderShow = props => {
                             <Basket record={controllerProps.record} />
                         </Grid>
                         <Grid item xs={6}>
-                            <TypoField fieldName={prefixI18n + 'payment_type.field_name'} field={translate(prefixI18n + 'payment_type.' + String(record.payment_type))} />
+                            <TypoField fieldName={prefixI18n + 'payment_type'} field={record.payment_type} />
                         </Grid>
                         <Grid item xs={6}>
                             <TypoField fieldName={prefixI18n + 'comments'} field={record.comments} />

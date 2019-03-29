@@ -2,7 +2,8 @@ import React from "react";
 import {
     Edit, DisabledInput, BooleanInput, NumberInput, TextInput, SelectInput,
     number, minValue, translate,
-    TabbedForm, FormTab, Toolbar
+    TabbedForm, FormTab, Toolbar,
+    ArrayInput, SimpleFormIterator
 } from "react-admin";
 import { TimeInput } from 'react-admin-date-inputs';
 import LocationButton from './locationButton';
@@ -44,12 +45,12 @@ const StoreUpdateToolbar = props => (
     </Toolbar>
 );
 
-function WhatsappIcon(props) {
+function WhatsappIcon (props) {
     // We spread the properties to the underlying DOM element.
     return <div {...props}><Whatsapp /></div>
 }
 
-function TextMaskCustom(props) {
+function TextMaskCustom (props) {
     const { inputRef, ...other } = props;
 
     return (
@@ -77,7 +78,7 @@ class StoreEdit extends React.Component {
     };
 
 
-    componentDidMount() {
+    componentDidMount () {
         try {
             qz.api.setSha256Type((data) => {
                 return shajs('sha256').update(data).digest('hex')
@@ -121,9 +122,8 @@ class StoreEdit extends React.Component {
         }
     }
 
-    render() {
+    render () {
         const { classes, translate } = this.props;
-        const { textmask } = this.state;
         const _res = 'resources.stores.fields.';
         const days = [{ source1: 'sun_is_open', source2: 'sun_open', source3: 'sun_close', label: _res + 'sunday' },
         { source1: 'mon_is_open', source2: 'mon_open', source3: 'mon_close', label: _res + 'monday' },
@@ -207,12 +207,40 @@ class StoreEdit extends React.Component {
 
                         </FormTab>
                         <FormTab label="resources.stores.tabs.customizing">
-                            <NumberInput source="delivery_fee" validate={[number(), minValue(0)]}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">R$</InputAdornment>)
-                                }} />
                             <SelectInput source="printer" allowEmpty choices={this.state.printer_choices} />
+                            <TextInput source='catalog_url1' />
+                            <TextInput source='catalog_url2' />
+                            <ArrayInput source='payment_types'>
+                                <SimpleFormIterator>
+                                    <TextInput source="payment_type" label="resources.stores.fields.payment_types_type" />
+                                    <NumberInput source="surcharge_percent" validate={[number(), minValue(0)]}
+                                        label="resources.stores.fields.payment_types_surcharge_percent"
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">%</InputAdornment>)
+                                        }} />
+                                    <NumberInput source="surcharge_amount" validate={[number(), minValue(0)]}
+                                        label="resources.stores.fields.payment_types_surcharge_amount"
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">R$</InputAdornment>)
+                                        }} />
+                                </SimpleFormIterator>
+                            </ArrayInput>
+                        </FormTab>
+                        <FormTab label="resources.stores.tabs.deliveryFees">
+                            <ArrayInput source="delivery_fees">
+                                <SimpleFormIterator>
+                                    <NumberInput source="from" validate={[number(), minValue(0)]} label="resources.stores.fields.delivery_fees_from" />
+                                    <NumberInput source="to" validate={[number(), minValue(0)]} label="resources.stores.fields.delivery_fees_to" />
+                                    <NumberInput source="fee" validate={[number(), minValue(0)]}
+                                        label="resources.stores.fields.delivery_fees_fee"
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">R$</InputAdornment>)
+                                        }} />
+                                </SimpleFormIterator>
+                            </ArrayInput>
                         </FormTab>
                     </TabbedForm>
                 </Edit >

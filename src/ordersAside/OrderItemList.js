@@ -39,14 +39,17 @@ const styles = theme => ({
 
 class OrderItemList extends React.Component {
 
-    render() {
+    render () {
         const { id, data, handleListItemClick, selected, classes } = this.props;
 
-        const statusField = data[id].status === ORDERSTATUS_CONFIRMED ?
+        const status = data[id] ? data[id].status : 99;
+        const status2 = data[id] ? data[id].status2 : 'ERRO';
+
+        const statusField = status === ORDERSTATUS_CONFIRMED ?
             (<Badge color="error" badgeContent={'!'}>
-                <StatusField status2={data[id].status2} />
+                <StatusField status2={status2} />
             </Badge>) :
-            (<StatusField status2={data[id].status2} />);
+            (<StatusField status2={status2} />);
 
         return (
             <MenuItem button

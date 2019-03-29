@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
     BooleanField,
+    BulkDeleteButton,
     ChipField,
     Create,
     Datagrid,
@@ -21,6 +22,7 @@ import {
     TextField,
     TextInput,
     Title,
+    translate,
     number,
     minValue,
     required,
@@ -31,6 +33,8 @@ import FlavorIcon from "@material-ui/icons/RestaurantMenu";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import dataProviderFactory from '../dataProvider';
 import { GET_ONE } from "ra-core/lib/dataFetchActions";
+import ChangeCategoryButton from './changeCategoryButton';
+import ChangePriceButton from './changePriceButton';
 
 // const FlavorTitle = ({ record }) => {
 //     return <span>{record ? `${record.flavor}` : ""}</span>;
@@ -45,8 +49,18 @@ const FlavorFilter = (props) => (
     </Filter>
 );
 
+const FlavorBulkActionButtons = translate(props => (
+    <Fragment>
+        <ChangePriceButton label={props.translate('pos.flavors.changePrice')} {...props} />
+        <ChangeCategoryButton label={props.translate('pos.flavors.changeCategory')} {...props} />
+        {/* Add the default bulk delete action */}
+        <BulkDeleteButton {...props} />
+    </Fragment>
+));
+
+
 const FlavorList = props => (
-    <List filters={<FlavorFilter />} {...props}>
+    <List filters={<FlavorFilter />} bulkActionButtons={<FlavorBulkActionButtons />} {...props}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="flavor" />
