@@ -1,25 +1,27 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
-    List,
-    Edit,
+    BulkDeleteButton,
     Create,
     Datagrid,
-    TextField,
-    ReferenceField,
-    EditButton,
     DisabledInput,
+    Edit,
+    EditButton,
+    List,
     NumberField,
     NumberInput,
     TextInput,
     ReferenceInput,
+    ReferenceField,
     SelectInput,
     SimpleForm,
+    TextField,
     number,
     minValue,
     translate,
 } from "react-admin";
 import PricingIcon from "@material-ui/icons/MonetizationOn";
 import InputAdornment from '@material-ui/core/InputAdornment';
+import ChangeCategoryButton from './changeCategoryButton';
 
 const PricingTitle = translate(({ record, translate }) => (
     <span>
@@ -28,8 +30,17 @@ const PricingTitle = translate(({ record, translate }) => (
     </span>
 ));
 
+const PricingBulkActionButtons = translate(props => (
+    <Fragment>
+        <ChangeCategoryButton {...props} />
+        {/* Add the default bulk delete action */}
+        <BulkDeleteButton {...props} />
+    </Fragment>
+));
+
+
 const PricingList = props => (
-    <List {...props}>
+    <List {...props} bulkActionButtons={<PricingBulkActionButtons />}>
         <Datagrid>
             <TextField source="id" />
             <ReferenceField source="categoryId" reference="categories">

@@ -47,7 +47,6 @@ NumberFormatCustom.propTypes = {
 class ChangePriceButton extends Component {
     state = {
         isOpen: false,
-        selectedCategory: null,
         numberformat: '0',
     }
 

@@ -22,6 +22,14 @@ export default {
             login_facebook: 'Favor realizar login novamente, sua conta no Facebook precisa estar conectada.',
             no_user: 'Usuário inexistente no sistema.'
         },
+        categories: {
+            changeCategory: 'Alterar Categorias em Massa',
+        },
+        customer: {
+            messages: {
+                no_customer_found: "Cliente não foi encontrado."
+            }
+        },
         dashboard: {
             cardapio: 'Cardápio',
             cardapio_tradicional: 'Tradicionais',
@@ -53,6 +61,13 @@ export default {
                 weekly_orders: 'Pedidos semana',
                 monthly_pizzas: 'Pizzas mês',
                 weekly_pizzas: 'Pizzas semana'
+            }
+        },
+        flavors: {
+            changePrice: 'Alterar Preços em Massa',
+            typePrice: 'Informe o novo preço',
+            messages: {
+                priceNotAllowed: 'Náo informe preço nesse produto, pois a categoria informada possui preço.'
             }
         },
         login: {
@@ -112,24 +127,11 @@ export default {
             confirm: "Confirmar",
             updatePageSuccess: 'Página atualizada com sucesso!',
         },
-        customer: {
-            messages: {
-                no_customer_found: "Cliente não foi encontrado."
-            }
-        },
         stores: {
             updateDeliveryTimeSuccess: 'Tempo de entrega atualizado com sucesso!',
             updatePickupTimeSuccess: 'Tempo de retirada atualizado com sucesso!',
             messages: {
                 whatsapp: 'Informe o número que será conectado ao Whatsapp'
-            }
-        },
-        flavors: {
-            changeCategory: 'Alterar Categorias em Massa',
-            changePrice: 'Alterar Preços em Massa',
-            typePrice: 'Informe o novo preço',
-            messages: {
-                priceNotAllowed: 'Náo informe preço nesse produto, pois a categoria informada possui preço.'
             }
         },
         pages: {

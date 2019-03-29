@@ -52,7 +52,7 @@ const FlavorFilter = (props) => (
 const FlavorBulkActionButtons = translate(props => (
     <Fragment>
         <ChangePriceButton label={props.translate('pos.flavors.changePrice')} {...props} />
-        <ChangeCategoryButton label={props.translate('pos.flavors.changeCategory')} {...props} />
+        <ChangeCategoryButton {...props} />
         {/* Add the default bulk delete action */}
         <BulkDeleteButton {...props} />
     </Fragment>
