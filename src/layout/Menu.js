@@ -182,14 +182,14 @@ class Menu extends Component {
                         leftIcon={<pages.icon />}
                         onClick={onMenuClick}
                     />
-                    <MenuItemLink
+                    {/* <MenuItemLink
                         to={`/catalog`}
                         primaryText={translate(`pos.dataload.catalog`, {
                             smart_count: 2,
                         })}
                         leftIcon={<pages.icon />}
                         onClick={onMenuClick}
-                    />
+                    /> */}
                 </SubMenu>
                 <Responsive
                     xsmall={
