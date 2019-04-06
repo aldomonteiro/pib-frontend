@@ -21,14 +21,6 @@ const styles = theme => ({
     margin: {
         margin: -theme.spacing.unit * 2,
     },
-    menuItem: {
-        '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& $primary, & $icon': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
 });
 
 const CustomAppBar = ({ classes, ...props }) => (

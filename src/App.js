@@ -69,7 +69,7 @@ const i18nProvider = locale => {
     }
     // return asyncMessages[locale]();
 }
-
+console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
 const socket = io(process.env.REACT_APP_API_URL, { forceNew: true });
 
 const App = () => (

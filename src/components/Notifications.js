@@ -43,10 +43,10 @@ class Notifications extends React.Component {
     componentDidMount () {
         const { socket, isConnected, set_connected } = this.props;
         if (socket) {
-            if (!isConnected) {
+            if (!isConnected) { // reducer
                 // const pageID = localStorage.getItem("activePage");
                 // socket = io(process.env.REACT_APP_API_URL + '?pageID=' + pageID, { forceNew: true });
-                socket.on('connect', () => {
+                socket.once('connect', () => {
                     const pageID = localStorage.getItem('activePage');
                     // replying to the server.
                     socket.emit('acknowledgment', pageID);
@@ -67,7 +67,10 @@ class Notifications extends React.Component {
                     });
                     socket.on('disconnect', () => {
                         console.log('disconnected..');
-                    })
+                    });
+                    socket.on('connect_error', (err) => {
+                        console.log(err);
+                    });
                 });
                 set_connected(true); // reducer
             }

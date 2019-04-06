@@ -27,14 +27,14 @@ const styles = theme => ({
     margin: {
         margin: -theme.spacing.unit * 2,
     },
-    menuItem: {
-        '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& $primary, & $icon': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
+    // menuItem: {
+    //     '&:focus': {
+    //         backgroundColor: theme.palette.primary.main,
+    //         '& $primary, & $icon': {
+    //             color: theme.palette.common.white,
+    //         },
+    //     },
+    // },
 });
 
 class CustomUserMenu extends React.Component {
@@ -60,14 +60,14 @@ class CustomUserMenu extends React.Component {
                         <UserMenu label="pos.notifications.newNotifications" {...rest} icon={<NotificationsIcon />}>
                             {notifications.map(notif => notif.first_name
                                 ? <MenuItem key={notif.id}>
-                                    <Button className={classes.menuItem} onClick={() => this.handleClick(notif)}>
+                                    <Button onClick={() => this.handleClick(notif)}>
                                         <SpeakerNotes />
                                         {notif.id + ' - ' + notif.first_name}
                                     </Button>
                                 </MenuItem>
                                 :
                                 <MenuItem key={notif.id}>
-                                    <Button className={classes.menuItem} onClick={() => push('/orders')}>
+                                    <Button onClick={() => push('/orders')}>
                                         <Info />
                                         {translate('pos.orders.newOrder') + ' - ' + notif.id + ' - ' + new Date(notif.confirmed_at).toLocaleTimeString('pt-BR')}
                                     </Button>
