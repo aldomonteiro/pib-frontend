@@ -63,6 +63,9 @@ export default {
                 weekly_pizzas: 'Pizzas semana'
             }
         },
+        dataload: {
+            catalog: 'Carga do Cardápio',
+        },
         flavors: {
             changePrice: 'Alterar Preços em Massa',
             clone: 'Clonar',
@@ -86,6 +89,11 @@ export default {
             reports: 'Relatórios',
             admin: 'Administração',
             pizza: 'Pizzas'
+        },
+        notifications: {
+            newNotifications: 'Avisos',
+            talk_to_human: 'Falar com atendente',
+            clear: 'Limpar notificação'
         },
         orders: {
             todayOrders: "Pedidos de hoje",
@@ -116,6 +124,7 @@ export default {
             deliveryTime: 'Tempo de Entrega',
             pickupTime: 'Tempo de Reirada',
             selectAnOrder: 'Selecione um pedido na lista de pedidos',
+            newOrder: 'Novo Pedido',
             newOrders: 'Novos Pedidos',
         },
         ordersmap: {

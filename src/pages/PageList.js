@@ -77,7 +77,7 @@ class PageList extends React.Component {
         selectedPagePicture: null,
     };
 
-    componentDidMount() {
+    componentDidMount () {
         // Assuring that FB is bound to window
         setfbAsyncInit();
         fbEnsureInit(() => {
@@ -96,8 +96,6 @@ class PageList extends React.Component {
         const { checked } = this.state;
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
-
-        console.log(currentIndex);
         // No page selected (checked.length) and the user is selecting a new toggle (currentIndex===-1)
         if (checked.length === 0 && currentIndex === -1) {
             newChecked.push(value);
@@ -106,7 +104,6 @@ class PageList extends React.Component {
             );
             const pagePictureArr = await this.state.pagePictures.filter(pagePicture => pagePicture.id === checkedPage[0].id);
             const selectedPagePicture = pagePictureArr && pagePictureArr.length ? pagePictureArr[0] : null;
-            console.log('selectedPagePicture:', selectedPagePicture)
             this.setState({
                 checked: newChecked,
                 checkedPage: checkedPage,
@@ -192,7 +189,7 @@ class PageList extends React.Component {
         return Promise.all(picturesArray);
     };
 
-    render() {
+    render () {
         const { classes, translate, isLoading } = this.props;
         return (
             this.state.loading ? <LoadingPage className={classes.divloader} /> :

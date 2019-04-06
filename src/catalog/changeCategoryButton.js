@@ -70,7 +70,6 @@ class ChangeCategoryButton extends Component {
     };
 
     handleChange = name => event => {
-        console.log(name, event.target);
         this.setState({
             [name]: event.target.value,
         });

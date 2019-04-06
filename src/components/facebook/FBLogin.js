@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 
 class FBLogin extends React.Component {
-    render() {
-        console.log(this.props);
+    render () {
         return (
             <div>
                 FBLogin

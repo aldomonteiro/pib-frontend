@@ -36,9 +36,6 @@ class MoreMenu extends React.Component {
             let dataToPrint = [ZPLPrintOrder(record)];   // Raw ZPL
 
             try {
-
-                console.log(qz.websocket.getConnectionInfo());
-
                 qz.printers.find(printer)
                     .then((printer) => {
                         let config = qz.configs.create(printer);
@@ -66,7 +63,7 @@ class MoreMenu extends React.Component {
         }
     };
 
-    render() {
+    render () {
         const { anchorEl } = this.state;
 
         return (

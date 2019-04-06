@@ -17,7 +17,7 @@ import reportFlavors from './reports/flavors';
 
 import { Layout, Menu } from './layout';
 
-// import englishMessages from './i18n/en';
+import englishMessages from './i18n/en';
 import portugueseMessages from './i18n/pt';
 
 import authProvider from "./authProvider";
@@ -29,8 +29,13 @@ import pagesReducer from './reducers/pages';
 import locationReducer from './reducers/location';
 import ordersReducer from './reducers/order';
 import printerReducer from './reducers/printer';
+import notificationsReducer from './reducers/notifications';
 
 import simpleRestProvider from 'ra-data-simple-rest';
+
+import SocketContext from './socketContext'
+import io from 'socket.io-client'
+
 // import OrderShow from "./components/database/ordersAside/OrderShow";
 // import myTheme from "./Theme";
 
@@ -47,77 +52,85 @@ const httpClient = (url, options = {}) => {
 
 const dataProvider = simpleRestProvider(process.env.REACT_APP_API_URL, httpClient);
 
-const asyncMessages = {
-    pt: () => import('./i18n/pt').then(messages => messages.default),
-    en: () => import('./i18n/en').then(messages => messages.default),
-}
+// This isn't loading the english messages assynchronously. Need to check
+// react-admin documentation, because I am loading the englishMessages.
+// const asyncMessages = {
+//     pt: () => import('./i18n/pt').then(messages => messages.default),
+//     en: () => import('./i18n/en').then(messages => messages.default),
+// }
 
 const locale = resolveBrowserLocale();
 
 const i18nProvider = locale => {
     if (locale === 'pt') {
         return portugueseMessages;
+    } else if (locale === 'en') {
+        return englishMessages;
     }
-    return asyncMessages[locale]();
+    // return asyncMessages[locale]();
 }
 
-const App = () => (
-    <Admin
-        customReducers={{ pagesReducer, locationReducer, ordersReducer, printerReducer }}
-        dashboard={Dashboard}
-        loginPage={CustomLogin}
-        authProvider={authProvider}
-        dataProvider={dataProvider}
-        customRoutes={customRoutes}
-        appLayout={Layout}
-        menu={Menu}
-        locale={locale}
-        i18nProvider={i18nProvider}
-    >
-        {permissions => [
-            <Resource
-                name="orders" {...orders}
-            />,
-            <Resource
-                name="customers" {...customers}
-            />,
-            <Resource
-                name="stores" {...stores}
-            />,
-            <Resource
-                name="flavors" {...flavors}
-            />,
-            <Resource
-                name="pricings" {...pricings}
-            />,
-            <Resource
-                name="categories" {...categories}
-            />,
-            <Resource
-                name="beverages" {...beverages}
-            />,
-            <Resource
-                name="sizes" {...sizes}
-            />,
-            <Resource
-                name="toppings" {...toppings}
-            />,
-            <Resource
-                name="pages" {...bots}
-            />,
-            <Resource
-                name="reportOrders" {...reportOrders}
-            />,
-            <Resource
-                name="reportFlavors" {...reportFlavors}
-            />,
-            <Resource
-                name="accounts"
-            />
-        ]}
+const socket = io(process.env.REACT_APP_API_URL, { forceNew: true });
 
-        {/* <Resource name="users" list={UserList} icon={UserIcon} /> */}
-    </Admin>
+const App = () => (
+    <SocketContext.Provider value={socket}>
+        <Admin
+            customReducers={{ pagesReducer, locationReducer, ordersReducer, printerReducer, notificationsReducer }}
+            dashboard={Dashboard}
+            loginPage={CustomLogin}
+            authProvider={authProvider}
+            dataProvider={dataProvider}
+            customRoutes={customRoutes}
+            appLayout={Layout}
+            menu={Menu}
+            locale={locale}
+            i18nProvider={i18nProvider}
+        >
+            {permissions => [
+                <Resource
+                    name="orders" {...orders}
+                />,
+                <Resource
+                    name="customers" {...customers}
+                />,
+                <Resource
+                    name="stores" {...stores}
+                />,
+                <Resource
+                    name="flavors" {...flavors}
+                />,
+                <Resource
+                    name="pricings" {...pricings}
+                />,
+                <Resource
+                    name="categories" {...categories}
+                />,
+                <Resource
+                    name="beverages" {...beverages}
+                />,
+                <Resource
+                    name="sizes" {...sizes}
+                />,
+                <Resource
+                    name="toppings" {...toppings}
+                />,
+                <Resource
+                    name="pages" {...bots}
+                />,
+                <Resource
+                    name="reportOrders" {...reportOrders}
+                />,
+                <Resource
+                    name="reportFlavors" {...reportFlavors}
+                />,
+                <Resource
+                    name="accounts"
+                />
+            ]}
+
+            {/* <Resource name="users" list={UserList} icon={UserIcon} /> */}
+        </Admin>
+    </SocketContext.Provider>
 );
 
 export default App;

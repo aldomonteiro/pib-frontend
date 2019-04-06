@@ -142,7 +142,6 @@ const asyncValidate = async (values, dispatch, props, field) => {
 
             //   const err = await res.text()
             //   app.asyncValidateErrors[field] = err
-            //   console.log('err', err)
             //   reject(app.asyncValidateErrors)
         }
 
@@ -154,7 +153,6 @@ const asyncValidate = async (values, dispatch, props, field) => {
 const FlavorEdit = withStyles(editStyles)(({ classes, ...props }) => (
     <EditController {...props}>
         {({ resource, record, redirect, save, basePath, version }) => {
-            console.log(record);
             return (
                 <div className="edit-page">
                     <Title defaultTitle={`#${record ? record.id : ''}`} />

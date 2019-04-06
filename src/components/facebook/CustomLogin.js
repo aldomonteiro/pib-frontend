@@ -95,7 +95,7 @@ class Login extends Component {
         this.setState({ [name]: event.target.checked });
     };
 
-    async componentDidMount() {
+    async componentDidMount () {
         await setfbAsyncInit();
         await fbEnsureInit(async () => {
             // Automatic login
@@ -117,7 +117,7 @@ class Login extends Component {
         });
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
     }
 
     facebookLoginHandler = async response => {
@@ -126,7 +126,6 @@ class Login extends Component {
         // first status when the page was loaded.
         // await this.setState({ responseStatus: response.status });
 
-        console.log(response);
         if (response.status === 'connected') {
             window.FB.api('/me?fields=id,name,email,picture,location', userData => {
                 let result = {
@@ -167,7 +166,7 @@ class Login extends Component {
         }
     }
 
-    render() {
+    render () {
         const { classes, handleSubmit, isLoading, translate } = this.props;
 
         let environmentTag = process.env.NODE_ENV !== 'production' ?

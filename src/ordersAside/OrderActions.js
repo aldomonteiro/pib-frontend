@@ -39,7 +39,6 @@ class OrderActions extends React.Component {
     }
 
     componentDidMount () {
-        console.log('componentDidMount', this.state.response)
         dataProviderFactory(GET_LIST, 'stores', {
             sort: { field: 'id', order: 'ASC' },
             pagination: { page: 1, perPage: 100 },

@@ -9,7 +9,11 @@ import { translate } from 'react-admin';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { view_order as viewOrderAction } from '../actions/orderActions';
+import {
+    update_notifications as updateNotificationsAction,
+} from '../actions/notificationsActions';
 
 const styles = theme => ({
     root: {
@@ -38,7 +42,7 @@ class OrderGrid extends React.Component {
         isLoading: true,
     };
 
-    componentDidUpdate() {
+    componentDidUpdate () {
         const { ids } = this.props;
 
         if (this.state.selectedIndex) {
@@ -50,17 +54,30 @@ class OrderGrid extends React.Component {
     }
 
     handleListItemClick = (event, index) => {
-        const { data, view_order } = this.props;
-
+        const { data, view_order, notifications, update_notifications } = this.props;
+        const order = data[index];
         this.setState({ selectedIndex: index }, () => {
 
         });
-        
+
+        // remove the seen order from the list
+        const newNotifs = [];
+        if (notifications && notifications.length > 0) {
+            for (const notif of notifications) {
+                if (notif.id !== order.id) {
+                    newNotifs.push(notif)
+                }
+            }
+        }
+
+        if (newNotifs.length > 0)
+            update_notifications(newNotifs);
+
         view_order(index, data[index]);
     };
 
 
-    render() {
+    render () {
         const { classes, ids, translate, ...rest } = this.props;
         return (<div className={classes.root}>
             <div className={classes.sideBar}>
@@ -96,12 +113,13 @@ OrderGrid.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    lastSeenId: state.ordersReducer.lastSeenId,
+    notifications: state.notificationsReducer.notifications,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         view_order: bindActionCreators(viewOrderAction, dispatch),
+        update_notifications: bindActionCreators(updateNotificationsAction, dispatch),
     }
 };
 

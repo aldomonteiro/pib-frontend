@@ -17,7 +17,6 @@ class UpdateWithLocationButton extends Component {
     handleClick = () => {
         const { basePath, handleSubmit, redirect, updateWithLocation, geoLocation } = this.props;
         return handleSubmit((values) => {
-            console.log(values);
             if (geoLocation) updateWithLocation(values, geoLocation.lat, geoLocation.long, basePath, redirect);
             else updateWithLocation(values, null, null, basePath, redirect);
         });

@@ -6,102 +6,388 @@ export default {
         search: 'Search',
         configuration: 'Configuration',
         language: 'Language',
-        areYouSure: 'Are you sure?',
-        deleting: 'Deleting ',
+        areYouSure: 'Você tem certeza disso?',
+        deleting: 'Apagando ',
+        messages: {
+            duplicatedKey: 'Ops, já há um registro com esse ID, favor utizar outro ID.'
+        },
         theme: {
             name: 'Theme',
             light: 'Light',
             dark: 'Dark',
         },
+        auth: {
+            invalid_token: 'Token de acesso inválido, por favor, faça o login novamente',
+            no_token: 'Não foi gerado um token de acesso válido, por favor, faça o login novamente',
+            login_facebook: 'Favor realizar login novamente, sua conta no Facebook precisa estar conectada.',
+            no_user: 'Usuário inexistente no sistema.'
+        },
+        categories: {
+            changeCategory: 'Alterar Categorias em Massa',
+        },
+        customer: {
+            messages: {
+                no_customer_found: "Cliente não foi encontrado."
+            }
+        },
         dashboard: {
-            cardapio: 'Menu',
-            cardapio_tradicional: 'Regular',
-            cardapio_especial: 'Premium',
-            cardapio_doce: 'Sweet',
-            monthly_revenue: 'Monthly Revenue',
-            new_orders: 'New Orders',
-            pending_reviews: 'Pending Reviews',
-            new_customers: 'New Customers',
-            pending_orders: 'Pending Orders',
+            cardapio: 'Cardápio',
+            cardapio_tradicional: 'Tradicionais',
+            cardapio_especial: 'Especiais',
+            cardapio_doce: 'Doces',
+            new_orders: 'Novos Pedidos',
+            new_customers: 'Novos Clientes',
+            pending_orders: 'Pedidos pendentes',
             order: {
                 items:
-                    'by %{customer_name}, one item |||| by %{customer_name}, %{nb_items} items',
+                    'por %{customer_name}, um item |||| por %{customer_name}, %{nb_items} itens',
             },
             welcome: {
-                title: 'Welcome to Pizzaibot admin',
+                title: 'Bem-vindo a administração do Pizzaibot',
                 subtitle:
-                    "This is the admin of an imaginary poster shop. Fell free to explore and modify the data - it's local to your computer, and will reset each time you reload.",
-                aor_button: 'react-admin site',
+                    "Aqui você poderá administrar as opções que serão oferecidas aos seus clientes quando eles entrarem em contato com a sua empresa através do seu chatbot.",
+                aor_button: 'Site do pizzaibot',
                 demo_button: 'Source for this demo',
             },
+            chart: {
+                title: 'Comparativo Semanal',
+                pw: 'Semana Passada',
+                tw: 'Semana Atual'
+            },
+            stats: {
+                monthly_revenue: 'Receita mensal',
+                weekly_revenue: 'Receita semanal',
+                monthly_orders: 'Pedidos mês',
+                weekly_orders: 'Pedidos semana',
+                monthly_pizzas: 'Pizzas mês',
+                weekly_pizzas: 'Pizzas semana'
+            }
         },
-        login: {
-            connect: "Connect Facebook Account",
-            sign_in: "Sign In with Facebook to create your first bot",
-            agree_terms_of_service_ini: 'I agree to PizzaIBot ',
-            agree_terms_of_service_end: 'Terms of Service and Privacy Police',
-            agree_next: "What's coming next?",
-            agree_description: "We'll need some permissions to manage your Page's messages to automate your replies. That will open Facebook but don't worry! You will be back right after granting all requested permissions.",
-            continue_with_facebook: "Continue with Facebook"
-        },
-        pageList: {
-            facebook_pages: "Facebook Pages",
-            select_facebook_page: "Select the facebook page to be connected to the bot",
-            back: "Back",
-            confirm: "Confirm",
-        }
-    },
-    resources: {
-        stores: {
-            name: 'Store |||| Stores',
-            fields: {
-                open: 'Open',
-                close: 'Close',
-                sunday: 'Sunday',
-                monday: 'Monday',
-                tuesday: 'Tuesday',
-                wednesday: 'Wednesday',
-                thursday: 'Thursday',
-                friday: 'Friday',
-                saturday: 'Saturday',
-                holyday: 'Holyday',
-            },
-            tabs: {
-                main: 'Main',
-                openingtimes: 'Opening Times',
-            },
-            page: {
-                delete: 'Delete Customer',
-            },
+        dataload: {
+            catalog: 'Carga do Cardápio',
         },
         flavors: {
-            name: 'Flavor |||| Flavors',
+            changePrice: 'Alterar Preços em Massa',
+            clone: 'Clonar',
+            typePrice: 'Informe o novo preço',
+            messages: {
+                priceNotAllowed: 'Náo informe preço nesse produto, pois a categoria informada possui preço.'
+            }
+        },
+        login: {
+            connect: "Conecte sua conta Facebook",
+            sign_in: "Entre com o Facebook para criar o seu bot",
+            agree_terms_of_service_ini: "Eu concordo com os ",
+            agree_terms_of_service_end: "Termos de Serviço e Política de Privacidade do PizzaAIBot",
+            agree_next: "O que acontece depois?",
+            agree_description: "Nós vamos precisar de algumas permissões para gerenciar a sua Página e automatizar as suas respostas. Agora você será direcionado para o Facebook, mas não se preocupe! Você estará de volta ao nosso site assim que as permissões solicitadas forem concedidas.",
+            continue_with_facebook: "Continuar com Facebook"
+        },
+        menu: {
+            catalog: 'Cardápio',
+            orders: 'Pedidos',
+            reports: 'Relatórios',
+            admin: 'Administração',
+            pizza: 'Pizzas'
+        },
+        notifications: {
+            newNotifications: 'Avisos',
+            talk_to_human: 'Falar com atendente',
+            clear: 'Limpar notificação'
+        },
+        orders: {
+            todayOrders: "Pedidos de hoje",
+            rejecting: "Rejeitando o pedido",
+            map: "Ver no mapa",
+            report: "Lista de Pedidos",
+            print: "Imprimir",
+            accept: "Aceitar o pedido",
+            reject: "Rejeitar o pedido",
+            deliver: "Enviar pedido para entrega",
+            defaultRejectionReason: "Infelizmente seu endereço está fora da nossa área de atendimento.",
+            status: {
+                pending: "Pendente",
+                viewed: "Aguard. Análise",
+                confirmed: "Aguard. Análise",
+                accepted: "Aceito - Pend.",
+                printed: "Impresso",
+                delivered: "Entregue",
+                rejected: "Rejeitado",
+                cancelled: "Cancelled"
+            },
+            new: {
+                title: "Novo Pedido",
+                chooseSize: "Tamanho",
+                chooseFlavor: "Produto",
+                chooseBeverage: "Bebida",
+            },
+            deliveryTime: 'Tempo de Entrega',
+            pickupTime: 'Tempo de Reirada',
+            selectAnOrder: 'Selecione um pedido na lista de pedidos',
+            newOrders: 'Novos Pedidos',
+        },
+        ordersmap: {
+            title: "Pedidos no mapa",
+        },
+        pageList: {
+            facebook_pages: "Páginas do Facebook",
+            select_facebook_page: "Selecione a página que será conectada ao bot",
+            back: "Voltar",
+            confirm: "Confirmar",
+            updatePageSuccess: 'Página atualizada com sucesso!',
+        },
+        stores: {
+            updateDeliveryTimeSuccess: 'Tempo de entrega atualizado com sucesso!',
+            updatePickupTimeSuccess: 'Tempo de retirada atualizado com sucesso!',
+            messages: {
+                whatsapp: 'Informe o número que será conectado ao Whatsapp'
+            }
+        },
+        pages: {
+            select: 'Selecionar',
+        },
+        configuration: {
+            title: 'Dados Financeiros',
+            creditCardHeader: 'Informe o número do seu Cartão de Crédito',
+            paymentMethod: 'Forma de Pagamento',
+            creditCard: 'Número do Cartão',
+            creditCardName: 'Nome Impresso no Cartão',
+            dueDate: 'Válido até',
+            cvc: 'Cód.',
+            updateSuccess: 'Dados financeiros atualizados com sucesso!',
+            updateFailues: 'Houve um erro durante a atualização dos seus dados financeiros',
+            messages: {
+                invalidCreditCard: 'O número de cartão de crédito informado é inválido'
+            }
+        },
+    },
+    resources: {
+        flavors: {
+            name: 'Produto |||| Produtos',
             fields: {
-                flavor: 'Flavor',
-                kind: 'Kind',
-                toppings: 'Toppings',
+                flavor: 'Produto',
+                categoryId: 'Categoria',
+                toppings: 'Ingredientes',
+                price: 'Preço',
+                price_by_size: 'Preço por Tamanho?',
+            },
+        },
+        toppings: {
+            name: 'Ingrediente |||| Ingredientes',
+            fields: {
+                topping: 'Ingrediente',
+                toppings: 'Ingredientes',
+            },
+        },
+        pricings: {
+            name: 'Preço |||| Preços',
+            fields: {
+                categoryId: 'Categoria',
+                sizeId: 'Tamanho',
+                price: 'Preço',
+            },
+        },
+        beverages: {
+            name: 'Bebida |||| Bebidas',
+            fields: {
+                kind: 'Tipo',
+                name: 'Descrição',
+                price: 'Preço',
+            },
+        },
+        stores: {
+            name: 'Loja |||| Lojas',
+            fields: {
+                name: 'Nome',
+                address: 'Endereço',
+                city: 'Cidade',
+                state: 'Estado',
+                phone: 'Telefone',
+                phone_whatsapp: 'Telefone/Whatsapp',
+                delivery_fee: 'Taxa de Entrega',
+                delivery_fees: 'Taxas de Entrega',
+                delivery_fees_from: 'Km - De',
+                delivery_fees_to: 'Km - Até',
+                delivery_fees_fee: 'Taxa',
+                location_lat: 'Latitude',
+                location_long: 'Longitude',
+                open: 'Abre',
+                close: 'Fecha',
+                sunday: 'Domingo',
+                monday: 'Segunda-feira',
+                tuesday: 'Terça-feira',
+                wednesday: 'Quarta-feira',
+                thursday: 'Quinta-feira',
+                friday: 'Sexta-feira',
+                saturday: 'Sábado',
+                holyday: 'Feriados',
+                printer: 'Impressora',
+                catalog_url1: 'URL do Cardápio 1',
+                catalog_url2: 'URL do Cardápio 2',
+                payment_types: 'Formas de Pagamento',
+                payment_types_type: 'Forma de Pagamento',
+                payment_types_surcharge_percent: 'Acréscimo %',
+                payment_types_surcharge_amount: 'Acréscimo Fixo',
+            },
+            tabs: {
+                main: 'Principal',
+                openingtimes: 'Horários de Abertura',
+                location: 'Localização',
+                customizing: 'Configurações',
+                deliveryFees: 'Taxas de Entrega'
             },
         },
         pages: {
-            name: 'Page |||| Pages',
+            name: 'Bot |||| Bots',
+            fields: {
+                name: 'Nome',
+                greetingText: 'Saudação do Facebook',
+                firstResponseText: 'Primeira resposta do bot ($NAME = será substituído pelo nome do cliente)',
+                activeBot: 'Bot ativo?',
+            },
             actions: {
-                activate: 'Activate Bot',
-                deactivate: 'Deactivate Bot',
-                deactivateAndDelete: 'Erase all data',
+                activate: 'Ativar o Bot',
+                deactivate: 'Apenas Desativar o Bot',
+                deactivateAndDelete: 'Desativar & Apagar tudo',
             },
             messages: {
-                warningBeforeDelete: 'Are you sure you want to delete this entry? This action is permanent.',
-                successfullDeactivated: 'Successfull bot deactivated.',
+                warningBeforeDelete: 'Você tem certeza que quer excluir/desativar o Bot? Todos os dados associados serão excluídos. Não é possível desfazer.',
+                successfullDeactivated: 'Bot desativado com sucesso.',
             }
         },
         pageslist: {
-            name: 'Active Page |||| Active Pages',
+            name: 'Minha Página |||| Minhas Páginas',
             fields: {
-                name: 'Name',
-                greetingText: 'Facebook Messenger Greeting Text',
-                firstResponseText: 'First response after user hits Start',
+                name: 'Nome',
+                greetingText: 'Saudação do Facebook',
+                firstResponseText: 'Primeira resposta após iniciar',
+            }
+        },
+        customers: {
+            name: 'Cliente |||| Clientes',
+            tabs: {
+                identity: 'Identificação',
+                address: 'Endereço',
+                orders: 'Pedidos',
+                stats: 'Estatísticas',
+            },
+            fields: {
+                customer: 'Cliente',
+                first_name: 'Primeiro Nome',
+                last_name: 'Último Nome',
+                createdAt: 'Data Criação',
+                updatedAt: 'Data Atualização',
+                phone: 'Telefone',
+                order: 'Pedido',
+                orders: 'Pedidos',
+                addr_formatted: 'Endereço completo',
+                addr_postalcode: 'CEP',
+                addr_city: 'Cidade',
+                first_order: 'Primeiro Pedido',
+                last_order: 'Últims Pedido',
+                nb_orders: 'Número de Pedidos',
+                total_spent: 'Total Gasto',
             }
 
         },
+        sizes: {
+            name: 'Tamanho |||| Tamanhos',
+            fields: {
+                size: 'Tamanho',
+                split: 'Divide',
+                slices: 'Nro de fatias',
+            }
+
+        },
+        categories: {
+            name: 'Categoria |||| Categorias',
+            fields: {
+                category: 'Categoria',
+                name: 'Categoria',
+                price_by_size: 'Preço por tamanho?',
+                is_pizza: 'É pizza?',
+            },
+        },
+        orders: {
+            name: "Pedido |||| Pedidos",
+            fields: {
+                id: 'ID',
+                customer: 'Cliente',
+                customerId: 'Cliente',
+                status2: 'Status',
+                createdAt: 'Data Criação',
+                updatedAt: 'Data Atualização',
+                phone: 'Telefone',
+                address: 'Endereço',
+                distanceFromStore: 'Distância',
+                payment_type: 'Forma de Pagamento',
+                delivery_type: 'Entrega/Retira',
+                payment_change: 'Levar Troco?',
+                comments: 'Observações',
+                confirmed_at: 'Data pedido',
+                confirmed_at_rangestart: 'Início',
+                confirmed_at_rangeend: 'Fim',
+                delivery_fee: 'Taxa de Entrega',
+                surcharge_percent: '% Forma de Pagto.',
+                surcharge_amount: 'Acréscimo Forma de Pagto.',
+                basket: {
+                    reference: "Referência",
+                    unit_price: "Preço Unit.",
+                    quantity: "Qtde.",
+                    sum: "Soma",
+                    total: "Total",
+                },
+            },
+            messages: {
+                warningBeforeReject: "Ao executar essa ação, o cliente receberá um aviso que o pedido não será atendido. Por favor informe o motivo que será enviado ao cliente.",
+                successfulAcceptedOrder: "Pedido aceito com sucesso.",
+                successfulPrintedOrder: "Pedido impresso com sucesso.",
+                successfulDeliveredOrder: "Pedido atualizado como entregue com sucesso.",
+                successfullRejectedOrder: "Pedido rejeitado.",
+                errorViewing: 'Houve um erro ao tentar atualizar a base de dados, tente novamente.'
+            }
+        },
+        reportOrders: {
+            name: "Pedido |||| Pedidos",
+            fields: {
+                id: 'ID',
+                customer: 'Cliente',
+                customerId: 'Cliente',
+                status2: 'Status',
+                createdAt: 'Data Criação',
+                updatedAt: 'Data Atualização',
+                phone: 'Telefone',
+                address: 'Endereço',
+                distanceFromStore: 'Distância',
+                payment_type: 'Forma de Pagamento',
+                delivery_type: 'Entrega/Retira',
+                payment_change: 'Levar Troco?',
+                comments: 'Observações',
+                confirmed_at: 'Data pedido',
+                confirmed_at_rangestart: 'Início',
+                confirmed_at_rangeend: 'Fim',
+                basket: {
+                    reference: "Referência",
+                    unit_price: "Preço Unit.",
+                    quantity: "Qtde.",
+                    sum: "Soma",
+                    total: "Total",
+                },
+            },
+        },
+        reportFlavors: {
+            name: "Produto |||| Produtos",
+            fields: {
+                id: 'ID',
+                flavor: 'Produto',
+                confirmed_at_rangestart: 'Início',
+                confirmed_at_rangeend: 'Fim',
+                categoryId: 'Categoria',
+                amountSold: 'Total Vendido',
+                itemsSold: 'Itens Vendidos',
+                firstSale: 'Primeiro Pedido',
+                lastSale: 'Último Pedido',
+            },
+        }
     },
 };

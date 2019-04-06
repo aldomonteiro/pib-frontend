@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import PageList from "../pages/PageList";
 import OrdersMap from '../components/maps/OrdersMap';
-// import OrderList from '../orders/OrderList';
+import CatalogDataLoad from '../dataload/catalog-data-load';
 import Configuration from '../configuration';
 
 const getFacebookOauthUrl = () => {
@@ -17,4 +17,5 @@ export default [
     // <Route exact path="/orderslist" component={OrderList} />,
     <Route exact path='/fb' component={() => { window.location = getFacebookOauthUrl(); return null; }} />,
     <Route exact path="/configuration" component={Configuration} />,
+    <Route exact path="/catalog" component={CatalogDataLoad} />,
 ];

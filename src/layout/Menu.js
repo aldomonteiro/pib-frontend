@@ -49,7 +49,7 @@ class Menu extends Component {
         this.setState(state => ({ [menu]: !state[menu] }));
     };
 
-    render() {
+    render () {
         const { onMenuClick, open, logout, translate } = this.props;
         return (
             <div>
@@ -177,6 +177,14 @@ class Menu extends Component {
                     <MenuItemLink
                         to={`/pagelist`}
                         primaryText={translate(`resources.pageslist.name`, {
+                            smart_count: 2,
+                        })}
+                        leftIcon={<pages.icon />}
+                        onClick={onMenuClick}
+                    />
+                    <MenuItemLink
+                        to={`/catalog`}
+                        primaryText={translate(`pos.dataload.catalog`, {
                             smart_count: 2,
                         })}
                         leftIcon={<pages.icon />}

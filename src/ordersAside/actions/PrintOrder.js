@@ -19,9 +19,7 @@ class PrintOrder extends React.Component {
         let dataToPrint = [ZPLPrintOrder(record)];   // Raw ZPL
 
         try {
-
-            console.log(qz.websocket.getConnectionInfo());
-
+            // console.log(qz.websocket.getConnectionInfo());
             qz.printers.find(this.state.printer)
                 .then((printer) => {
                     let config = qz.configs.create(printer);

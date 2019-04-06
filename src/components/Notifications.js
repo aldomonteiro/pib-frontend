@@ -1,43 +1,93 @@
 import React from 'react';
-import { translate, showNotification as showNotificationAction } from 'react-admin';
+import { showNotification as showNotificationAction } from 'react-admin';
 
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
-import socketIOClient from "socket.io-client";
+// import io from "socket.io-client";
 
 import {
     update_last_order as updateLastOrderAction,
     update_orders_list as updateOrdersListAction,
 } from '../actions/orderActions';
 
-import MySnackBar from '../components/SnackBar';
+import {
+    add_notification as addNotificationsAction,
+    update_notifications as updateNotificationsAction,
+    set_connected as setConnectedAction,
+} from '../actions/notificationsActions';
+// import SocketContext from '../socketContext'
+
+import MySnackBar from './SnackBar';
+
+import SocketContext from '../socketContext';
+
+const WithContext = (Component) => {
+    return (props) => (
+        <SocketContext.Consumer>
+            {socket => <Component {...props} socket={socket} />}
+        </SocketContext.Consumer>
+    )
+}
 
 class Notifications extends React.Component {
+    queue = [];
+
     state = {
         showNotification: false,
-        lastOrderId: null,
+        messageInfo: {},
     }
 
-    componentDidMount() {
-        const pageID = localStorage.getItem("activePage");
-        const socket = socketIOClient(process.env.REACT_APP_API_URL + '?pageID=' + pageID, { forceNew: true });
-        socket.on('LastOrders', data => {
-            if (data && data.length) {
-                this.props.update_orders_list(data);
-                if (this.props.lastOrderId !== data[0].id) {
-                    this.props.update_last_order(data[0].id);
-                    // this.props.showNotification(`Novo pedido: ${data[0].id}`)
-                    this.handleOpen(data[0].id);
-                }
+    componentDidMount () {
+        const { socket, isConnected, set_connected } = this.props;
+        if (socket) {
+            if (!isConnected) {
+                // const pageID = localStorage.getItem("activePage");
+                // socket = io(process.env.REACT_APP_API_URL + '?pageID=' + pageID, { forceNew: true });
+                socket.on('connect', () => {
+                    const pageID = localStorage.getItem('activePage');
+                    // replying to the server.
+                    socket.emit('acknowledgment', pageID);
+
+                    socket.on('new-order', data => {
+                        const { update_last_order, add_notification } = this.props;
+                        update_last_order(data.id);
+                        add_notification(data);
+                        this.handleOpen('new-order', data);
+                    });
+                    socket.on('talk-to-human', data => {
+                        const { add_notification } = this.props;
+                        add_notification(data)
+                        this.handleOpen('notification', data);
+                    });
+                    socket.on('reconnect_attempt', (attempt) => {
+                        console.log('reconnecting attempt ' + attempt);
+                    });
+                    socket.on('disconnect', () => {
+                        console.log('disconnected..');
+                    })
+                });
+                set_connected(true); // reducer
             }
-        });
+        }
     }
 
-    handleOpen = (lastOrderId) => {
-        this.setState({ lastOrderId: lastOrderId, showNotification: true });
+    handleOpen = (type, data) => {
+        this.queue.push({
+            notifType: type,
+            notifData: data,
+            key: new Date().getTime(),
+        });
+
+        if (this.state.showNotification) {
+            // immediately begin dismissing current message
+            // to start showing new one
+            this.setState({ showNotification: false });
+        } else {
+            this.processQueue();
+        }
     };
 
     handleClose = (event, reason) => {
@@ -47,14 +97,30 @@ class Notifications extends React.Component {
         this.setState({ showNotification: false });
     };
 
+    handleExited = () => {
+        this.processQueue();
+    };
 
-    render() {
+    processQueue = () => {
+        if (this.queue.length > 0) {
+            this.setState({
+                messageInfo: this.queue.shift(),
+                showNotification: true
+            });
+        }
+    };
+
+    render () {
+        const { key, notifType, notifData } = this.state.messageInfo
         return (
             <MySnackBar
+                key={key}
                 showNotification={this.state.showNotification}
-                lastOrderId={this.state.lastOrderId}
+                type={notifType}
+                data={notifData}
                 handleClose={this.handleClose}
-                handleOpen={this.handleOpen} />
+                handleOpen={this.handleOpen}
+                handleExited={this.handleExited} />
         );
     }
 }
@@ -66,6 +132,7 @@ Notifications.propTypes = {
 const mapStateToProps = state => ({
     lastOrderId: state.ordersReducer.lastOrderId,
     lastOrders: state.ordersReducer.lastOrders,
+    notifications: state.notificationsReducer.notifications,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -73,11 +140,15 @@ const mapDispatchToProps = dispatch => {
         update_last_order: bindActionCreators(updateLastOrderAction, dispatch),
         update_orders_list: bindActionCreators(updateOrdersListAction, dispatch),
         showNotification: bindActionCreators(showNotificationAction, dispatch),
+        add_notification: bindActionCreators(addNotificationsAction, dispatch),
+        update_notifications: bindActionCreators(updateNotificationsAction, dispatch),
+        set_connected: bindActionCreators(setConnectedAction, dispatch),
     }
 };
 
 const enhance = compose(
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, mapDispatchToProps),
+    WithContext,
 );
 
 

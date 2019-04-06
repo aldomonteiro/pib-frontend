@@ -99,13 +99,11 @@ class Login extends Component {
         this.setState({ [name]: event.target.checked });
     };
 
-    async componentDidMount() {
+    async componentDidMount () {
         await setfbAsyncInit();
         await fbEnsureInit(async () => {
             // Automatic login
             await window.FB.getLoginStatus(async response => {
-                console.log("CustomLogin");
-                console.log(response, localStorage);
                 // This status is important because it is the first status when the user opens the page.
                 await this.setState({ responseStatus: response.status });
                 if (response && response.status === 'connected') {
@@ -137,7 +135,7 @@ class Login extends Component {
         });
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
     }
 
     facebookLoginHandler = async response => {
@@ -175,7 +173,7 @@ class Login extends Component {
                     this.props.userLogin(response, this.props.location.state ? this.props.location.state.nextPathname : '/');
                 }
                 else if (response.status === 'authorization_expired') {
-                    console.log("WARNING: need to do something about " + response.status);
+
                 }
                 else {
                     // this.props.push("/fb");
@@ -191,7 +189,7 @@ class Login extends Component {
         }
     }
 
-    render() {
+    render () {
         const { classes, handleSubmit, isLoading, translate } = this.props;
         let environmentTag = process.env.NODE_ENV !== 'production' ?
             (<Typography component="p" color="error">

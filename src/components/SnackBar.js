@@ -82,8 +82,8 @@ const styles2 = theme => ({
 });
 
 class MySnackBar extends React.Component {
-    render() {
-        const { classes, showNotification, handleClose, lastOrderId } = this.props;
+    render () {
+        const { classes, showNotification, handleClose, handleExited, type, data } = this.props;
         return (
             <div>
                 <Snackbar
@@ -92,13 +92,22 @@ class MySnackBar extends React.Component {
                         horizontal: 'left',
                     }}
                     open={showNotification}
-                    autoHideDuration={5000}
-                    onClose={handleClose}>
-                    <MySnackbarContentWrapper
-                        variant="info"
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    onExited={handleExited}>
+                    {type === 'new-order' ? (
+                        <MySnackbarContentWrapper
+                            variant="info"
+                            className={classes.margin}
+                            onClose={handleClose}
+                            message={`Novo pedido: ${data.id}`} />
+                    ) : data ? (<MySnackbarContentWrapper
+                        variant="warning"
                         className={classes.margin}
                         onClose={handleClose}
-                        message={`Novo pedido: ${lastOrderId}`} />
+                        message={`${data.id} - ${data.first_name} chamou...`} />)
+                            : null
+                    }
                 </Snackbar>
             </div>
         );

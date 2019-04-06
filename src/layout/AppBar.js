@@ -1,21 +1,9 @@
 import React from 'react';
-import { AppBar, UserMenu, MenuItemLink, translate, showNotification as showNotificationAction } from 'react-admin';
+import { AppBar } from 'react-admin';
 
-import compose from 'recompose/compose';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import Typography from '@material-ui/core/Typography';
-import SettingsIcon from '@material-ui/icons/Settings';
-import InfoIcon from '@material-ui/icons/Info';
+import { Typography, } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Notifications from '@material-ui/icons/Notifications'
-import {
-    update_last_order as updateLastOrderAction,
-    update_orders_list as updateOrdersListAction,
-} from '../actions/orderActions';
-
-import { Badge } from '@material-ui/core';
+import CustomUserMenu from './CustomUserMenu';
 
 const styles = theme => ({
     title: {
@@ -33,39 +21,18 @@ const styles = theme => ({
     margin: {
         margin: -theme.spacing.unit * 2,
     },
+    menuItem: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& $primary, & $icon': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
 });
 
-const CustomUserMenu = withStyles(styles)(translate(({ classes, translate, lastOrders, ...props }) => {
-    const { logout, ...rest } = props;
-    return (
-        <React.Fragment>
-            {lastOrders &&
-                (<Badge badgeContent={lastOrders.length} color="error">
-                    <UserMenu label="pos.orders.newOrders" {...rest} icon={<Notifications />}>
-                        {lastOrders && lastOrders.map(order => (
-                            <MenuItemLink
-                                key={order.id}
-                                to="/orders"
-                                primaryText={order.id + ' || ' + new Date(order.confirmed_at).toLocaleString('pt-BR')}
-                                leftIcon={<InfoIcon />}
-                            />
-                        ))
-                        }
-                    </UserMenu>
-                </Badge>)}
-            <UserMenu {...props} >
-                <MenuItemLink
-                    to="/configuration"
-                    primaryText={translate('pos.configuration.title')}
-                    leftIcon={<SettingsIcon />}
-                />
-            </UserMenu>
-        </React.Fragment >
-    )
-}));
-
-const CustomAppBar = ({ classes, lastOrders, ...props }) => (
-    <AppBar {...props} userMenu={<CustomUserMenu lastOrders={lastOrders} />}>
+const CustomAppBar = ({ classes, ...props }) => (
+    <AppBar {...props} userMenu={<CustomUserMenu />}>
         <Typography
             variant="title"
             color="inherit"
@@ -76,26 +43,7 @@ const CustomAppBar = ({ classes, lastOrders, ...props }) => (
     </AppBar>
 );
 
-const mapStateToProps = state => ({
-    lastOrderId: state.ordersReducer.lastOrderId,
-    lastOrders: state.ordersReducer.lastOrders,
-});
-
-const mapDispatchToProps = dispatch => {
-    return {
-        update_last_order: bindActionCreators(updateLastOrderAction, dispatch),
-        update_orders_list: bindActionCreators(updateOrdersListAction, dispatch),
-        showNotification: bindActionCreators(showNotificationAction, dispatch),
-    }
-};
-
-const enhance = compose(
-    withStyles(styles),
-    connect(mapStateToProps, mapDispatchToProps)
-);
-
-
-export default enhance(CustomAppBar);
+export default withStyles(styles)(CustomAppBar);
 
 
 // import React from 'react';
