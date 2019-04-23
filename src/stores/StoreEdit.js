@@ -210,6 +210,9 @@ class StoreEdit extends React.Component {
                             <SelectInput source="printer" allowEmpty choices={this.state.printer_choices} />
                             <TextInput source='catalog_url1' />
                             <TextInput source='catalog_url2' />
+                            <TextInput source='missing_address_notification' />
+                            <TextInput source='accept_notification' />
+                            <TextInput source='deliver_notification' />
                             <ArrayInput source='payment_types'>
                                 <SimpleFormIterator>
                                     <TextInput source="payment_type" label="resources.stores.fields.payment_types_type" />

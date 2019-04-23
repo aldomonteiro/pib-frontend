@@ -50,7 +50,7 @@ class UpdatePageButton extends React.Component {
         localStorage.setItem('activePage', record.id);
     }
 
-    render() {
+    render () {
         const { record, isLoading } = this.props;
         return (
             < UpdatePage
@@ -92,6 +92,7 @@ const BotEdit = props => (
             <DisabledInput source="name" />
             <LongTextInput source="greetingText" />
             <LongTextInput source="firstResponseText" />
+            <LongTextInput source="orderExample" />
         </SimpleForm>
     </Edit>
 );

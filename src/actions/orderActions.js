@@ -7,6 +7,7 @@ export const DELIVER_ORDER = 'DELIVER_ORDER';
 export const UPDATE_PRINTER = 'UPDATE_PRINTER';
 export const UPDATE_ORDERSLIST = 'UPDATE_ORDERSLIST';
 export const VIEW_ORDER = 'VIEW_ORDER';
+export const NOTIFY_CUSTOMER = 'NOTIFY_CUSTOMER';
 
 
 export const accept_order = (operation, id, data, basePath) => ({
@@ -83,14 +84,14 @@ export const deliver_order = (operation, id, data, basePath) => ({
         resource: 'orders',
         onSuccess: {
             notification: {
-                body: 'resources.orders.messages.successfulDeliveredOrder',
+                body: 'resources.orders.messages.success.deliveredOrder',
                 level: 'info',
             },
             basePath,
         },
         onFailure: {
             notification: {
-                body: 'Error while delivering order. Try again please.',
+                body: 'resources.orders.messages.failure.deliveredOrder',
                 level: 'warning',
             },
         },
@@ -140,4 +141,26 @@ export const UPDATE_SEEN_IDS = 'UPDATE_SEEN_IDS';
 export const update_seen_ids = (seenIds) => ({
     type: UPDATE_SEEN_IDS,
     payload: { seenIds },
+});
+
+export const notify_customer = (operation, id, data, basePath) => ({
+    type: NOTIFY_CUSTOMER,
+    payload: { id, data: { ...data, operation: operation } },
+    meta: {
+        fetch: UPDATE,
+        resource: 'orders',
+        onSuccess: {
+            notification: {
+                body: 'resources.orders.messages.success.notifyCustomer',
+                level: 'info',
+            },
+            basePath,
+        },
+        onFailure: {
+            notification: {
+                body: 'resources.orders.messages.failure.notifyCustomer',
+                level: 'warning',
+            },
+        },
+    }
 });

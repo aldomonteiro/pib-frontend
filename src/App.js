@@ -2,7 +2,8 @@ import React from "react";
 import { Admin, Resource, fetchUtils, resolveBrowserLocale } from "react-admin";
 // import { PageResourceList, PageResourceEdit } from "./components/database/pages";
 
-import orders from './ordersAside';
+// import orders from './ordersAside';
+import orders from './simpleOrders';
 import customers from './customers';
 import stores from './stores';
 import flavors from './catalog/flavors';

@@ -101,12 +101,18 @@ class MySnackBar extends React.Component {
                             className={classes.margin}
                             onClose={handleClose}
                             message={`Novo pedido: ${data.id}`} />
+                    ) : type === 'new-comment' ? (
+                        <MySnackbarContentWrapper
+                            variant="info"
+                            className={classes.margin}
+                            onClose={handleClose}
+                            message={`Mensagem no pedido: ${data.id}`} />
                     ) : data ? (<MySnackbarContentWrapper
                         variant="warning"
                         className={classes.margin}
                         onClose={handleClose}
                         message={`${data.id} - ${data.first_name} chamou...`} />)
-                            : null
+                                : null
                     }
                 </Snackbar>
             </div>

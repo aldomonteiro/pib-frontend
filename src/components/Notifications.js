@@ -57,6 +57,11 @@ class Notifications extends React.Component {
                         add_notification(data);
                         this.handleOpen('new-order', data);
                     });
+                    socket.on('new-comment', data => {
+                        const { add_notification } = this.props;
+                        add_notification(data);
+                        this.handleOpen('new-comment', data);
+                    });
                     socket.on('talk-to-human', data => {
                         const { add_notification } = this.props;
                         add_notification(data)

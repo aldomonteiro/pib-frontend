@@ -105,6 +105,11 @@ export default {
             reject: "Rejeitar o pedido",
             deliver: "Enviar pedido para entrega",
             defaultRejectionReason: "Infelizmente seu endereço está fora da nossa área de atendimento.",
+            missingAddress: "Solicitar endereço",
+            send: "Enviar Dúvida",
+            typeQuestion: "Digite o que será enviado ao cliente",
+            openQuestion: "Enviar pergunta",
+            defaultQuestion: 'Quer algo para beber?',
             status: {
                 pending: "Pendente",
                 viewed: "Aguard. Análise",
@@ -229,6 +234,9 @@ export default {
                 payment_types_type: 'Forma de Pagamento',
                 payment_types_surcharge_percent: 'Acréscimo %',
                 payment_types_surcharge_amount: 'Acréscimo Fixo',
+                missing_address_notification: "Mensagem 'Solicitar Endereço'",
+                accept_notification: "Mensagem 'Aceite do Pedido'",
+                deliver_notification: "Mensagem 'Pedido saiu para entrega'"
             },
             tabs: {
                 main: 'Principal',
@@ -244,6 +252,7 @@ export default {
                 name: 'Nome',
                 greetingText: 'Saudação do Facebook',
                 firstResponseText: 'Primeira resposta do bot ($NAME = será substituído pelo nome do cliente)',
+                orderExample: 'Exemplo dos dados que precisam ser enviados para um pedido rápido. ($TEMPOENTREGAR e $TEMPORETIRAR são variaveis)',
                 activeBot: 'Bot ativo?',
             },
             actions: {
@@ -324,7 +333,7 @@ export default {
                 payment_type: 'Forma de Pagamento',
                 delivery_type: 'Entrega/Retira',
                 payment_change: 'Levar Troco?',
-                comments: 'Observações',
+                comments: 'Dados do Pedido',
                 confirmed_at: 'Data pedido',
                 confirmed_at_rangestart: 'Início',
                 confirmed_at_rangeend: 'Fim',
@@ -343,9 +352,16 @@ export default {
                 warningBeforeReject: "Ao executar essa ação, o cliente receberá um aviso que o pedido não será atendido. Por favor informe o motivo que será enviado ao cliente.",
                 successfulAcceptedOrder: "Pedido aceito com sucesso.",
                 successfulPrintedOrder: "Pedido impresso com sucesso.",
-                successfulDeliveredOrder: "Pedido atualizado como entregue com sucesso.",
                 successfullRejectedOrder: "Pedido rejeitado.",
-                errorViewing: 'Houve um erro ao tentar atualizar a base de dados, tente novamente.'
+                errorViewing: 'Houve um erro ao tentar atualizar a base de dados, tente novamente.',
+                success: {
+                    notifyCustomer: "Aviso enviado com sucesso",
+                    deliveredOrder: "Pedido atualizado como entregue com sucesso.",
+                },
+                failure: {
+                    notifyCustomer: "Erro ao enviar aviso. Envie manualmente pelo Whatsapp.",
+                    deliveredOrder: "Erro ao atualizar o status do pedido. Tente novamente por favor",
+                }
             }
         },
         reportOrders: {
