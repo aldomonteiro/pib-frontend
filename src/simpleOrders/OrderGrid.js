@@ -1,19 +1,27 @@
 import React from 'react';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 import OrderItemList from './OrderItemList';
 import OrderShow from './OrderShow';
-import { translate } from 'react-admin';
+import { translate, refreshView as refreshAction } from 'react-admin';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
-import { view_order as viewOrderAction } from '../actions/orderActions';
+import {
+    update_orders_list as updateOrdersListAction,
+    view_order as viewOrderAction,
+} from '../actions/orderActions';
 import {
     update_notifications as updateNotificationsAction,
+    remove_notification as removeNotificationAction,
 } from '../actions/notificationsActions';
+import { ORDERSTATUS_VIEWED } from '../util';
 
 const styles = theme => ({
     root: {
@@ -26,6 +34,7 @@ const styles = theme => ({
         width: '30%',
         overflow: 'auto',
         height: '70vh',
+        minWidth: '250px',
     },
     details: {
         width: '70%',
@@ -39,11 +48,12 @@ const styles = theme => ({
 class OrderGrid extends React.Component {
     state = {
         selectedIndex: null,
+        areNewOrders: false,
         isLoading: true,
     };
 
     componentDidUpdate () {
-        const { ids } = this.props;
+        const { ids, lastOrders, filterValues } = this.props;
 
         if (this.state.selectedIndex) {
             const presentId = ids.filter(id => id === this.state.selectedIndex);
@@ -51,37 +61,79 @@ class OrderGrid extends React.Component {
                 this.setState({ selectedIndex: null });
             }
         }
-    }
 
-    handleListItemClick = (event, index) => {
-        const { data, view_order, notifications, update_notifications } = this.props;
-        const order = data[index];
-        this.setState({ selectedIndex: index }, () => {
-
-        });
-
-        // remove the seen order from the list
-        const newNotifs = [];
-        if (notifications && notifications.length > 0) {
-            for (const notif of notifications) {
-                if (notif.id !== order.id) {
-                    newNotifs.push(notif)
+        // only runs if the areNewOrders state is false. Look for ids in lastOrders
+        // that are not in ids. When user clicks in the button showed by this state,
+        // the areNewORders state is gonna be false again.
+        if (!this.state.areNewOrders) {
+            if (lastOrders && ids) {
+                if (filterValues && filterValues.createdAt) {
+                    const filterDate = moment(filterValues.createdAt);
+                    const today = moment();
+                    if (filterDate.date() === today.date()) {
+                        let theNotFoundID = 0;
+                        for (const newId of lastOrders) {
+                            let foundId = false;
+                            for (const listId of ids) {
+                                console.log('newId:', newId, 'listId:', listId);
+                                if (listId === newId) {
+                                    foundId = true;
+                                    break;
+                                }
+                            }
+                            if (!foundId) {
+                                theNotFoundID = newId;
+                                break;
+                            }
+                        }
+                        if (theNotFoundID > 0) {
+                            console.log('>> The Not Found ID:', theNotFoundID);
+                            this.setState({ areNewOrders: true });
+                        }
+                    }
                 }
             }
         }
+    }
 
-        if (newNotifs.length > 0)
-            update_notifications(newNotifs);
+    handleNewItemClick = (event, index) => {
+        event.preventDefault();
 
-        // view_order(index, data[index]);
+        const { refreshView } = this.props;
+        this.setState({ areNewOrders: false });
+        refreshView();
+    }
+
+    handleListItemClick = (event, index) => {
+        const { data, remove_notification, view_order } = this.props;
+        const order = data[index];
+        this.setState({ selectedIndex: index });
+
+        console.log('order:', order);
+
+        if (order.status < ORDERSTATUS_VIEWED) {
+
+            // remove the seen order from the list
+            remove_notification(order);
+
+            view_order(index, data[index]);
+        }
     };
 
 
     render () {
-        const { classes, ids, translate, ...rest } = this.props;
+        const { classes, ids, translate, lastOrders, ...rest } = this.props;
         return (<div className={classes.root}>
             <div className={classes.sideBar}>
                 <List component="nav">
+                    {this.state.areNewOrders && (
+                        <React.Fragment>
+                            <ListItem button>
+                                <ListItemText secondary="Novo pedido.." onClick={this.handleNewItemClick} />
+                            </ListItem>
+                            <Divider />
+                        </React.Fragment>
+                    )}
                     {ids.map(id =>
                         (
                             <React.Fragment key={id}>
@@ -114,12 +166,16 @@ OrderGrid.defaultProps = {
 
 const mapStateToProps = state => ({
     notifications: state.notificationsReducer.notifications,
+    lastOrders: state.ordersReducer.lastOrders,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
+        refreshView: bindActionCreators(refreshAction, dispatch),
+        update_orders_list: bindActionCreators(updateOrdersListAction, dispatch),
         view_order: bindActionCreators(viewOrderAction, dispatch),
         update_notifications: bindActionCreators(updateNotificationsAction, dispatch),
+        remove_notification: bindActionCreators(removeNotificationAction, dispatch),
     }
 };
 

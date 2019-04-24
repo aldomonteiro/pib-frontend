@@ -23,17 +23,20 @@ class AcceptOrder extends React.Component {
         accept_order('ACCEPT', id, record)
     }
 
-    render = () =>
-        (<Tooltip title={this.props.translate('pos.orders.accept')}>
+    render = () => {
+        console.log('props:', this.props);
+        return (<Tooltip title={this.props.translate('pos.orders.accept')}>
             <IconButton
                 aria-label={this.props.translate('pos.orders.accept')}
-                className={this.props.classes.button}
                 onClick={this.handleClick}
+                color='primary'
+                disabled={this.props.disabled}
             >
                 <ThumbUp />
             </IconButton>
         </Tooltip>
         );
+    }
 }
 
 const enhanced = compose(

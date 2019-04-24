@@ -24,6 +24,7 @@ const styles = theme => ({
         margin: theme.spacing.unit,
         color: theme.palette.error.main,
         '& svg': theme.palette.error.main,
+        '&:disabled': 'grey',
         '&:hover': {
             backgroundColor: fade(theme.palette.error.main, 0.12),
             // Reset on mouse devices
@@ -40,7 +41,7 @@ class RejectOrderDialog extends Component {
         rejectionReason: ''
     };
 
-    componentDidMount() {
+    componentDidMount () {
         const { translate } = this.props;
         this.setState({ rejectionReason: translate('pos.orders.defaultRejectionReason') });
     }
@@ -64,7 +65,7 @@ class RejectOrderDialog extends Component {
         reject_order('REJECT', this.state.rejectionReason, id, record)
     };
 
-    render() {
+    render () {
         const { showDialog } = this.state;
         const { label = 'pos.orders.reject', classes = {}, record, translate } = this.props;
         return (
@@ -72,8 +73,9 @@ class RejectOrderDialog extends Component {
                 <Tooltip title={translate('pos.orders.reject')}>
                     <IconButton
                         aria-label={translate('pos.orders.reject')}
-                        className={classes.button}
                         onClick={this.handleClick}
+                        className={classes.rejectButton}
+                        disabled={this.props.disabled}
                     >
                         <ThumbDown />
                     </IconButton>

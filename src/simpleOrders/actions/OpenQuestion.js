@@ -72,8 +72,8 @@ class NotifyCustomer extends Component {
                 <Tooltip title={translate('pos.orders.send')}>
                     <IconButton
                         aria-label={translate('pos.orders.send')}
-                        className={classes.button}
                         onClick={this.handleClick}
+                        color='primary'
                     >
                         <Send />
                     </IconButton>

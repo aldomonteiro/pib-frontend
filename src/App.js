@@ -70,8 +70,13 @@ const i18nProvider = locale => {
     }
     // return asyncMessages[locale]();
 }
-console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
-const socket = io(process.env.REACT_APP_API_URL, { forceNew: true });
+
+const socket = io(process.env.REACT_APP_API_URL, {
+    secure: true,
+    reconnect: true,
+    rejectUnauthorized: false,
+    transports: ['websocket'],
+});
 
 const App = () => (
     <SocketContext.Provider value={socket}>

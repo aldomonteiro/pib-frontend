@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 // import Button from '@material-ui/core/Button';
-import { CardActions, Button, RefreshButton, NumberInput, GET_LIST } from 'react-admin';
+import { CardActions, Button, RefreshButton, GET_LIST } from 'react-admin';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push as pushAction } from 'react-router-redux';
 import { translate } from 'react-admin';
-import { Map, List } from '@material-ui/icons'
+import { List } from '@material-ui/icons'
 import socketIOClient from "socket.io-client";
 import {
     update_orders_list as updateOrdersListAction,
@@ -16,7 +16,7 @@ import {
 
 } from '../actions/orderActions';
 import dataProviderFactory from '../dataProvider';
-import OrderDialog from './create';
+// import OrderDialog from './create';
 import DeliveryTime from './DeliveryTime';
 import PickupTime from './PickupTime';
 import { Badge } from '@material-ui/core';
@@ -133,11 +133,11 @@ class OrderActions extends React.Component {
 
                     {/* Add your custom actions */}
                     {/* <OrderDialog /> */}
-                    <Button
+                    {/* <Button
                         onClick={this.handleClickMaps}
                         label={translate('pos.orders.map')}>
                         <Map />
-                    </Button>
+                    </Button> */}
                     <Button
                         onClick={this.handleClickReport}
                         label={translate('pos.orders.report')}>

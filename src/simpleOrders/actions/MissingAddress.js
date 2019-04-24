@@ -27,8 +27,9 @@ class NotifyCustomer extends React.Component {
         (<Tooltip title={this.props.translate('pos.orders.missingAddress')}>
             <IconButton
                 aria-label={this.props.translate('pos.orders.missingAddress')}
-                className={this.props.classes.button}
                 onClick={this.handleClick}
+                disabled={this.props.disabled}
+                color='primary'
             >
                 <Map />
             </IconButton>

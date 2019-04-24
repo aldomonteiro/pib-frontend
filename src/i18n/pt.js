@@ -130,6 +130,7 @@ export default {
             pickupTime: 'Tempo de Reirada',
             selectAnOrder: 'Selecione um pedido na lista de pedidos',
             newOrder: 'Novo Pedido',
+            newComment: 'Novo Comentário',
             newOrders: 'Novos Pedidos',
         },
         ordersmap: {

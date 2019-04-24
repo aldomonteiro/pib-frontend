@@ -5,9 +5,12 @@ export const REJECT_ORDER = 'REJECT_ORDER';
 export const PRINT_ORDER = 'PRINT_ORDER';
 export const DELIVER_ORDER = 'DELIVER_ORDER';
 export const UPDATE_PRINTER = 'UPDATE_PRINTER';
-export const UPDATE_ORDERSLIST = 'UPDATE_ORDERSLIST';
+export const UPDATE_ORDERS_LIST = 'UPDATE_ORDERS_LIST';
 export const VIEW_ORDER = 'VIEW_ORDER';
+export const UPDATE_LAST_ORDER = 'UPDATE_LAST_ORDER';
+export const UPDATE_SEEN_IDS = 'UPDATE_SEEN_IDS';
 export const NOTIFY_CUSTOMER = 'NOTIFY_CUSTOMER';
+export const ADD_NEW_ORDER = 'ADD_NEW_ORDER';
 
 
 export const accept_order = (operation, id, data, basePath) => ({
@@ -126,18 +129,16 @@ export const update_printer = (printer) => ({
     payload: { printer },
 });
 
-export const update_orders_list = (lastOrders) => ({
-    type: UPDATE_ORDERSLIST,
-    payload: { lastOrders },
+export const update_orders_list = (update) => ({
+    type: UPDATE_ORDERS_LIST,
+    payload: { update },
 });
 
-export const UPDATE_LAST_ORDER = 'UPDATE_LAST_ORDER';
 export const update_last_order = (lastOrderId) => ({
     type: UPDATE_LAST_ORDER,
     payload: { lastOrderId },
 });
 
-export const UPDATE_SEEN_IDS = 'UPDATE_SEEN_IDS';
 export const update_seen_ids = (seenIds) => ({
     type: UPDATE_SEEN_IDS,
     payload: { seenIds },
@@ -163,4 +164,9 @@ export const notify_customer = (operation, id, data, basePath) => ({
             },
         },
     }
+});
+
+export const add_new_order = (newId) => ({
+    type: ADD_NEW_ORDER,
+    payload: { newId },
 });

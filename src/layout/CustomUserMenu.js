@@ -65,13 +65,19 @@ class CustomUserMenu extends React.Component {
                                         {notif.id + ' - ' + notif.first_name}
                                     </Button>
                                 </MenuItem>
-                                :
-                                <MenuItem key={notif.id}>
-                                    <Button onClick={() => push('/orders')}>
-                                        <Info />
-                                        {translate('pos.orders.newOrder') + ' - ' + notif.id + ' - ' + new Date(notif.confirmed_at).toLocaleTimeString('pt-BR')}
-                                    </Button>
-                                </MenuItem>)}
+                                : notif.new_comment ?
+                                    <MenuItem key={notif.id}>
+                                        <Button onClick={() => push('/orders')}>
+                                            <Info />
+                                            {translate('pos.orders.newComment') + ' - ' + notif.id}
+                                        </Button>
+                                    </MenuItem>
+                                    : <MenuItem key={notif.id}>
+                                        <Button onClick={() => push('/orders')}>
+                                            <Info />
+                                            {translate('pos.orders.newOrder') + ' - ' + notif.id + ' - ' + new Date(notif.confirmed_at).toLocaleTimeString('pt-BR')}
+                                        </Button>
+                                    </MenuItem>)}
                         </UserMenu>
                     </Badge>)}
                 <UserMenu {...this.props} >

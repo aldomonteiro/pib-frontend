@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 
 import {
     update_last_order as updateLastOrderAction,
+    add_new_order as addNewOrderAction,
     update_orders_list as updateOrdersListAction,
 } from '../actions/orderActions';
 
@@ -52,9 +53,10 @@ class Notifications extends React.Component {
                     socket.emit('acknowledgment', pageID);
 
                     socket.on('new-order', data => {
-                        const { update_last_order, add_notification } = this.props;
+                        const { update_last_order, add_notification, add_new_order } = this.props;
                         update_last_order(data.id);
-                        add_notification(data);
+                        add_new_order(data.id);
+                        add_notification({ new_comment: true, ...data });
                         this.handleOpen('new-order', data);
                     });
                     socket.on('new-comment', data => {
@@ -69,9 +71,12 @@ class Notifications extends React.Component {
                     });
                     socket.on('reconnect_attempt', (attempt) => {
                         console.log('reconnecting attempt ' + attempt);
+                        const pageID = localStorage.getItem('activePage');
+                        socket.emit('acknowledgment', pageID);
                     });
                     socket.on('disconnect', () => {
                         console.log('disconnected..');
+                        set_connected(false);
                     });
                     socket.on('connect_error', (err) => {
                         console.log(err);
@@ -147,6 +152,7 @@ const mapDispatchToProps = dispatch => {
     return {
         update_last_order: bindActionCreators(updateLastOrderAction, dispatch),
         update_orders_list: bindActionCreators(updateOrdersListAction, dispatch),
+        add_new_order: bindActionCreators(addNewOrderAction, dispatch),
         showNotification: bindActionCreators(showNotificationAction, dispatch),
         add_notification: bindActionCreators(addNotificationsAction, dispatch),
         update_notifications: bindActionCreators(updateNotificationsAction, dispatch),

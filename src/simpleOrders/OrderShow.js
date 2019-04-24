@@ -50,12 +50,12 @@ const enhance = compose(
 
 const OrderShowActions = enhance(({ classes, record, ...rest }) => (
     <CardActions className={classes.actions} disableActionSpacing>
-        {record.status < ORDERSTATUS_ACCEPTED && (<MissingAddress record={record} {...rest} />)}
-        {record.status < ORDERSTATUS_ACCEPTED && (<OpenQuestion record={record} {...rest} />)}
-        {record.status < ORDERSTATUS_ACCEPTED && (<AcceptOrder record={record} {...rest} />)}
-        {record.status < ORDERSTATUS_ACCEPTED && (<RejectOrderDialog record={record} {...rest} />)}
-        {record.status < ORDERSTATUS_PRINTED && (<PrintOrder record={record} {...rest} />)}
-        {record.status < ORDERSTATUS_DELIVERED && (<DeliverOrder record={record} {...rest} />)}
+        <MissingAddress record={record} disabled={record.status > ORDERSTATUS_ACCEPTED} {...rest} />
+        <OpenQuestion record={record} {...rest} />
+        <AcceptOrder record={record} disabled={record.status > ORDERSTATUS_ACCEPTED} {...rest} />
+        <RejectOrderDialog record={record} disabled={record.status > ORDERSTATUS_ACCEPTED} {...rest} />
+        <PrintOrder record={record} disabled={record.status > ORDERSTATUS_PRINTED} {...rest} />
+        <DeliverOrder record={record} disabled={record.status > ORDERSTATUS_DELIVERED} {...rest} />
         <MoreMenu record={record} {...rest} />
     </CardActions>)
 );
@@ -66,7 +66,7 @@ const OrderShow = props => {
         {controllerProps => {
             const { record } = controllerProps;
             const prefixI18n = 'resources.orders.fields.';
-            const refDate = record.confirmed_at ? record.confirmed_at : record.updatedAt;
+            const refDate = record && record.confirmed_at ? record.confirmed_at : record.updatedAt;
             return (< Card >
                 <CardHeader
                     avatar={
