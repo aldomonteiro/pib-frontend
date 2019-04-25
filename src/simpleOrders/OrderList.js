@@ -41,7 +41,6 @@ class OrderList extends React.Component {
 
     render () {
         const { updateOrdersList, translate, ...rest } = this.props;
-        console.log('>> OrdersList updateOrdersList:', updateOrdersList);
         return (
             <List
                 title={translate('pos.orders.todayOrders')}

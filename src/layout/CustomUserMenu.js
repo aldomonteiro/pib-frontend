@@ -10,6 +10,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { Info, SpeakerNotes } from '@material-ui/icons';
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import NotificationDialog from './NotificationDialog';
+import { remove_notification } from '../actions/notificationsActions';
 
 const styles = theme => ({
     title: {
@@ -47,6 +48,13 @@ class CustomUserMenu extends React.Component {
         this.setState({ showDialog: true, selectedNotif: notification })
     }
 
+    handleNotif = (notification) => {
+        const { push, remove_notification } = this.props;
+        remove_notification(notification);
+        push('/orders');
+    }
+
+
     handleClose = () => {
         this.setState({ showDialog: false })
     }
@@ -67,8 +75,8 @@ class CustomUserMenu extends React.Component {
                                 </MenuItem>
                                 : notif.new_comment ?
                                     <MenuItem key={notif.id}>
-                                        <Button onClick={() => push('/orders')}>
-                                            <Info />
+                                        <Button onClick={() => this.handleNotif(notif)}>
+                                            <SpeakerNotes />
                                             {translate('pos.orders.newComment') + ' - ' + notif.id}
                                         </Button>
                                     </MenuItem>
@@ -100,10 +108,16 @@ const mapStateToProps = state => ({
     notifications: state.notificationsReducer.notifications,
 });
 
+
 const enhance = compose(
     withStyles(styles),
     translate,
-    connect(mapStateToProps, { push })
+    connect(
+        mapStateToProps,
+        {
+            push,
+            remove_notification,
+        })
 );
 
 

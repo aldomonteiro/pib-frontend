@@ -2,12 +2,10 @@ import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { Button, Confirm, crudUpdateMany, translate } from 'react-admin';
-import NumberFormat from 'react-number-format';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Icon from '@material-ui/icons/MonetizationOn';
-
+import NumberFormatCustom from '../components/NumberFormat';
 
 const styles = theme => ({
     container: {
@@ -18,31 +16,6 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
 });
-
-function NumberFormatCustom (props) {
-    const { inputRef, onChange, ...other } = props;
-
-    return (
-        <NumberFormat
-            {...other}
-            ref={inputRef}
-            onValueChange={values => {
-                onChange({
-                    target: {
-                        value: values.value,
-                    },
-                });
-            }}
-            thousandSeparator
-            prefix="R$"
-        />
-    );
-}
-
-NumberFormatCustom.propTypes = {
-    inputRef: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-};
 
 class ChangePriceButton extends Component {
     state = {

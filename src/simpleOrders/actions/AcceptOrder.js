@@ -8,12 +8,7 @@ import { Tooltip, IconButton } from '@material-ui/core';
 import { ThumbUp } from '@material-ui/icons'
 
 import { accept_order } from '../../actions/orderActions';
-
-const styles = () => ({
-    button: {
-        '& svg': { color: 'green' }
-    }
-});
+import styles from './styles';
 
 class AcceptOrder extends React.Component {
 
@@ -24,13 +19,13 @@ class AcceptOrder extends React.Component {
     }
 
     render = () => {
-        console.log('props:', this.props);
-        return (<Tooltip title={this.props.translate('pos.orders.accept')}>
+        const { translate, classes, disabled } = this.props;
+        return (<Tooltip title={translate('pos.orders.accept')}>
             <IconButton
-                aria-label={this.props.translate('pos.orders.accept')}
+                aria-label={translate('pos.orders.accept')}
                 onClick={this.handleClick}
-                color='primary'
-                disabled={this.props.disabled}
+                className={classes.buttonGreen}
+                disabled={disabled}
             >
                 <ThumbUp />
             </IconButton>

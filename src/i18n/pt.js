@@ -110,6 +110,10 @@ export default {
             typeQuestion: "Digite o que será enviado ao cliente",
             openQuestion: "Enviar pergunta",
             defaultQuestion: 'Quer algo para beber?',
+            updateOrder: 'Atualizar o pedido',
+            confirmAddress: "Confirme o endereço desse pedido",
+            confirmTotal: "Confirme o valor total desse pedido",
+            total: "Total do Pedido",
             status: {
                 pending: "Pendente",
                 viewed: "Aguard. Análise",
@@ -117,6 +121,7 @@ export default {
                 accepted: "Aceito - Pend.",
                 printed: "Impresso",
                 delivered: "Entregue",
+                finished: "Finalizado",
                 rejected: "Rejeitado",
                 cancelled: "Cancelled"
             },
@@ -132,6 +137,9 @@ export default {
             newOrder: 'Novo Pedido',
             newComment: 'Novo Comentário',
             newOrders: 'Novos Pedidos',
+            messages: {
+                invalidTotal: 'O valor informado é inválido. Informe um valor válido.',
+            }
         },
         ordersmap: {
             title: "Pedidos no mapa",
@@ -341,6 +349,7 @@ export default {
                 delivery_fee: 'Taxa de Entrega',
                 surcharge_percent: '% Forma de Pagto.',
                 surcharge_amount: 'Acréscimo Forma de Pagto.',
+                total: "Total",
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
@@ -358,10 +367,12 @@ export default {
                 success: {
                     notifyCustomer: "Aviso enviado com sucesso",
                     deliveredOrder: "Pedido atualizado como entregue com sucesso.",
+                    updatedOrder: "Pedido atualizado com sucesso.",
                 },
                 failure: {
                     notifyCustomer: "Erro ao enviar aviso. Envie manualmente pelo Whatsapp.",
                     deliveredOrder: "Erro ao atualizar o status do pedido. Tente novamente por favor",
+                    updatedOrder: "Erro ao atualizar o pedido. Tente novamente por favor",
                 }
             }
         },

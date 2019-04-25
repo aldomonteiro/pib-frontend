@@ -25,6 +25,7 @@ class DeliverOrder extends React.Component {
                 aria-label={this.props.translate('pos.orders.deliver')}
                 onClick={this.handleClick}
                 disabled={this.props.disabled}
+                color='primary'
             >
                 <Motorcycle />
             </IconButton>

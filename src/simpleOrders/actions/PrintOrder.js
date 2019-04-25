@@ -52,6 +52,7 @@ class PrintOrder extends React.Component {
                 aria-label={this.props.translate('pos.orders.print')}
                 onClick={this.handleClick}
                 disabled={this.props.disabled}
+                color='primary'
             >
                 <Print />
             </IconButton>

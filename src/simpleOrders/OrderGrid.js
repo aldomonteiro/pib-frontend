@@ -16,6 +16,7 @@ import moment from 'moment';
 import {
     update_orders_list as updateOrdersListAction,
     view_order as viewOrderAction,
+    remove_new_order as removeNewOrderAction,
 } from '../actions/orderActions';
 import {
     update_notifications as updateNotificationsAction,
@@ -39,7 +40,7 @@ const styles = theme => ({
     details: {
         width: '70%',
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'top',
         justifyContent: 'center',
     }
 
@@ -49,6 +50,7 @@ class OrderGrid extends React.Component {
     state = {
         selectedIndex: null,
         areNewOrders: false,
+        newOrder: null,
         isLoading: true,
     };
 
@@ -71,24 +73,27 @@ class OrderGrid extends React.Component {
                     const filterDate = moment(filterValues.createdAt);
                     const today = moment();
                     if (filterDate.date() === today.date()) {
-                        let theNotFoundID = 0;
-                        for (const newId of lastOrders) {
-                            let foundId = false;
-                            for (const listId of ids) {
-                                console.log('newId:', newId, 'listId:', listId);
-                                if (listId === newId) {
-                                    foundId = true;
+                        let theNotFoundOrder;
+                        for (const newOrder of lastOrders) {
+                            if (moment(newOrder.confirmed_at).date() === today.date()) {
+                                const newId = newOrder.id;
+                                let foundId = false;
+                                for (const listId of ids) {
+                                    console.log('newId:', newId, 'listId:', listId);
+                                    if (listId === newId) {
+                                        foundId = true;
+                                        break;
+                                    }
+                                }
+                                if (!foundId) {
+                                    theNotFoundOrder = newOrder;
                                     break;
                                 }
                             }
-                            if (!foundId) {
-                                theNotFoundID = newId;
-                                break;
-                            }
                         }
-                        if (theNotFoundID > 0) {
-                            console.log('>> The Not Found ID:', theNotFoundID);
-                            this.setState({ areNewOrders: true });
+                        if (theNotFoundOrder) {
+                            console.log('>> The Not Found ID:', theNotFoundOrder.id);
+                            this.setState({ areNewOrders: true, newOrder: theNotFoundOrder });
                         }
                     }
                 }
@@ -97,15 +102,20 @@ class OrderGrid extends React.Component {
     }
 
     handleNewItemClick = (event, index) => {
-        event.preventDefault();
+        // Refresh entire screen
+        // const { refreshView } = this.props;
+        // refreshView();
 
-        const { refreshView } = this.props;
-        this.setState({ areNewOrders: false });
-        refreshView();
+        if (this.state.newOrder) {
+            const { remove_notification } = this.props;
+            remove_notification(this.state.newOrder);
+
+            this.setState({ areNewOrders: false, newOrder: null });
+        }
     }
 
     handleListItemClick = (event, index) => {
-        const { data, remove_notification, view_order } = this.props;
+        const { data, remove_notification, view_order, remove_new_order } = this.props;
         const order = data[index];
         this.setState({ selectedIndex: index });
 
@@ -115,7 +125,7 @@ class OrderGrid extends React.Component {
 
             // remove the seen order from the list
             remove_notification(order);
-
+            remove_new_order(order);
             view_order(index, data[index]);
         }
     };
@@ -129,7 +139,7 @@ class OrderGrid extends React.Component {
                     {this.state.areNewOrders && (
                         <React.Fragment>
                             <ListItem button>
-                                <ListItemText secondary="Novo pedido.." onClick={this.handleNewItemClick} />
+                                <ListItemText primary="Novo pedido.." onClick={this.handleNewItemClick} />
                             </ListItem>
                             <Divider />
                         </React.Fragment>
@@ -176,6 +186,7 @@ const mapDispatchToProps = dispatch => {
         view_order: bindActionCreators(viewOrderAction, dispatch),
         update_notifications: bindActionCreators(updateNotificationsAction, dispatch),
         remove_notification: bindActionCreators(removeNotificationAction, dispatch),
+        remove_new_order: bindActionCreators(removeNewOrderAction, dispatch),
     }
 };
 

@@ -41,16 +41,16 @@ const PendingOrders = ({ orders = [], customers = {}, translate, classes }) => (
                             src={customers[record.customerId].profile_pic}
                         />
                     ) : (
-                            <Avatar />
-                        )}
+                        <Avatar />
+                    )}
                     <ListItemText
                         primary={new Date(record.createdAt).toLocaleString('pt-BR')}
                         secondary={translate('pos.dashboard.order.items', {
-                            smart_count: record.items.length,
-                            nb_items: record.items.length,
+                            smart_count: record.items  ? record.items.length : 1,
+                            nb_items: record.items  ? record.items.length : 1,
                             customer_name: customers[record.customerId]
                                 ? `${
-                                customers[record.customerId].first_name
+                                    customers[record.customerId].first_name
                                 } ${customers[record.customerId].last_name}`
                                 : '',
                         })}
@@ -58,10 +58,10 @@ const PendingOrders = ({ orders = [], customers = {}, translate, classes }) => (
                     <ListItemSecondaryAction>
                         {/* <span className={classes.cost}>{record.total}$</span> */}
                         <span className={classes.cost}>
-                            {record.total.toLocaleString(undefined, {
+                            {record.total ? record.total.toLocaleString(undefined, {
                                 style: 'currency',
                                 currency: 'BRL',
-                            })}
+                            }) : 0}
                         </span>
                     </ListItemSecondaryAction>
                 </ListItem>

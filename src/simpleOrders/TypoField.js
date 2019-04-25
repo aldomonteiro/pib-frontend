@@ -9,11 +9,11 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
     heading: {
         fontSize: theme.typography.pxToRem(12),
-        fontWeight: theme.typography.fontWeightBold,
+        fontWeight: 'bold',
     },
     detail: {
         fontSize: theme.typography.pxToRem(10),
-        fontWeight: theme.typography.fontWeightRegular,
+        fontWeight: 'normal',
     },
 });
 

@@ -3,81 +3,91 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
-import { ThumbDown, Cancel } from '@material-ui/icons';
+import { Cancel, LocationOn, Send } from '@material-ui/icons';
 import { Button as RaButton, translate } from 'react-admin';
 import {
     Tooltip, IconButton,
     Dialog, DialogTitle, DialogContent, DialogActions,
     TextField
 } from '@material-ui/core';
-import { reject_order } from '../../actions/orderActions';
+import { update_order_data } from '../../actions/orderActions';
 import styles from './styles';
 
-
-class RejectOrderDialog extends Component {
+class UpdateAddress extends Component {
     state = {
         showDialog: false,
-        rejectionReason: ''
+        value: null,
     };
 
-    componentDidMount () {
-        const { translate } = this.props;
-        this.setState({ rejectionReason: translate('pos.orders.defaultRejectionReason') });
+
+    componentDidUpdate () {
+        // const selection = window.getSelection();
+        // if (selection.rangeCount) {
+        //     const selectedText = selection.getRangeAt(0).toString();
+        //     if (this.state.value !== selectedText)
+        //         this.setState({ value: selectedText });
+        // }
     }
 
+
     handleClick = () => {
-        this.setState({ showDialog: true });
-    };
+        const selection = window.getSelection();
+        let selectedText;
+        if (selection.rangeCount) {
+            selectedText = selection.getRangeAt(0).toString();
+        }
+        this.setState({ showDialog: true, value: selectedText });
+    }
 
     handleCloseClick = () => {
         this.setState({ showDialog: false });
     };
 
     handleChange = event => {
-        this.setState({ rejectionReason: event.target.value });
+        this.setState({ value: event.target.value });
     }
-    handleReject = event => {
+    handleSend = event => {
         event.preventDefault();
-        this.setState({ showDialog: false });
-        const { record, reject_order } = this.props;
+        const { record, update_order_data } = this.props;
         const { id } = record;
-        reject_order('REJECT', this.state.rejectionReason, id, record)
+        console.log('this.state.value:', this.state.value);
+        const newData = { newAddress: this.state.value, ...record }
+        update_order_data('UPDATE_ORDER_DATA', id, newData)
+        this.setState({ showDialog: false });
     };
 
     render () {
         const { showDialog } = this.state;
-        const { label = 'pos.orders.reject', classes = {}, record, translate } = this.props;
+        const { label = 'pos.orders.updateOrder', classes = {}, record, translate } = this.props;
         return (
             <Fragment>
-                <Tooltip title={translate('pos.orders.reject')}>
+                <Tooltip title={translate('pos.orders.updateOrder')}>
                     <IconButton
-                        aria-label={translate('pos.orders.reject')}
+                        aria-label={translate('pos.orders.updateOrder')}
                         onClick={this.handleClick}
-                        className={classes.rejectButton}
-                        disabled={this.props.disabled}
+                        color='primary'
                     >
-                        <ThumbDown />
+                        <LocationOn />
                     </IconButton>
                 </Tooltip>
                 <Dialog fullWidth open={showDialog} onClose={this.handleCloseClick} aria-label={translate('pos.areYouSure')}>
                     <DialogTitle>
-                        {translate('pos.orders.rejecting')} “
-						{record.id}”
-					</DialogTitle>
+                        {translate('pos.orders.updateOrder')}
+                    </DialogTitle>
                     <DialogContent>
-                        <div>{translate('resources.orders.messages.warningBeforeReject')}</div>
+                        <div>{translate('pos.orders.confirmAddress')}</div>
                         <TextField
-                            defaultValue={this.state.rejectionReason}
+                            value={this.state.value}
                             onChange={this.handleChange}
                             className={classes.textField} />
                     </DialogContent>
                     <DialogActions>
                         <RaButton
-                            onClick={this.handleReject}
+                            onClick={this.handleSend}
                             label={label}
-                            className={classes.rejectButton}
+                            className={classes.greenButton}
                             key="button">
-                            <ThumbDown />
+                            <Send />
                         </RaButton>
                         <RaButton label="ra.action.cancel" onClick={this.handleCloseClick}>
                             <Cancel />
@@ -89,7 +99,7 @@ class RejectOrderDialog extends Component {
     }
 }
 
-RejectOrderDialog.propTypes = {
+UpdateAddress.propTypes = {
     basePath: PropTypes.string,
     classes: PropTypes.object,
     className: PropTypes.string,
@@ -108,9 +118,9 @@ export default compose(
     connect(
         null,
         {
-            reject_order,
+            update_order_data,
         }
     ),
     translate,
     withStyles(styles)
-)(RejectOrderDialog);
+)(UpdateAddress);

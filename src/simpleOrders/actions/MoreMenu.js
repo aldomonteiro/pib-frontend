@@ -6,13 +6,14 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import { print_order } from '../../actions/orderActions';
 import { ZPLPrintOrder } from '../../util/print';
 import shajs from 'sha.js';
 import qz from 'qz-tray';
+import { update_order_data, print_order } from '../../actions/orderActions';
 
 
 const options = [
+    "Finalizar Ordem",
     "Reimprimir",
     "Voltar status"
 ];
@@ -30,7 +31,15 @@ class MoreMenu extends React.Component {
 
     handleClose = event => {
         this.setState({ anchorEl: null });
-        if (event.nativeEvent.target.value === 0) {
+        const clicked = event.currentTarget.getAttribute('value');
+        if (clicked === options[0]) {
+            const { record, update_order_data } = this.props;
+            const { id } = record;
+
+            const newData = { closeOrder: true, ...record }
+            update_order_data('UPDATE_ORDER_DATA', id, newData)
+
+        } else if (clicked === options[1]) {
             const { record, print_order, printer } = this.props;
 
             let dataToPrint = [ZPLPrintOrder(record)];   // Raw ZPL
@@ -107,7 +116,8 @@ const enhanced = compose(
     connect(
         mapStateToProps,
         {
-            print_order
+            print_order,
+            update_order_data,
         }
     )
 )
