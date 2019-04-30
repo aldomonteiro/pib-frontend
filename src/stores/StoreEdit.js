@@ -210,9 +210,10 @@ class StoreEdit extends React.Component {
                             <SelectInput source="printer" allowEmpty choices={this.state.printer_choices} />
                             <TextInput source='catalog_url1' />
                             <TextInput source='catalog_url2' />
-                            <TextInput source='missing_address_notification' />
-                            <TextInput source='accept_notification' />
-                            <TextInput source='deliver_notification' />
+                            <LongTextInput source='missing_address_notification' />
+                            <LongTextInput source='accept_notification' />
+                            <LongTextInput source='deliver_notification' />
+                            <LongTextInput source='total_notification' />
                             <ArrayInput source='default_messages' style={{ width: '500px' }}>
                                 <SimpleFormIterator>
                                     <LongTextInput source="default_message" label="resources.stores.fields.default_messages_message" />

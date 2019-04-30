@@ -30,6 +30,8 @@ import {
     // ORDERSTATUS_CANCELLED
 } from '../../util'
 import CardComments from '../components/CardComments';
+import CardAddress from '../components/CardAddress';
+import CardTotal from '../components/CardTotal';
 
 const styles = (theme) => ({
     root: {
@@ -118,31 +120,32 @@ const OrderShow = props => {
                                         ))}
                                     </Grid>
                                 )}
-                                <Grid item xs={12}>
-                                    <ExpansionPanel text={record.comments} />
+                                <Grid item xs={6}>
+                                    <CardAddress
+                                        record={record}
+                                        title={translate(prefixI18n + 'address')}
+                                        text={record.address}
+                                    />
+                                    {/* <TypoField fieldName={prefixI18n + 'address'} field={record.address} /> */}
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Paper className={classes.paper}>
-                                        <TypoField fieldName={prefixI18n + 'address'} field={record.address} />
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Paper className={classes.paper}>
-                                        <TypoField fieldName={prefixI18n + 'total'} field={record.total && record.total.toLocaleString('pt-BR', {
+                                    <CardTotal
+                                        record={record}
+                                        title={translate(prefixI18n + 'total')}
+                                        text={record.total && record.total.toLocaleString('pt-BR', {
                                             style: 'currency',
                                             currency: 'BRL',
                                             minimumFractionDigits: 0,
                                             maximumFractionDigits: 0,
-                                        })} />
-                                    </Paper>
+                                        })}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <ExpansionPanel text={record.comments} />
                                 </Grid>
                             </Grid>
                         </div>
                     </CardContent>
-                    <CardActions>
-                        <UpdateAddress record={record} />
-                        <UpdateTotal record={record} />
-                    </CardActions>
                 </Card>
             </div>);
         }

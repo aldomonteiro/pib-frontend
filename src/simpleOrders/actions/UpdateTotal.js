@@ -3,36 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
-import { Cancel, MonetizationOn, Send } from '@material-ui/icons';
-import {
-    Button as RaButton, translate, number,
-    minValue, NumberInput
-} from 'react-admin';
+import { Cancel, Edit, Send, Save } from '@material-ui/icons';
 import {
     Tooltip, IconButton, Input, InputAdornment,
     Dialog, DialogTitle, DialogContent, DialogActions,
-    TextField
 } from '@material-ui/core';
+import {
+    Button as RaButton, translate,
+} from 'react-admin';
 import { update_order_data } from '../../actions/orderActions';
 import styles from './styles';
-import NumberFormatCustom from '../../components/NumberFormat';
 
 class UpdateTotal extends Component {
     state = {
         showDialog: false,
         value: null,
+        errorValue: false,
     };
 
-
-    componentDidUpdate () {
-        // const selection = window.getSelection();
-        // if (selection.rangeCount) {
-        //     const selectedText = selection.getRangeAt(0).toString();
-        //     if (this.state.value !== selectedText)
-        //         this.setState({ value: selectedText });
-        // }
+    componentDidMount () {
+        const { record } = this.props;
+        if (record)
+            this.setState({ value: record.total });
     }
-
 
     handleClick = () => {
         this.setState({ showDialog: true });
@@ -49,14 +42,55 @@ class UpdateTotal extends Component {
         event.preventDefault();
         const { record, update_order_data } = this.props;
         const { id } = record;
-        const newData = { newTotal: this.state.value, ...record }
-        update_order_data('UPDATE_ORDER_DATA', id, newData)
-        this.setState({ showDialog: false });
+        const { value } = this.state;
+        let newTotal;
+        if (!isNaN(Number(value)))
+            newTotal = value;
+        else {
+            const strippedValue = value.toString().replace(',', '.');
+            try {
+                const result = eval(strippedValue);
+                if (!isNaN(Number(result)))
+                    newTotal = result;
+            } catch (error) {
+                // do nothing..                
+            }
+        }
+        if (newTotal) {
+            const newData = { newTotal: newTotal, totalNotification: true, ...record }
+            update_order_data('UPDATE_ORDER_DATA', id, newData)
+            this.setState({ showDialog: false, value: newTotal, errorValue: false });
+        } else this.setState({ errorValue: true });
+    };
+
+    handleSave = event => {
+        event.preventDefault();
+        const { record, update_order_data } = this.props;
+        const { id } = record;
+        const { value } = this.state;
+        let newTotal;
+        if (!isNaN(Number(value)))
+            newTotal = value;
+        else {
+            const strippedValue = value.toString().replace(',', '.');
+            try {
+                const result = eval(strippedValue);
+                if (!isNaN(Number(result)))
+                    newTotal = result;
+            } catch (error) {
+                // do nothing..                
+            }
+        }
+        if (newTotal) {
+            const newData = { newTotal: newTotal, ...record }
+            update_order_data('UPDATE_ORDER_DATA', id, newData)
+            this.setState({ showDialog: false, value: newTotal, errorValue: false });
+        } else this.setState({ errorValue: true });
     };
 
     render () {
         const { showDialog, value } = this.state;
-        const { label = 'pos.orders.updateOrder', classes = {}, translate } = this.props;
+        const { classes = {}, translate } = this.props;
         return (
             <Fragment>
                 <Tooltip title={translate('pos.orders.updateOrder')}>
@@ -65,35 +99,39 @@ class UpdateTotal extends Component {
                         onClick={this.handleClick}
                         color='primary'
                     >
-                        <MonetizationOn />
+                        <Edit />
                     </IconButton>
                 </Tooltip>
-                <Dialog fullWidth open={showDialog} onClose={this.handleCloseClick} aria-label={translate('pos.areYouSure')}>
-                    <DialogTitle>
+                <Dialog
+                    fullWidth
+                    open={showDialog}
+                    onClose={this.handleCloseClick}
+                    aria-label={translate('pos.areYouSure')}>
+                    <DialogTitle classes={{ root: 'dialog-title' }} >
                         {translate('pos.orders.updateOrder')}
                     </DialogTitle>
                     <DialogContent>
                         <div>{translate('pos.orders.confirmTotal')}</div>
                         <Input
+                            error={this.state.errorValue}
+                            label={this.state.errorValue && translate('pos.orders.messages.invalidTotal')}
                             id="adornment-amount"
                             value={this.state.value}
                             onChange={this.handleChange}
                             startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                         />
-                        {/* <TextField
-                            className={classes.formControl}
-                            label={translate('pos.orders.total')}
-                            value={value}
-                            onChange={this.handleChange}
-                            InputProps={{
-                                inputComponent: NumberFormatCustom,
-                            }}
-                        /> */}
                     </DialogContent>
                     <DialogActions>
                         <RaButton
+                            onClick={this.handleSave}
+                            label={translate('pos.orders.save')}
+                            className={classes.greenButton}
+                            key="button">
+                            <Save />
+                        </RaButton>
+                        <RaButton
                             onClick={this.handleSend}
-                            label={label}
+                            label={translate('pos.orders.send')}
                             className={classes.greenButton}
                             key="button">
                             <Send />

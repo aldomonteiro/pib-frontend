@@ -10,7 +10,12 @@ import { ZPLPrintOrder } from '../../util/print';
 import shajs from 'sha.js';
 import qz from 'qz-tray';
 import { update_order_data, print_order } from '../../actions/orderActions';
-
+import {
+    ORDERSTATUS_DELIVERED,
+    ORDERSTATUS_PRINTED,
+    ORDERSTATUS_ACCEPTED,
+    ORDERSTATUS_FINISHED
+} from '../../util';
 
 const options = [
     "Finalizar Ordem",
@@ -30,18 +35,15 @@ class MoreMenu extends React.Component {
     };
 
     handleClose = event => {
+        const { record, update_order_data, print_order, printer } = this.props;
+        const { id } = record;
+
         this.setState({ anchorEl: null });
         const clicked = event.currentTarget.getAttribute('value');
-        if (clicked === options[0]) {
-            const { record, update_order_data } = this.props;
-            const { id } = record;
-
+        if (clicked === options[0]) { // Finalizar Ordem
             const newData = { closeOrder: true, ...record }
             update_order_data('UPDATE_ORDER_DATA', id, newData)
-
-        } else if (clicked === options[1]) {
-            const { record, print_order, printer } = this.props;
-
+        } else if (clicked === options[1]) { // Imprimir Ordem
             let dataToPrint = [ZPLPrintOrder(record)];   // Raw ZPL
 
             try {
@@ -69,6 +71,28 @@ class MoreMenu extends React.Component {
 
             const { id } = record;
             print_order('PRINT', id, record)
+        } else if (clicked === options[2]) { // Voltar Status
+            let previousOp;
+            switch (record.status) {
+                case ORDERSTATUS_FINISHED:
+                    previousOp = 'DELIVER'
+                    break;
+                case ORDERSTATUS_DELIVERED:
+                    previousOp = 'PRINT'
+                    break;
+                case ORDERSTATUS_PRINTED:
+                    previousOp = 'ACCEPT'
+                    break;
+                case ORDERSTATUS_ACCEPTED:
+                    previousOp = 'VIEW'
+                    break;
+                default:
+                    break;
+            }
+
+            if (previousOp) {
+                update_order_data(previousOp, id, record)
+            }
         }
     };
 

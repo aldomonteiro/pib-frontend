@@ -113,5 +113,6 @@ export const ORDERSTATUS_VIEWED = 2;
 export const ORDERSTATUS_ACCEPTED = 3;
 export const ORDERSTATUS_PRINTED = 4;
 export const ORDERSTATUS_DELIVERED = 5;
+export const ORDERSTATUS_FINISHED = 7;
 export const ORDERSTATUS_REJECTED = 8;
 export const ORDERSTATUS_CANCELLED = 9;

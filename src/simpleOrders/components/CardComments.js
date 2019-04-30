@@ -61,6 +61,7 @@ class CardComments extends React.Component {
 
         const newData = { updatePostComments: 'MERGE', updatedPostComment: value, ...record }
         update_order_data('UPDATE_ORDER_DATA', id, newData)
+        this.setState({ showDialog: false });
     }
 
     handleRemove = () => {

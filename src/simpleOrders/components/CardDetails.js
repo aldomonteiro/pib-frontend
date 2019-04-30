@@ -7,7 +7,7 @@ import {
     Dialog, DialogTitle, DialogContent, DialogActions,
     TextField
 } from '@material-ui/core';
-import { Edit, Send, Cancel } from '@material-ui/icons';
+import { Edit, Cancel, Save } from '@material-ui/icons';
 import { Button as RaButton, translate } from 'react-admin';
 import { update_order_data } from '../../actions/orderActions';
 import UpdateAddress from '../actions/UpdateAddress';
@@ -65,12 +65,9 @@ class CardComments extends React.Component {
                 <Card className={classes.card}>
                     <CardHeader
                         action={
-                            <React.Fragment>
-                                <IconButton onClick={this.handleOpen}>
-                                    <Edit />
-                                </IconButton>
-                                <UpdateAddress record={record} />
-                            </React.Fragment>}
+                            <IconButton onClick={this.handleOpen} color="primary">
+                                <Edit />
+                            </IconButton>}
                         title={title}
                         subheader={
                             <span style={{ lineHeight: 0.9 }} dangerouslySetInnerHTML={this.createMarkup(separatedLines)} />
@@ -94,10 +91,10 @@ class CardComments extends React.Component {
                     <DialogActions>
                         <RaButton
                             onClick={this.handleEdit}
-                            label={translate('pos.orders.updateOrder')}
+                            label={translate('pos.orders.save')}
                             className={classes.greenButton}
                             key="button">
-                            <Send />
+                            <Save />
                         </RaButton>
                         <RaButton label="ra.action.cancel" onClick={this.handleClose}>
                             <Cancel />

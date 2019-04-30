@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
-import { Cancel, LocationOn, Send } from '@material-ui/icons';
+import { Cancel, Edit, Save } from '@material-ui/icons';
 import { Button as RaButton, translate } from 'react-admin';
 import {
     Tooltip, IconButton,
@@ -31,10 +31,16 @@ class UpdateAddress extends Component {
 
 
     handleClick = () => {
-        const selection = window.getSelection();
+        const { record } = this.props;
         let selectedText;
-        if (selection.rangeCount) {
-            selectedText = selection.getRangeAt(0).toString();
+
+        if (record && record.address) {
+            selectedText = record.address;
+        } else {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                selectedText = selection.getRangeAt(0).toString();
+            }
         }
         this.setState({ showDialog: true, value: selectedText });
     }
@@ -58,7 +64,7 @@ class UpdateAddress extends Component {
 
     render () {
         const { showDialog } = this.state;
-        const { label = 'pos.orders.updateOrder', classes = {}, record, translate } = this.props;
+        const { label = 'pos.orders.save', classes = {}, record, translate } = this.props;
         return (
             <Fragment>
                 <Tooltip title={translate('pos.orders.updateOrder')}>
@@ -67,7 +73,7 @@ class UpdateAddress extends Component {
                         onClick={this.handleClick}
                         color='primary'
                     >
-                        <LocationOn />
+                        <Edit />
                     </IconButton>
                 </Tooltip>
                 <Dialog fullWidth open={showDialog} onClose={this.handleCloseClick} aria-label={translate('pos.areYouSure')}>
@@ -87,7 +93,7 @@ class UpdateAddress extends Component {
                             label={label}
                             className={classes.greenButton}
                             key="button">
-                            <Send />
+                            <Save />
                         </RaButton>
                         <RaButton label="ra.action.cancel" onClick={this.handleCloseClick}>
                             <Cancel />

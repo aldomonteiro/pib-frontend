@@ -35,19 +35,34 @@ const printData = orderData => {
     `;
 
     let line = 390
-    orderData.items.map(item => {
-        zpl += `
-        ^FO50,${line}^FD${item.qty}^FS`;
 
-        if (item.flavor && item.size) {
-            zpl += `^FO100,${line}^FD${item.flavor} ${item.size}^FS`;
-        } else if (item.beverage) {
-            zpl += `^FO100,${line}^FD${item.beverage}^FS`;
-        }
-        zpl += `^FO450,${line}^FD${item.price}^FS
+    if (orderData.items && orderData.items.length > 0) {
+        orderData.items.map(item => {
+            zpl += `^FO50,${line}^FD${item.qty}^FS`;
+
+            if (item.flavor && item.size) {
+                zpl += `^FO100,${line}^FD${item.flavor} ${item.size}^FS`;
+            } else if (item.beverage) {
+                zpl += `^FO100,${line}^FD${item.beverage}^FS`;
+            }
+            zpl += `^FO450,${line}^FD${item.price}^FS
                 ^FO630,${line}^FDR${item.price * item.qty}^FS`;
-        line += 40;
-    });
+            line += 40;
+        });
+    } else if (orderData.details) {
+        if (orderData.details) {
+            // split in arrays of 35 characters
+            // var arrComments = orderData.comments.match(/(.{1,35})/g);
+
+            // split in arrays divided by newlines
+            var arrDetails = orderData.details.split('\n');
+            arrDetails.map(detail => {
+                zpl += `    
+            ^FO50,${line}^FD${detail}^FS`;
+                line += 30;
+            });
+        }
+    }
     zpl += `            
         ^FX Divider
         ^FO50,${line}^GB700,1,3^FS`;
@@ -55,7 +70,7 @@ const printData = orderData => {
     line += 30;
     zpl += `
         ^FO450,500^FDTotal:^FS
-        ^FO630,500^FDR$197,98^FS`;
+        ^FO630,500^FDR${orderData.total}^FS`;
 
     line += 50;
     zpl += `
@@ -73,15 +88,15 @@ const printData = orderData => {
 
     line += 20;
 
-    if (orderData.comments) {
-        // split in arrays of 35 characters
-        var arrComments = orderData.comments.match(/(.{1,35})/g);
-        arrComments.map(comment => {
-            zpl += `    
-        ^FO50,${line}^FD${comment}^FS`;
-            line += 30;
-        });
-    }
+    // if (orderData.comments) {
+    //     // split in arrays of 35 characters
+    //     var arrDetails = orderData.comments.match(/(.{1,35})/g);
+    //     arrDetails.map(comment => {
+    //         zpl += `    
+    //     ^FO50,${line}^FD${comment}^FS`;
+    //         line += 30;
+    //     });
+    // }
 
     zpl += `^XZ`;
 
