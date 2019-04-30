@@ -28,12 +28,20 @@ import customRoutes from './routes/customRoutes';
 // Custom Reducers
 import pagesReducer from './reducers/pages';
 import locationReducer from './reducers/location';
-import ordersReducer from './reducers/order';
+import ordersReducer from './reducers/ordersReducer';
 import printerReducer from './reducers/printer';
 import notificationsReducer from './reducers/notifications';
 
 import simpleRestProvider from 'ra-data-simple-rest';
 
+// I tried to use this ra-realtime component inside this module, createRealTimeSaga,
+// but, it is not performatic (I was using a setInterval that calls the dataProvider GET_LIST)
+// and, also, it has a bug, open in github for several months:
+// https://github.com/marmelab/react-admin/issues/2496 (checked on April-26-19)
+// It starts working, querying the dataProvider, but, when I click in an order (the
+// same resource used in this saga) it raises the error shown in the issue, and stops
+// working.
+// import createRealTimeSaga from "./createRealTimeSaga";
 import SocketContext from './socketContext'
 import io from 'socket.io-client'
 
@@ -75,7 +83,7 @@ const socket = io(process.env.REACT_APP_API_URL, {
     secure: true,
     reconnect: true,
     rejectUnauthorized: false,
-    transports: ['websocket'],
+    transports: ['polling', 'websocket'],
 });
 
 const App = () => (
@@ -86,6 +94,7 @@ const App = () => (
             loginPage={CustomLogin}
             authProvider={authProvider}
             dataProvider={dataProvider}
+            // customSagas={[createRealTimeSaga(dataProvider)]}
             customRoutes={customRoutes}
             appLayout={Layout}
             menu={Menu}

@@ -6,13 +6,16 @@ import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { red } from '@material-ui/core/colors';
 import { Cancel, Send } from '@material-ui/icons';
-import { Button as RaButton, translate } from 'react-admin';
+import { Button as RaButton, translate, GET_ONE } from 'react-admin';
 import {
     Tooltip, IconButton,
     Dialog, DialogTitle, DialogContent, DialogActions,
     TextField
 } from '@material-ui/core';
 import { notify_customer } from '../../actions/orderActions';
+import { update_stores_admin } from '../../actions/storeActions';
+import QuestionOptions from './QuestionOptions';
+import dataProviderFactory from '../../dataProvider';
 
 const styles = theme => ({
     button: {
@@ -39,9 +42,14 @@ class NotifyCustomer extends Component {
         question: ''
     };
 
-    componentDidMount () {
-        const { translate } = this.props;
+    async componentDidMount () {
+        const { translate, store, update_stores_admin } = this.props;
         this.setState({ question: translate('pos.orders.defaultQuestion') });
+        console.log(store[1])
+        if (!store[1]) {
+            const res = await dataProviderFactory(GET_ONE, 'stores', { id: 1 });
+            update_stores_admin(res.data);
+        }
     }
 
     handleClick = () => {
@@ -67,6 +75,8 @@ class NotifyCustomer extends Component {
     render () {
         const { showDialog } = this.state;
         const { label = 'pos.orders.send', classes = {}, record, translate } = this.props;
+        const { store } = this.props;
+        console.log(store);
         return (
             <Fragment>
                 <Tooltip title={translate('pos.orders.send')}>
@@ -81,14 +91,13 @@ class NotifyCustomer extends Component {
                 <Dialog fullWidth open={showDialog} onClose={this.handleCloseClick} aria-label={translate('pos.areYouSure')}>
                     <DialogTitle>
                         {translate('pos.orders.openQuestion')} “
-						{record.id}”
-					</DialogTitle>
+                        {record.id}”
+                    </DialogTitle>
                     <DialogContent>
-                        <div>{translate('pos.orders.typeQuestion')}</div>
-                        <TextField
-                            defaultValue={this.state.question}
+                        <QuestionOptions
+                            label={translate('pos.orders.typeQuestion')}
                             onChange={this.handleChange}
-                            className={classes.textField} />
+                            options={store[1] && store[1].default_messages} />
                     </DialogContent>
                     <DialogActions>
                         <RaButton
@@ -119,15 +128,16 @@ NotifyCustomer.propTypes = {
     translate: PropTypes.func,
 };
 
-// DeactivateWithConfirmation.defaultProps = {
-//     redirect: 'list',
-// };
+const mapStateToProps = state => ({
+    store: state.admin.resources.stores.data,
+});
 
 export default compose(
     connect(
-        null,
+        mapStateToProps,
         {
             notify_customer,
+            update_stores_admin
         }
     ),
     translate,

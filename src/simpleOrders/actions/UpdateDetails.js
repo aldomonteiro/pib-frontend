@@ -3,21 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
-import { Cancel, MonetizationOn, Send } from '@material-ui/icons';
+import { Cancel, LocationOn, Details } from '@material-ui/icons';
+import { Button as RaButton, translate } from 'react-admin';
 import {
-    Button as RaButton, translate, number,
-    minValue, NumberInput
-} from 'react-admin';
-import {
-    Tooltip, IconButton, Input, InputAdornment,
+    Tooltip, IconButton,
     Dialog, DialogTitle, DialogContent, DialogActions,
     TextField
 } from '@material-ui/core';
 import { update_order_data } from '../../actions/orderActions';
 import styles from './styles';
-import NumberFormatCustom from '../../components/NumberFormat';
 
-class UpdateTotal extends Component {
+class UpdateAddress extends Component {
     state = {
         showDialog: false,
         value: null,
@@ -35,28 +31,31 @@ class UpdateTotal extends Component {
 
 
     handleClick = () => {
-        this.setState({ showDialog: true });
+        const { record } = this.props;
+        const details = record.details || record.comments;
+        this.setState({ showDialog: true, value: details });
     }
 
     handleCloseClick = () => {
         this.setState({ showDialog: false });
     };
 
-    handleChange = e => {
-        this.setState({ value: e.target.value });
+    handleChange = event => {
+        this.setState({ value: event.target.value });
     }
     handleSend = event => {
         event.preventDefault();
         const { record, update_order_data } = this.props;
         const { id } = record;
-        const newData = { newTotal: this.state.value, ...record }
+        console.log('this.state.value:', this.state.value);
+        const newData = { newDetails: this.state.value, ...record }
         update_order_data('UPDATE_ORDER_DATA', id, newData)
         this.setState({ showDialog: false });
     };
 
     render () {
-        const { showDialog, value } = this.state;
-        const { label = 'pos.orders.updateOrder', classes = {}, translate } = this.props;
+        const { showDialog } = this.state;
+        const { label = 'pos.orders.updateOrder', classes = {}, record, translate } = this.props;
         return (
             <Fragment>
                 <Tooltip title={translate('pos.orders.updateOrder')}>
@@ -65,7 +64,7 @@ class UpdateTotal extends Component {
                         onClick={this.handleClick}
                         color='primary'
                     >
-                        <MonetizationOn />
+                        <LocationOn />
                     </IconButton>
                 </Tooltip>
                 <Dialog fullWidth open={showDialog} onClose={this.handleCloseClick} aria-label={translate('pos.areYouSure')}>
@@ -73,22 +72,12 @@ class UpdateTotal extends Component {
                         {translate('pos.orders.updateOrder')}
                     </DialogTitle>
                     <DialogContent>
-                        <div>{translate('pos.orders.confirmTotal')}</div>
-                        <Input
-                            id="adornment-amount"
+                        <div>{translate('pos.orders.updateDetails')}</div>
+                        <TextField
                             value={this.state.value}
                             onChange={this.handleChange}
-                            startAdornment={<InputAdornment position="start">R$</InputAdornment>}
-                        />
-                        {/* <TextField
-                            className={classes.formControl}
-                            label={translate('pos.orders.total')}
-                            value={value}
-                            onChange={this.handleChange}
-                            InputProps={{
-                                inputComponent: NumberFormatCustom,
-                            }}
-                        /> */}
+                            multiline={true}
+                            className={classes.textField} />
                     </DialogContent>
                     <DialogActions>
                         <RaButton
@@ -96,7 +85,7 @@ class UpdateTotal extends Component {
                             label={label}
                             className={classes.greenButton}
                             key="button">
-                            <Send />
+                            <Details />
                         </RaButton>
                         <RaButton label="ra.action.cancel" onClick={this.handleCloseClick}>
                             <Cancel />
@@ -108,11 +97,8 @@ class UpdateTotal extends Component {
     }
 }
 
-UpdateTotal.propTypes = {
-    basePath: PropTypes.string,
+UpdateAddress.propTypes = {
     classes: PropTypes.object,
-    className: PropTypes.string,
-    label: PropTypes.string,
     record: PropTypes.object,
     translate: PropTypes.func,
 };
@@ -130,4 +116,4 @@ export default compose(
     ),
     translate,
     withStyles(styles)
-)(UpdateTotal);
+)(UpdateAddress);

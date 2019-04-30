@@ -11,18 +11,18 @@ import { update_order_data } from '../../actions/orderActions';
 class PostCommentsChip extends React.Component {
 
     handleClick = () => {
-        const { record, update_order_data } = this.props;
+        const { record, update_order_data, postComment } = this.props;
         const { id } = record;
 
-        const newData = { updatePostComments: 'MERGE', ...record }
+        const newData = { updatePostComments: 'MERGE', updatedPostComment: postComment, ...record }
         update_order_data('UPDATE_ORDER_DATA', id, newData)
     }
 
     handleDelete = () => {
-        const { record, update_order_data } = this.props;
+        const { record, update_order_data, postComment } = this.props;
         const { id } = record;
 
-        const newData = { updatePostComments: 'DELETE', ...record }
+        const newData = { updatePostComments: 'DELETE', updatedPostComment: postComment, ...record }
         update_order_data('UPDATE_ORDER_DATA', id, newData)
     }
 

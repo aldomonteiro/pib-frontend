@@ -100,13 +100,8 @@ class UpdateAddress extends Component {
 }
 
 UpdateAddress.propTypes = {
-    basePath: PropTypes.string,
     classes: PropTypes.object,
-    className: PropTypes.string,
-    deletePage: PropTypes.func,
-    label: PropTypes.string,
     record: PropTypes.object,
-    resource: PropTypes.string.isRequired,
     translate: PropTypes.func,
 };
 

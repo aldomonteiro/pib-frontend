@@ -1,5 +1,5 @@
-import OrderList from './OrderList';
-import OrderShow from './OrderShow';
+import OrderList from './list/OrderList';
+import OrderShow from './show/OrderShow';
 import OrderIcon from '@material-ui/icons/MonetizationOn';
 
 export default {

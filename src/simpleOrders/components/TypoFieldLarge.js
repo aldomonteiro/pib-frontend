@@ -20,18 +20,16 @@ const styles = theme => ({
 });
 
 
-const TypoField = (props) => {
+const TypoField = ({ field, fieldName, translate, classes }) => {
     const separatedLines =
-        props.field && props.field.indexOf('\n') > -1
-            ? props.field.split('\n').map((item, i) => `<p key=${i}>${item}</p>`).join('')
-            : props.field;
+        field && field.indexOf('\n') > -1
+            ? field.split('\n').map((item, i) => `<p style="font-weight:normal;font-size:12px;line-height:0.90" key=${i}>${item}</p>`).join('')
+            : field;
     return (<React.Fragment>
-        <Typography className={props.classes.heading} >
-            {props.translate(props.fieldName)}
+        <Typography className={classes.heading} >
+            {translate(fieldName)}
         </Typography>
-        <Typography className={props.classes.detail} >
-            <div dangerouslySetInnerHTML={createMarkup(separatedLines)} />
-        </Typography>
+        <div dangerouslySetInnerHTML={createMarkup(separatedLines)} />
     </React.Fragment>);
 };
 

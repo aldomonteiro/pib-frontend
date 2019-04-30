@@ -4580,7 +4580,7 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoist-non-react-statics@^2.1.0, hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
+hoist-non-react-statics@^2.1.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
@@ -7970,10 +7970,10 @@ qz-tray@^2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/qz-tray/-/qz-tray-2.0.8.tgz#5e15d102cf3a11a31ddb332891c7f8a6af8f6ad5"
 
-ra-core@^2.8.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-2.8.4.tgz#5eb8c54489e6edbbadbad234f9537c02eb949d9a"
-  integrity sha512-TbZg4dF75cSMuoTcTbew4icIGc2sJmUBWUBFYfk/birnFUgjrZ7datQ848B4LjHPhMCqm+72cG4ERDX37D0pJQ==
+ra-core@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-2.9.0.tgz#d5caa958a0379261ee0ca04e9de099993e735235"
+  integrity sha512-M0k7ik8l4tNIibd65g/W/k99taZp/uFjEjtp7mMup/HRfKjhxnrFaG0DqpmYl9DgNMTHeKvEZlHkJ/HLG8xqzg==
   dependencies:
     classnames "~2.2.5"
     date-fns "^1.29.0"
@@ -7982,10 +7982,10 @@ ra-core@^2.8.4:
     node-polyglot "^2.2.2"
     prop-types "~15.6.1"
     query-string "~5.1.1"
-    ra-language-english "^2.7.0"
+    ra-language-english "^2.8.5"
     react-redux "~5.0.7"
-    react-router "~4.2.0"
-    react-router-dom "~4.2.2"
+    react-router "^4.2.0"
+    react-router-dom "^4.2.0"
     react-router-redux "~5.0.0-alpha.9"
     recompose "~0.26.0"
     redux "~3.7.2"
@@ -7993,36 +7993,48 @@ ra-core@^2.8.4:
     redux-saga "~0.16.0"
     reselect "~3.0.0"
 
-ra-data-json-server@^2.8.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/ra-data-json-server/-/ra-data-json-server-2.8.4.tgz#cd0a1585c6131edc6a7222cc0b52e8b03eef1af4"
-  integrity sha512-l3gwDHLO9yaJpCpKNtU56Ri7Z4Sd/f1CcXleysoayb1CHu9TKgYInMSwkIxBbXn1M6PzmtH1HEG+W9eemtpnbA==
+ra-data-json-server@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/ra-data-json-server/-/ra-data-json-server-2.9.0.tgz#62d53341f7a662e5251cc589ef28fa2eb7d60a36"
+  integrity sha512-Z6Yx3pqEUiPccKapJebNSSRhGtZZvrestof6VEDnmlwaM+O8Mybe3A3gZNqihsmP0UjzWXKOAG/d/6EQQsjjsg==
   dependencies:
     query-string "~5.1.1"
-    ra-core "^2.8.4"
+    ra-core "^2.9.0"
 
-ra-data-simple-rest@^2.8.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-2.8.4.tgz#14c026a5163f030237dfeb9c48cf30703e25d027"
-  integrity sha512-ebV8x2/DtdOpJilTsPJlkZa3gMCF0D615IYs+gK0sJHH56piG8s/Q136CEUxHiqLTRmZO4pO7j1RIGo76m2vww==
+ra-data-simple-rest@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-2.9.0.tgz#70d5d2592d169aa6586aac9c6f398651e01c981e"
+  integrity sha512-przprkND2K7TjgDGcTTBhlRc2Jy3Boq6+25Gf6OeIDeTHLWdpe4Yuj/w837trTAt8pQrCMvvZlll6aRE9NSZ5g==
   dependencies:
     query-string "~5.1.1"
-    ra-core "^2.8.4"
+    ra-core "^2.9.0"
 
 ra-language-english@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-2.7.0.tgz#84de3d67db84cccb1745257551e2f9a9a9470f13"
   integrity sha512-Q57ZfuXqDbESu1Iln7P61Q4mEemFWElCqxmclfJHpLNOr+Dx1gqlrHiGgzmJazGeCrCS1X6shoKI601T5Wt7sw==
 
+ra-language-english@^2.8.5:
+  version "2.8.5"
+  resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-2.8.5.tgz#c8ca2dc8fcfc6c1c2aca2ee1192b55fc2b1365bf"
+  integrity sha512-5cuR5PrA4YK+3na+kj3NGN9Li9R08m1vkS8SPMmApTCMLydUFlDcsZxR0VR/Z2oAtm8MhbHXAIKP945KReaSYA==
+
 ra-language-portuguese@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/ra-language-portuguese/-/ra-language-portuguese-1.5.0.tgz#22bbe3ca8c9f6f2b214c18650b5089d7cf1595e9"
   integrity sha512-C44mldNXX7BSUrgZcepxeNNysEG5GaykeFdTNpPyHNu6fUvQWu+MPlzdIVHjt3PVTQ62D6x7AOl+eVm0lr4M4Q==
 
-ra-ui-materialui@^2.8.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-2.8.4.tgz#70e7214e4dc9436fe7267b2fbc21391cb30a733a"
-  integrity sha512-ckMmY8doFQpG5SbNq7B9VO+VQ6f8hfQOUPCr/5606CE02slkJxjBUWr1hiSh8e2ih6V1Vbh7gX1lz2nda0SNTA==
+ra-realtime@^2.8.6:
+  version "2.8.6"
+  resolved "https://registry.yarnpkg.com/ra-realtime/-/ra-realtime-2.8.6.tgz#c3d1e70425bcd86f0df082db0b8bea3d4ec26667"
+  integrity sha512-JpnwV3z7JLbGR0mVv3ag/pxTrN35mwbyad9gXng8zuLErw7xQ/hryJtRAn23FvO6vovlQtopFmwp1KN+kDCx+w==
+  dependencies:
+    lodash "~4.17.5"
+
+ra-ui-materialui@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/ra-ui-materialui/-/ra-ui-materialui-2.9.0.tgz#6771aac265d16102d406d0e8f2fb8f6f573481f6"
+  integrity sha512-E2zEfchvFLgiRyG+TuTkZNQr6Brnf6Ya87CbX7uGGTKgw20JMEK84L+2T0JatmO/EuNW6ErTHTS3kHbFBr0kkA==
   dependencies:
     "@material-ui/core" "^1.4.0"
     "@material-ui/icons" "^1.0.0"
@@ -8033,13 +8045,13 @@ ra-ui-materialui@^2.8.4:
     material-ui-chip-input "1.0.0-beta.6 - 1.0.0-beta.8"
     papaparse "^4.1.4"
     prop-types "~15.6.1"
-    ra-core "^2.8.4"
+    ra-core "^2.9.0"
     react-autosuggest "^9.4.2"
     react-dropzone "~4.0.1"
     react-headroom "^2.2.4"
     react-redux "~5.0.7"
-    react-router "~4.2.0"
-    react-router-dom "~4.2.2"
+    react-router "^4.2.0"
+    react-router-dom "^4.2.0"
     react-router-redux "~5.0.0-alpha.9"
     react-transition-group "^2.2.1"
     recompose "~0.26.0"
@@ -8118,14 +8130,14 @@ react-admin-date-inputs@^1.0.21:
     date-fns "2.0.0-alpha.16"
     material-ui-pickers "1.0.0-rc.17"
 
-react-admin@^2.8.4:
-  version "2.8.4"
-  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-2.8.4.tgz#9061b71a19080f9c19d179074eb046e7f5ee5045"
-  integrity sha512-SbJujmsR1MC6crh8FYQH4aeV6FboIk6L1OQDACI8JqaDtl2LdIlrxugql4PXv3ChZiGRvcVYENqCANj/G8BidQ==
+react-admin@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/react-admin/-/react-admin-2.9.0.tgz#9b0f413afe82322919aae0e1f4048daf686524db"
+  integrity sha512-159f0xJX354OMYN/v2lDm2BYZlngTuVYCpV3C0rbpA4KDF50dhBdNBzzANlYHeQCVagIW3nqUmA091cyRfPzvg==
   dependencies:
-    ra-core "^2.8.4"
-    ra-language-english "^2.7.0"
-    ra-ui-materialui "^2.8.4"
+    ra-core "^2.9.0"
+    ra-language-english "^2.8.5"
+    ra-ui-materialui "^2.9.0"
 
 react-app-polyfill@^0.1.3:
   version "0.1.3"
@@ -8362,17 +8374,17 @@ react-resize-detector@~2.3.0:
     prop-types "^15.6.0"
     resize-observer-polyfill "^1.5.0"
 
-react-router-dom@~4.2.2:
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
-  integrity sha512-cHMFC1ZoLDfEaMFoKTjN7fry/oczMgRt5BKfMAkTu5zEuJvUiPp1J8d0eXSVTnBh6pxlbdqDhozunOOLtmKfPA==
+react-router-dom@^4.2.0:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
+  integrity sha512-c/MlywfxDdCp7EnB7YfPMOfMD3tOtIjrQlj/CKfNMBxdmpJP8xcz5P/UAFn3JbnQCNUxsHyVVqllF9LhgVyFCA==
   dependencies:
     history "^4.7.2"
-    invariant "^2.2.2"
+    invariant "^2.2.4"
     loose-envify "^1.3.1"
-    prop-types "^15.5.4"
-    react-router "^4.2.0"
-    warning "^3.0.0"
+    prop-types "^15.6.1"
+    react-router "^4.3.1"
+    warning "^4.0.1"
 
 react-router-redux@~5.0.0-alpha.9:
   version "5.0.0-alpha.9"
@@ -8383,7 +8395,7 @@ react-router-redux@~5.0.0-alpha.9:
     prop-types "^15.6.0"
     react-router "^4.2.0"
 
-react-router@^4.2.0:
+react-router@^4.2.0, react-router@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.3.1.tgz#aada4aef14c809cb2e686b05cee4742234506c4e"
   integrity sha512-yrvL8AogDh2X42Dt9iknk4wF4V8bWREPirFfS9gLU1huk6qK41sg7Z/1S81jjTrGHxa3B8R3J6xIkDAA6CVarg==
@@ -8395,19 +8407,6 @@ react-router@^4.2.0:
     path-to-regexp "^1.7.0"
     prop-types "^15.6.1"
     warning "^4.0.1"
-
-react-router@~4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.2.0.tgz#61f7b3e3770daeb24062dae3eedef1b054155986"
-  integrity sha512-DY6pjwRhdARE4TDw7XjxjZsbx9lKmIcyZoZ+SDO7SBJ1KUeWNxT22Kara2AC7u6/c2SYEHlEDLnzBCcNhLE8Vg==
-  dependencies:
-    history "^4.7.2"
-    hoist-non-react-statics "^2.3.0"
-    invariant "^2.2.2"
-    loose-envify "^1.3.1"
-    path-to-regexp "^1.7.0"
-    prop-types "^15.5.4"
-    warning "^3.0.0"
 
 react-scripts@2.0.4:
   version "2.0.4"

@@ -10,8 +10,9 @@ import PropTypes from 'prop-types';
 
 import {
     update_last_order as updateLastOrderAction,
-    add_new_order as addNewOrderAction,
     update_orders_list as updateOrdersListAction,
+    update_orders_admin as updateOrdersAdminAction,
+    view_order as viewOrderAction,
 } from '../actions/orderActions';
 
 import {
@@ -53,14 +54,17 @@ class Notifications extends React.Component {
                     socket.emit('acknowledgment', pageID);
 
                     socket.on('new-order', data => {
-                        const { update_last_order, add_notification, add_new_order } = this.props;
+                        const { view_order, update_last_order, update_orders_admin } = this.props;
+                        update_orders_admin(data);
                         update_last_order(data);
-                        add_new_order(data);
+                        view_order(data.id, data, true);
                         this.handleOpen('new-order', data);
                     });
                     socket.on('new-comment', data => {
-                        const { add_notification } = this.props;
+                        const { add_notification, view_order } = this.props;
                         add_notification({ new_comment: true, ...data });
+                        // update_last_order(data);
+                        view_order(data.id, data, true);
                         this.handleOpen('new-comment', data);
                     });
                     socket.on('talk-to-human', data => {
@@ -79,6 +83,7 @@ class Notifications extends React.Component {
                     });
                     socket.on('connect_error', (err) => {
                         console.log(err);
+                        set_connected(false);
                     });
                 });
                 set_connected(true); // reducer
@@ -142,16 +147,17 @@ Notifications.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    lastOrderId: state.ordersReducer.lastOrderId,
+    lastOrder: state.ordersReducer.lastOrder,
     lastOrders: state.ordersReducer.lastOrders,
     notifications: state.notificationsReducer.notifications,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
-        update_last_order: bindActionCreators(updateLastOrderAction, dispatch),
+        view_order: bindActionCreators(viewOrderAction, dispatch),
+        update_orders_admin: bindActionCreators(updateOrdersAdminAction, dispatch),
         update_orders_list: bindActionCreators(updateOrdersListAction, dispatch),
-        add_new_order: bindActionCreators(addNewOrderAction, dispatch),
+        update_last_order: bindActionCreators(updateLastOrderAction, dispatch),
         showNotification: bindActionCreators(showNotificationAction, dispatch),
         add_notification: bindActionCreators(addNotificationsAction, dispatch),
         update_notifications: bindActionCreators(updateNotificationsAction, dispatch),

@@ -7,8 +7,8 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
     button: {
         color: "#ffffff",
-        fontSize: theme.typography.pxToRem(10),
-        width: 100,
+        fontSize: theme.typography.pxToRem(12),
+        width: 90,
         height: '20px',
         lineHeight: '20px',
         textAlign: "center",

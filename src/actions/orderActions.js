@@ -1,4 +1,4 @@
-import { UPDATE } from 'react-admin';
+import { UPDATE, GET_ONE, FETCH_END } from 'react-admin';
 
 export const ACCEPT_ORDER = 'ACCEPT_ORDER';
 export const REJECT_ORDER = 'REJECT_ORDER';
@@ -11,8 +11,9 @@ export const UPDATE_LAST_ORDER = 'UPDATE_LAST_ORDER';
 export const UPDATE_SEEN_IDS = 'UPDATE_SEEN_IDS';
 export const NOTIFY_CUSTOMER = 'NOTIFY_CUSTOMER';
 export const ADD_NEW_ORDER = 'ADD_NEW_ORDER';
-export const REMOVE_NEW_ORDER = 'REMOVE_NEW_ORDER';
+export const REMOVE_ORDER = 'REMOVE_ORDER';
 export const UPDATE_ORDER_DATA = 'UPDATE_ORDER_DATA';
+export const UPDATE_ORDER_ADMIN = 'UPDATE_ORDER_ADMIN';
 
 export const accept_order = (operation, id, data, basePath) => ({
     type: ACCEPT_ORDER,
@@ -102,28 +103,6 @@ export const deliver_order = (operation, id, data, basePath) => ({
     }
 });
 
-export const view_order = (id, data, basePath) => ({
-    type: VIEW_ORDER,
-    payload: { id, data: { ...data, operation: 'VIEW' } },
-    meta: {
-        fetch: UPDATE,
-        resource: 'orders',
-        // onSuccess: {
-        //     notification: {
-        //         body: 'resources.orders.messages.successfulAcceptedOrder',
-        //         level: 'info',
-        //     },
-        //     basePath,
-        // },
-        onFailure: {
-            notification: {
-                body: 'resources.orders.messages.errorViewing',
-                level: 'warning',
-            },
-        },
-    }
-});
-
 export const update_order_data = (operation, id, data, basePath) => ({
     type: UPDATE_ORDER_DATA,
     payload: { id, data: { ...data, operation: operation } },
@@ -193,8 +172,20 @@ export const add_new_order = (newOrder) => ({
     payload: { newOrder },
 });
 
-export const remove_new_order = (order) => ({
-    type: REMOVE_NEW_ORDER,
-    payload: { order },
+// Updating the store from react-admin, as described here:
+// https://stackoverflow.com/a/51229173/7948731
+export const update_orders_admin = (data) => ({
+    type: UPDATE_ORDER_ADMIN,
+    payload: { data },
+    meta: {
+        resource: 'orders',
+        fetchResponse: GET_ONE,
+        fetchStatus: FETCH_END,
+    },
 });
 
+export const view_order = (id, data, unSeen = true) => ({
+    type: VIEW_ORDER,
+    payload: { id, data: { ...data, unSeen: unSeen } },
+    meta: { resource: 'orders', fetchResponse: UPDATE, fetchStatus: FETCH_END },
+});

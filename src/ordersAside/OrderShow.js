@@ -6,7 +6,7 @@ import { ShowController, ReferenceField, translate } from 'react-admin';
 import Basket from './Basket';
 import TypoField from './TypoField';
 import {
-    Card, CardHeader, CardContent, CardActions, Grid
+    Card, CardHeader, CardContent, CardActions, Grid, Paper
 } from '@material-ui/core';
 import OnlyNameField from '../customers/OnlyNameField';
 import AvatarField from '../customers/AvatarField';
@@ -63,48 +63,49 @@ const OrderShow = props => {
             const { record } = controllerProps;
             const prefixI18n = 'resources.orders.fields.';
 
-            return (< Card >
-                <CardHeader
-                    avatar={
-                        <ReferenceField source="customerId" reference="customers" size={50} {...controllerProps}>
-                            <AvatarField />
-                        </ReferenceField>}
-                    action={
-                        <OrderShowActions {...controllerProps} />
-                    }
-                    title={
-                        <ReferenceField source="customerId" reference="customers" {...controllerProps}>
-                            <OnlyNameField />
-                        </ReferenceField>}
-                    subheader={new Date(record.confirmed_at).toLocaleString('pt-BR')}
-                />
-                <CardContent>
-                    <Grid container spacing={8} className={classes.root}>
-                        <Grid item xs={3}>
-                            <TypoField fieldName={prefixI18n + 'id'} field={record.id} />
+            return (
+                < Card >
+                    <CardHeader
+                        avatar={
+                            <ReferenceField source="customerId" reference="customers" size={50} {...controllerProps}>
+                                <AvatarField />
+                            </ReferenceField>}
+                        action={
+                            <OrderShowActions {...controllerProps} />
+                        }
+                        title={
+                            <ReferenceField source="customerId" reference="customers" {...controllerProps}>
+                                <OnlyNameField />
+                            </ReferenceField>}
+                        subheader={new Date(record.confirmed_at).toLocaleString('pt-BR')}
+                    />
+                    <CardContent>
+                        <Grid container spacing={8} className={classes.root}>
+                            <Grid item xs={3}>
+                                <TypoField fieldName={prefixI18n + 'id'} field={record.id} />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <TypoField fieldName={prefixI18n + 'confirmed_at'}
+                                    field={new Date(record.confirmed_at).toLocaleTimeString('pt-BR', { hour: 'numeric', minute: 'numeric' })} />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <TypoField fieldName={prefixI18n + 'phone'} field={record.phone} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TypoField fieldName={prefixI18n + 'address'} field={record.address || 'Cliente vem retirar'} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Basket record={controllerProps.record} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TypoField fieldName={prefixI18n + 'payment_type'} field={record.payment_type} />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TypoField fieldName={prefixI18n + 'comments'} field={record.comments} />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={3}>
-                            <TypoField fieldName={prefixI18n + 'confirmed_at'}
-                                field={new Date(record.confirmed_at).toLocaleTimeString('pt-BR', { hour: 'numeric', minute: 'numeric' })} />
-                        </Grid>
-                        <Grid item xs={3}>
-                            <TypoField fieldName={prefixI18n + 'phone'} field={record.phone} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TypoField fieldName={prefixI18n + 'address'} field={record.address || 'Cliente vem retirar'} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Basket record={controllerProps.record} />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TypoField fieldName={prefixI18n + 'payment_type'} field={record.payment_type} />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TypoField fieldName={prefixI18n + 'comments'} field={record.comments} />
-                        </Grid>
-                    </Grid>
-                </CardContent>
-            </Card>);
+                    </CardContent>
+                </Card>);
         }
         }
     </ShowController>);

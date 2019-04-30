@@ -11,7 +11,7 @@ const AvatarField = ({ record, size }) => (
 );
 
 AvatarField.defaultProps = {
-    size: 25,
+    size: 50,
 };
 
 export default AvatarField;

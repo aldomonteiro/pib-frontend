@@ -1,7 +1,8 @@
-import { UPDATE } from 'react-admin';
+import { UPDATE, GET_ONE, FETCH_END } from 'react-admin';
 
 export const UPDATE_DELIVERY_TIME = 'UPDATE_DELIVERY_TIME';
 export const UPDATE_PICKUP_TIME = 'UPDATE_PICKUP_TIME';
+export const UPDATE_STORES_ADMIN = 'UPDATE_STORES_ADMIN';
 
 
 export const updateDeliveryTime = (id, data, basePath) => ({
@@ -46,4 +47,16 @@ export const updatePickupTime = (id, data, basePath) => ({
             },
         },
     }
+});
+
+// Updating the store from react-admin, as described here:
+// https://stackoverflow.com/a/51229173/7948731
+export const update_stores_admin = (data) => ({
+    type: UPDATE_STORES_ADMIN,
+    payload: { data },
+    meta: {
+        resource: 'stores',
+        fetchResponse: GET_ONE,
+        fetchStatus: FETCH_END,
+    },
 });

@@ -228,6 +228,8 @@ export default {
                 payment_types_type: 'Forma de Pagamento',
                 payment_types_surcharge_percent: 'Acréscimo %',
                 payment_types_surcharge_amount: 'Acréscimo Fixo',
+                default_messages: 'Mensagens Padrão',
+                default_messages_message: 'Mensagem Padrão',
             },
             tabs: {
                 main: 'Principal',

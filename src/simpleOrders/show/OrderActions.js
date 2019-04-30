@@ -14,11 +14,11 @@ import {
     update_printer as updatePrinterAction,
     update_last_order as updateLastOrderAction,
 
-} from '../actions/orderActions';
-import dataProviderFactory from '../dataProvider';
+} from '../../actions/orderActions';
+import dataProviderFactory from '../../dataProvider';
 // import OrderDialog from './create';
-import DeliveryTime from './DeliveryTime';
-import PickupTime from './PickupTime';
+import DeliveryTime from '../DeliveryTime';
+import PickupTime from '../PickupTime';
 import { Badge } from '@material-ui/core';
 
 const cardActionStyle = {

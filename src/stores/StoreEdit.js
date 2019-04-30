@@ -2,12 +2,12 @@ import React from "react";
 import {
     Edit, DisabledInput, BooleanInput, NumberInput, TextInput, SelectInput,
     number, minValue, translate,
-    TabbedForm, FormTab, Toolbar,
+    TabbedForm, FormTab, Toolbar, LongTextInput,
     ArrayInput, SimpleFormIterator
 } from "react-admin";
 import { TimeInput } from 'react-admin-date-inputs';
 import LocationButton from './locationButton';
-import { Grid, Tooltip } from "@material-ui/core";
+import { Grid, Tooltip, FormControl } from "@material-ui/core";
 import shajs from 'sha.js';
 import qz from 'qz-tray';
 import { withStyles } from '@material-ui/core/styles';
@@ -213,6 +213,11 @@ class StoreEdit extends React.Component {
                             <TextInput source='missing_address_notification' />
                             <TextInput source='accept_notification' />
                             <TextInput source='deliver_notification' />
+                            <ArrayInput source='default_messages' style={{ width: '500px' }}>
+                                <SimpleFormIterator>
+                                    <LongTextInput source="default_message" label="resources.stores.fields.default_messages_message" />
+                                </SimpleFormIterator>
+                            </ArrayInput>
                             <ArrayInput source='payment_types'>
                                 <SimpleFormIterator>
                                     <TextInput source="payment_type" label="resources.stores.fields.payment_types_type" />

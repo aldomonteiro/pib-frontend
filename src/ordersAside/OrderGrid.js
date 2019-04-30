@@ -73,7 +73,7 @@ class OrderGrid extends React.Component {
         if (newNotifs.length > 0)
             update_notifications(newNotifs);
 
-        view_order(index, data[index]);
+        view_order(index, data[index], false);
     };
 
 
