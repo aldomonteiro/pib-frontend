@@ -93,9 +93,9 @@ class UpdateTotal extends Component {
     render () {
         const { showDialog, value } = this.state;
         const { classes = {}, translate, record } = this.props;
-        const separatedLines = record && record.details.indexOf('\n') > -1
+        const separatedLines = record && record.details && record.details.indexOf('\n') > -1
             ? record.details.split('\n').map((item, i) => `<p key=${i}>${item}</p>`).join('')
-            : record.details;
+            : record.details ? record.details : record.comments;
         return (
             <Fragment>
                 <Tooltip title={translate('pos.orders.updateOrder')}>
