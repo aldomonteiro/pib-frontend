@@ -229,6 +229,12 @@ class StoreEdit extends React.Component {
                             </ArrayInput>
                         </FormTab>
                         <FormTab label="resources.stores.tabs.messages">
+                            <NumberInput source="autoreply_delay" validate={[number(), minValue(0)]}
+                                label="resources.stores.fields.autoreply_delay"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">seg.</InputAdornment>)
+                                }} />
                             <LongTextInput source='autoreply_notification' />
                             <LongTextInput source='missing_address_notification' />
                             <LongTextInput source='accept_notification' />
