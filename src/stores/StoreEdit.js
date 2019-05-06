@@ -210,15 +210,6 @@ class StoreEdit extends React.Component {
                             <SelectInput source="printer" allowEmpty choices={this.state.printer_choices} />
                             <TextInput source='catalog_url1' />
                             <TextInput source='catalog_url2' />
-                            <LongTextInput source='missing_address_notification' />
-                            <LongTextInput source='accept_notification' />
-                            <LongTextInput source='deliver_notification' />
-                            <LongTextInput source='total_notification' />
-                            <ArrayInput source='default_messages' style={{ width: '500px' }}>
-                                <SimpleFormIterator>
-                                    <LongTextInput source="default_message" label="resources.stores.fields.default_messages_message" />
-                                </SimpleFormIterator>
-                            </ArrayInput>
                             <ArrayInput source='payment_types'>
                                 <SimpleFormIterator>
                                     <TextInput source="payment_type" label="resources.stores.fields.payment_types_type" />
@@ -234,6 +225,18 @@ class StoreEdit extends React.Component {
                                             startAdornment: (
                                                 <InputAdornment position="start">R$</InputAdornment>)
                                         }} />
+                                </SimpleFormIterator>
+                            </ArrayInput>
+                        </FormTab>
+                        <FormTab label="resources.stores.tabs.messages">
+                            <LongTextInput source='autoreply_notification' />
+                            <LongTextInput source='missing_address_notification' />
+                            <LongTextInput source='accept_notification' />
+                            <LongTextInput source='deliver_notification' />
+                            <LongTextInput source='total_notification' />
+                            <ArrayInput source='default_messages' style={{ width: '500px' }}>
+                                <SimpleFormIterator>
+                                    <LongTextInput source="default_message" label="resources.stores.fields.default_messages_message" />
                                 </SimpleFormIterator>
                             </ArrayInput>
                         </FormTab>

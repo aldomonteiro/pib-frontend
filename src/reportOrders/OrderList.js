@@ -54,9 +54,9 @@ const OrderFilter = withStyles(filterStyles)(({ classes, ...props }) => (
             />
         </ReferenceInput>
         <DateInput
-            source="confirmed_at_rangestart"
+            source="createdAt_rangestart"
             alwaysOn />
-        <DateInput source="confirmed_at_rangeend" alwaysOn />
+        <DateInput source="createdAt_rangeend" alwaysOn />
     </Filter>
 ));
 
@@ -73,7 +73,7 @@ class TabbedDatagrid extends React.Component {
 
     state = { ordered: [], delivered: [], cancelled: [] };
 
-    static getDerivedStateFromProps(props, state) {
+    static getDerivedStateFromProps (props, state) {
         if (props.ids !== state[props.filterValues.status3]) {
             return { ...state, [props.filterValues.status3]: props.ids };
         }
@@ -85,7 +85,7 @@ class TabbedDatagrid extends React.Component {
         setFilters({ ...filterValues, status3: value });
     };
 
-    render() {
+    render () {
         const { classes, filterValues, ...props } = this.props;
         return (
             <Fragment>
@@ -119,7 +119,7 @@ class TabbedDatagrid extends React.Component {
                                     {...props}
                                     ids={this.state['pending']}
                                 >
-                                    <DateField source="confirmed_at" showTime locales="pt-BR" />
+                                    <DateField source="createdAt" showTime locales="pt-BR" />
                                     <TextField source="id" />
                                     <CustomerReferenceField />
                                     <TextField source="phone" />
@@ -142,7 +142,7 @@ class TabbedDatagrid extends React.Component {
                                     {...props}
                                     ids={this.state['delivered']}
                                 >
-                                    <DateField source="confirmed_at" showTime locales="pt-BR" />
+                                    <DateField source="createdAt" showTime locales="pt-BR" />
                                     <TextField source="id" />
                                     <CustomerReferenceField />
                                     <NbItemsField />
@@ -163,7 +163,7 @@ class TabbedDatagrid extends React.Component {
                                     {...props}
                                     ids={this.state['cancelled']}
                                 >
-                                    <DateField source="confirmed_at" showTime locales="pt-BR" />
+                                    <DateField source="createdAt" showTime locales="pt-BR" />
                                     <TextField source="id" />
                                     <CustomerReferenceField />
                                     <NbItemsField />
@@ -198,7 +198,7 @@ const Aside = ({ data, ids }) => (
                 style: 'currency',
                 currency: 'BRL',
             }) : 0} */}
-            Valor Total: {ids.length > 0 ? data[ids[0]].asideTotalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 0}
+            Valor Total: {ids.length > 0 ? data[ids[0]].asideTotalAmount ? data[ids[0]].asideTotalAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 0 : 0}
         </Typography>
         <Typography variant="body2" gutterBottom>
             {/* This only shows values from the paginated list. I am using workaround and calculating it in the server side.
@@ -223,10 +223,10 @@ const OrderList = ({ classes, ...props }) => {
         <List
             {...newProps}
             actions={<OrderActions />}
-            sort={{ field: 'confirmed_at', order: 'DESC' }}
+            sort={{ field: 'createdAt', order: 'DESC' }}
             perPage={25}
             aside={<Aside />}
-            filterDefaultValues={{ confirmed_at_rangestart: iniMonth, confirmed_at_rangeend: new Date(), status3: 'pending' }}
+            filterDefaultValues={{ createdAt_rangestart: iniMonth, createdAt_rangeend: new Date(), status3: 'pending' }}
             filters={<OrderFilter />}
         >
             <StyledTabbedDatagrid />

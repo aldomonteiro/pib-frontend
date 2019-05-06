@@ -97,8 +97,8 @@ export default {
         },
         orders: {
             accept: "Aceitar o pedido",
-            confirmAddress: "Confirme o endereço desse pedido",
-            confirmTotal: "Confirme o valor total desse pedido",
+            confirmAddress: "Confirme o endereço do pedido",
+            confirmTotal: "Valor total do pedido",
             updateDetails: "Atualize os detalhes do pedido",
             ordersDate: "Data dos Pedidos",
             defaultQuestion: 'Quer algo para beber?',
@@ -124,8 +124,8 @@ export default {
             rejecting: "Rejeitando o pedido",
             report: "Lista de Pedidos",
             save: "Salvar",
-            send: "Salvar & Enviar Mensagem",
-            sendTotal: "Salvar e Enviar Mensagem",
+            send: "Enviar Mensagem",
+            saveSend: "Salvar e Enviar Mensagem",
             typeQuestion: "Selecione o que será enviado ao cliente",
             updateOrder: 'Atualizar o pedido',
             todayOrders: "Pedidos de hoje",
@@ -191,19 +191,19 @@ export default {
                 price_by_size: 'Preço por Tamanho?',
             },
         },
-        toppings: {
-            name: 'Ingrediente |||| Ingredientes',
-            fields: {
-                topping: 'Ingrediente',
-                toppings: 'Ingredientes',
-            },
-        },
         pricings: {
             name: 'Preço |||| Preços',
             fields: {
                 categoryId: 'Categoria',
                 sizeId: 'Tamanho',
                 price: 'Preço',
+            },
+        },
+        toppings: {
+            name: 'Ingrediente |||| Ingredientes',
+            fields: {
+                topping: 'Ingrediente',
+                toppings: 'Ingredientes',
             },
         },
         beverages: {
@@ -249,6 +249,7 @@ export default {
                 payment_types_surcharge_amount: 'Acréscimo Fixo',
                 missing_address_notification: "Mensagem 'Solicitar Endereço'",
                 accept_notification: "Mensagem 'Aceite do Pedido'",
+                autoreply_notification: "Mensagem de Resposta Automática",
                 deliver_notification: "Mensagem 'Pedido saiu para entrega'",
                 total_notification: "Mensagem com valor total (usar variável $TOTAL)",
                 default_messages: 'Mensagens Padrão',
@@ -259,6 +260,7 @@ export default {
                 openingtimes: 'Horários de Abertura',
                 location: 'Localização',
                 customizing: 'Configurações',
+                messages: 'Mensagens',
                 deliveryFees: 'Taxas de Entrega'
             },
         },

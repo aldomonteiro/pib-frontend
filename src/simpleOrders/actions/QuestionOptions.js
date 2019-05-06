@@ -18,17 +18,32 @@ const styles = theme => ({
     group: {
         margin: `${theme.spacing.unit}px 0`,
     },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 400,
+    },
 });
 
 class RadioButtonsGroup extends React.Component {
     state = {
         value: null,
+        openText: null,
     };
 
     handleChange = event => {
         this.setState({ value: event.target.value });
-        this.props.onChange(event);
+        if (event.target.value !== 'opentext') {
+            this.props.onChange(event);
+        }
     };
+
+    handleChangeText = event => {
+        this.setState({ openText: event.target.value });
+        if (this.state.value === 'opentext') {
+            this.props.onChange(event);
+        }
+    }
 
     render () {
         const { classes, options, label } = this.props;
@@ -47,6 +62,15 @@ class RadioButtonsGroup extends React.Component {
                         {options && options.map(option => (
                             <FormControlLabel key={option._id} value={option.default_message} control={<Radio />} label={option.default_message} />
                         ))}
+                        <FormControlLabel value="opentext" control={<Radio />}
+                            label={<TextField
+                                id="openTextField"
+                                disabled={this.state.value !== 'opentext'}
+                                multiline={true}
+                                className={classes.textField}
+                                value={this.state.openText}
+                                onChange={this.handleChangeText} />
+                            } />
                     </RadioGroup>
                 </FormControl>
             </div>

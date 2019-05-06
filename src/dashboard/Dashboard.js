@@ -34,7 +34,7 @@ const styles = {
 class DashBoard extends Component {
     state = {};
 
-    componentDidMount() {
+    componentDidMount () {
         const { push, translate } = this.props;
         if (!localStorage.getItem("activePage")) {
             push("/pagelist");
@@ -63,21 +63,20 @@ class DashBoard extends Component {
 
             // List Orders
             dataProviderFactory(GET_LIST, 'orders', {
-                filter: { confirmed_at: [filterDate, today] },
+                filter: { createdAt: [filterDate, today] },
                 sort: { field: 'createdAt', order: 'DESC' },
                 pagination: { page: 1, perPage: 9000 },
             })
                 .then(response =>
                     response.data
-                        .filter(order => order.status !== ORDERSTATUS_PENDING)
                         .reduce(
                             (stats, order) => {
-                                if (order.status > ORDERSTATUS_PENDING && order.status < ORDERSTATUS_REJECTED) {
-                                    stats.revenue += order.total;
-                                    stats.nbNewOrders++;
-                                    stats.allOrders.push(order);
+                                stats.nbNewOrders++;
+                                stats.allOrders.push(order);
+                                if (order.status < ORDERSTATUS_REJECTED) {
+                                    stats.revenue += order.total || 0;
                                 }
-                                if (order.status > ORDERSTATUS_PENDING && order.status < ORDERSTATUS_DELIVERED) {
+                                if (order.status < ORDERSTATUS_DELIVERED) {
                                     stats.pendingOrders.push(order);
                                 }
                                 return stats;
@@ -101,11 +100,11 @@ class DashBoard extends Component {
                     let quantityWeek = 0;
 
                     allOrders.map(order => {
-                        const mDate = moment(order.confirmed_at);
-                        const orderWeekDay = moment(order.confirmed_at).weekday();
+                        const mDate = moment(order.createdAt);
+                        const orderWeekDay = moment(order.createdAt).weekday();
 
                         if (mDate.isAfter(iniMonth)) {
-                            revenueMonth += order.total;
+                            revenueMonth += order.total || 0;
                             quantityMonth++;
                         }
 
@@ -115,7 +114,7 @@ class DashBoard extends Component {
                         }
                         else if (mDate.isAfter(endPastWeek)) {
                             thisWeekOrders[orderWeekDay]++;
-                            revenueWeek += order.total;
+                            revenueWeek += order.total || 0;
                             quantityWeek++;
                         }
                         return true;
@@ -184,7 +183,7 @@ class DashBoard extends Component {
     }
 
 
-    render() {
+    render () {
         const { flavors, toppings,
             pendingOrders,
             pendingOrdersCustomers,

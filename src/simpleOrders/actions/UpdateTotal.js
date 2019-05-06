@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Cancel, Edit, Send, Save } from '@material-ui/icons';
 import {
     Tooltip, IconButton, Input, InputAdornment,
-    Dialog, DialogTitle, DialogContent, DialogActions,
+    Dialog, DialogTitle, DialogContent, DialogActions, FormControl, InputLabel, Paper, Typography,
 } from '@material-ui/core';
 import {
     Button as RaButton, translate,
@@ -88,9 +88,14 @@ class UpdateTotal extends Component {
         } else this.setState({ errorValue: true });
     };
 
+    createMarkup = html => { return { __html: html } };
+
     render () {
         const { showDialog, value } = this.state;
-        const { classes = {}, translate } = this.props;
+        const { classes = {}, translate, record } = this.props;
+        const separatedLines = record && record.details.indexOf('\n') > -1
+            ? record.details.split('\n').map((item, i) => `<p key=${i}>${item}</p>`).join('')
+            : record.details;
         return (
             <Fragment>
                 <Tooltip title={translate('pos.orders.updateOrder')}>
@@ -111,15 +116,25 @@ class UpdateTotal extends Component {
                         {translate('pos.orders.updateOrder')}
                     </DialogTitle>
                     <DialogContent>
-                        <div>{translate('pos.orders.confirmTotal')}</div>
-                        <Input
-                            error={this.state.errorValue}
-                            label={this.state.errorValue && translate('pos.orders.messages.invalidTotal')}
-                            id="adornment-amount"
-                            value={this.state.value}
-                            onChange={this.handleChange}
-                            startAdornment={<InputAdornment position="start">R$</InputAdornment>}
-                        />
+                        <Paper className={classes.root} elevation={1}>
+                            <Typography variant='title' component="h3">
+                                {translate('resources.orders.fields.details')}
+                            </Typography>
+                            <Typography component="p">
+                                <span dangerouslySetInnerHTML={this.createMarkup(separatedLines)} />
+                            </Typography>
+                        </Paper>
+                        <FormControl fullWidth className={classes.margin}>
+                            <InputLabel htmlFor="adornment-amount">{translate('pos.orders.confirmTotal')}</InputLabel>
+                            <Input
+                                error={this.state.errorValue}
+                                label={this.state.errorValue && translate('pos.orders.messages.invalidTotal')}
+                                id="adornment-amount"
+                                value={this.state.value}
+                                onChange={this.handleChange}
+                                startAdornment={<InputAdornment position="start">R$</InputAdornment>}
+                            />
+                        </FormControl>
                     </DialogContent>
                     <DialogActions>
                         <RaButton

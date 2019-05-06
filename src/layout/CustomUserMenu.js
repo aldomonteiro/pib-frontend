@@ -83,7 +83,7 @@ class CustomUserMenu extends React.Component {
                                     : <MenuItem key={notif.id}>
                                         <Button onClick={() => push('/orders')}>
                                             <Info />
-                                            {translate('pos.orders.newOrder') + ' - ' + notif.id + ' - ' + new Date(notif.confirmed_at).toLocaleTimeString('pt-BR')}
+                                            {translate('pos.orders.newOrder') + ' - ' + notif.id}
                                         </Button>
                                     </MenuItem>)}
                         </UserMenu>

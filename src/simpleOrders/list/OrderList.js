@@ -29,7 +29,7 @@ const OrderFilter = (props) => {
     // in the component orderListAside, so, I am explicitly removing it.
     if (props.filterValues) {
         const { filterValues, ...rest } = props;
-        let { status3, confirmed_at_rangestart, confirmed_at_rangeend, ...newFilters } = filterValues;
+        let { status3, createdAt_rangestart, createdAt_rangeend, ...newFilters } = filterValues;
         if (!newFilters || Object.keys(newFilters).length === 0)
             newFilters = { createdAt: new Date() };
 
@@ -76,7 +76,7 @@ class OrderList extends React.Component {
         moment.locale(resolveBrowserLocale())
 
         dataProvider(GET_LIST, 'orders', {
-            // filter: { confirmed_at: dateValue }, // Get date from Filter.
+            // filter: { createdAt: dateValue }, // Get date from Filter.
             sort: { field: 'updatedAt', order: 'DESC' },
             pagination: { page: 1, perPage: 100 },
         })

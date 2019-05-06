@@ -55,7 +55,7 @@ class CardComments extends React.Component {
     }
 
     render () {
-        const { classes, text, translate, title, record } = this.props;
+        const { classes, text, translate, title, record, showButton } = this.props;
         const { showDialog, value } = this.state;
         const separatedLines = text && text.indexOf('\n') > -1
             ? text.split('\n').map((item, i) => `<p key=${i}>${item}</p>`).join('')
@@ -63,16 +63,23 @@ class CardComments extends React.Component {
         return (
             <div>
                 <Card className={classes.card}>
-                    <CardHeader
-                        action={
-                            <IconButton onClick={this.handleOpen} color="primary">
-                                <Edit />
-                            </IconButton>}
+                    {showButton ? (
+                        <CardHeader
+                            action={
+                                <IconButton onClick={this.handleOpen} color="primary">
+                                    <Edit />
+                                </IconButton>}
+                            title={title}
+                            subheader={
+                                <span style={{ lineHeight: 0.9 }} dangerouslySetInnerHTML={this.createMarkup(separatedLines)} />
+                            }
+                        />
+                    ) : (<CardHeader
                         title={title}
                         subheader={
                             <span style={{ lineHeight: 0.9 }} dangerouslySetInnerHTML={this.createMarkup(separatedLines)} />
                         }
-                    />
+                    />)}
                 </Card>
                 <Dialog fullWidth
                     open={showDialog}

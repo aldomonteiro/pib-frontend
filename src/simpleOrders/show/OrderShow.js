@@ -111,7 +111,7 @@ const OrderShow = props => {
                         <div className={classes.contentDiv}>
                             <Grid container spacing={8}>
                                 <Grid item xs={12}>
-                                    <CardDetails record={record} title={translate(prefixI18n + 'details')} text={record.details} />
+                                    <CardDetails showButton={true} record={record} title={translate(prefixI18n + 'details')} text={record.details} />
                                 </Grid>
                                 {record && record.postComments && (
                                     <Grid item xs={12}>

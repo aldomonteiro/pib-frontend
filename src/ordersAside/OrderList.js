@@ -9,19 +9,19 @@ const OrderFilter = (props) => {
     // in the component orderListAside, so, I am explicitly removing it.
     if (props.filterValues) {
         const { filterValues, ...rest } = props;
-        let { status3, confirmed_at_rangestart, confirmed_at_rangeend, ...newFilters } = filterValues;
+        let { status3, createdAt_rangestart, createdAt_rangeend, ...newFilters } = filterValues;
         if (!newFilters || Object.keys(newFilters).length === 0)
-            newFilters = { confirmed_at: new Date() };
+            newFilters = { createdAt: new Date() };
 
         return (
             <Filter filterValues={newFilters} {...rest}>
-                <DateInput source="confirmed_at" alwaysOn />
+                <DateInput source="createdAt" alwaysOn />
             </Filter>
         );
     } else {
         return (
             <Filter {...props}>
-                <DateInput source="confirmed_at" alwaysOn />
+                <DateInput source="createdAt" alwaysOn />
             </Filter>
         );
     }

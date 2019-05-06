@@ -29,6 +29,14 @@ const styles = theme => ({
     formControl: {
         margin: theme.spacing.unit,
     },
+    margin: {
+        margin: theme.spacing.unit,
+    },
+    root: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+    },
 });
 
 export default styles;

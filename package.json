@@ -33,6 +33,7 @@
     "react-data-grid": "^6.1.0-0",
     "react-data-grid-addons": "^6.1.0-0",
     "react-dom": "^16.8.6",
+    "react-draggable": "^3.3.0",
     "react-geolocated": "^2.4.0",
     "react-icons": "^3.2.2",
     "react-number-format": "^4.0.7",

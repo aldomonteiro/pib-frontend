@@ -71,20 +71,20 @@ const OrderEdit = ({ classes, ...props }) => (
                                 />
                                 <TextInput source="phone" />
                                 <TextInput source="address" />
-                                <TextInput source="payment_type" />
+                                {/* <TextInput source="payment_type" />
                                 <NumberInput source="surcharge_percent" validate={[number(), minValue(0)]}
                                     label="resources.stores.fields.payment_types_surcharge_percent"
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">%</InputAdornment>)
-                                    }} />
-                                <NumberInput source="surcharge_amount" validate={[number(), minValue(0)]}
-                                    label="resources.stores.fields.payment_types_surcharge_amount"
+                                    }} /> */}
+                                <NumberInput source="total" validate={[number(), minValue(0)]}
+                                    label="resources.orders.fields.total"
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">R$</InputAdornment>)
                                     }} />
-                                <FormDataConsumer>
+                                {/* <FormDataConsumer>
                                     {
                                         ({ formData, ...rest }) => formData.payment_type === 'payment_money'
                                             &&
@@ -97,11 +97,11 @@ const OrderEdit = ({ classes, ...props }) => (
                                                 {...rest}
                                             />
                                     }
-                                </FormDataConsumer>
+                                </FormDataConsumer> */}
                                 {/* <BooleanInput source="returned" /> */}
                             </SimpleForm>
                         </Card>
-                        <Basket record={record} />
+                        {record && record.items && (<Basket record={record} />)}
                     </div>
                 ) : (
                         ''

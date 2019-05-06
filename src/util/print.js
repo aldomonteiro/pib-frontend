@@ -12,7 +12,7 @@ const printData = orderData => {
         ^CF0,60
         ^FO300,50^FDPedido ${orderData.id}^FS
         ^CF0,40
-        ^FO260,100^FDData: ${orderData.confirmed_at}^FS
+        ^FO260,100^FDData: ${orderData.createdAt}^FS
 
         ^FX Divider
         ^FO50,150^GB700,1,3^FS
