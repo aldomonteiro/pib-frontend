@@ -1,4 +1,4 @@
-import { UPDATE, GET_ONE, FETCH_END } from 'react-admin';
+import { UPDATE, GET_LIST, DELETE_MANY, FETCH_END } from 'react-admin';
 
 export const ACCEPT_ORDER = 'ACCEPT_ORDER';
 export const REJECT_ORDER = 'REJECT_ORDER';
@@ -14,6 +14,7 @@ export const ADD_NEW_ORDER = 'ADD_NEW_ORDER';
 export const REMOVE_ORDER = 'REMOVE_ORDER';
 export const UPDATE_ORDER_DATA = 'UPDATE_ORDER_DATA';
 export const UPDATE_ORDER_ADMIN = 'UPDATE_ORDER_ADMIN';
+export const REFRESH_ORDER_ADMIN = 'REFRESH_ORDER_ADMIN';
 
 export const accept_order = (operation, id, data, basePath) => ({
     type: ACCEPT_ORDER,
@@ -172,14 +173,24 @@ export const add_new_order = (newOrder) => ({
     payload: { newOrder },
 });
 
+export const refresh_orders_admin = (data) => ({
+    type: DELETE_MANY,
+    payload: { ids: data },
+    meta: {
+        resource: 'orders'
+    },
+});
+
 // Updating the store from react-admin, as described here:
 // https://stackoverflow.com/a/51229173/7948731
-export const update_orders_admin = (data) => ({
+export const update_orders_admin = (data, oldIDS) => ({
     type: UPDATE_ORDER_ADMIN,
-    payload: { data },
+    payload: { data, ids: oldIDS },
     meta: {
         resource: 'orders',
-        fetchResponse: GET_ONE,
+        optimistic: true,
+        fetch: DELETE_MANY,
+        fetchResponse: GET_LIST,
         fetchStatus: FETCH_END,
     },
 });

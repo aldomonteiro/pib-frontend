@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 import { ShowController, ReferenceField, translate } from 'react-admin';
-import TypoField from '../TypoField';
+import { connect } from 'react-redux';
 import {
     Card, CardHeader, CardContent, CardActions, Grid, Paper
 } from '@material-ui/core';
@@ -16,8 +16,6 @@ import RejectOrderDialog from '../actions/RejectOrderDialog';
 import PrintOrder from '../actions/PrintOrder';
 import DeliverOrder from '../actions/DeliverOrder';
 import MoreMenu from '../actions/MoreMenu';
-import UpdateAddress from '../actions/UpdateAddress';
-import UpdateTotal from '../actions/UpdateTotal';
 import MissingAddress from '../actions/MissingAddress';
 import OpenQuestion from '../actions/OpenQuestion';
 import {
@@ -86,11 +84,22 @@ const OrderShowActions = enhance(({ classes, record, ...rest }) => (
 
 const OrderShow = props => {
     const { classes, translate, ...rest } = props;
-    return (<ShowController {...rest}>
+    let hideOrder = true;
+    if (rest.orders) {
+        for (const orderId of Object.keys(rest.orders)) {
+            if (orderId == rest.id) {
+                hideOrder = false;
+                break;
+            }
+
+        }
+    }
+    if (hideOrder) return (<div></div>);
+    else return (<ShowController {...rest}>
         {controllerProps => {
             const { record } = controllerProps;
             const prefixI18n = 'resources.orders.fields.';
-            const refDate = record ? record.confirmed_at ? record.confirmed_at : record.updatedAt : null;
+            const refDate = record ? record.confirmed_at ? record.confirmed_at : record.createdAt : null;
             return record && (<div className={classes.scroll}>
                 <Card>
                     <CardHeader
@@ -157,9 +166,14 @@ OrderShow.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = state => ({
+    orders: state.admin.resources.orders.data
+});
+
 const enhanceShow = compose(
     translate,
-    withStyles(styles)
+    withStyles(styles),
+    connect(mapStateToProps, null)
 )
 
 export default enhanceShow(OrderShow);

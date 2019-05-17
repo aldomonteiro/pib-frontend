@@ -20,7 +20,11 @@ import {
     update_notifications as updateNotificationsAction,
     set_connected as setConnectedAction,
 } from '../actions/notificationsActions';
-// import SocketContext from '../socketContext'
+
+import {
+    add_log as addLogAction,
+} from '../actions/logsActions';
+
 
 import MySnackBar from './SnackBar';
 
@@ -40,55 +44,89 @@ class Notifications extends React.Component {
     state = {
         showNotification: false,
         messageInfo: {},
+        connected: false,
     }
 
     componentDidMount () {
-        const { socket, isConnected, set_connected } = this.props;
+        const { socket, isConnected, set_connected, add_log } = this.props;
+        console.log('componentDidMount:', socket ? socket.connected : 'socket is null');
         if (socket) {
-            if (!isConnected) { // reducer
-                // const pageID = localStorage.getItem("activePage");
-                // socket = io(process.env.REACT_APP_API_URL + '?pageID=' + pageID, { forceNew: true });
-                socket.once('connect', () => {
-                    const pageID = localStorage.getItem('activePage');
-                    // replying to the server.
-                    socket.emit('acknowledgment', pageID);
+            // if (!isConnected) { // reducer
 
-                    socket.on('new-order', data => {
-                        const { view_order, update_last_order, update_orders_admin } = this.props;
-                        update_orders_admin(data);
-                        update_last_order(data);
-                        view_order(data.id, data, true);
-                        this.handleOpen('new-order', data);
-                    });
-                    socket.on('new-comment', data => {
-                        const { add_notification, view_order } = this.props;
-                        add_notification({ new_comment: true, ...data });
-                        // update_last_order(data);
-                        view_order(data.id, data, true);
-                        this.handleOpen('new-comment', data);
-                    });
-                    socket.on('talk-to-human', data => {
-                        const { add_notification } = this.props;
-                        add_notification(data)
-                        this.handleOpen('notification', data);
-                    });
-                    socket.on('reconnect_attempt', (attempt) => {
-                        console.log('reconnecting attempt ' + attempt);
-                        const pageID = localStorage.getItem('activePage');
-                        socket.emit('acknowledgment', pageID);
-                    });
-                    socket.on('disconnect', () => {
-                        console.log('disconnected..');
-                        set_connected(false);
-                    });
-                    socket.on('connect_error', (err) => {
-                        console.log(err);
-                        set_connected(false);
-                    });
-                });
-                set_connected(true); // reducer
+            if (socket.connected && !this.state.connected) {
+                console.log('componentDidMount: reconnecting socket');
+
+                socket.close();
+                socket.open();
             }
+
+            socket.once('connect', () => {
+                const pageID = localStorage.getItem('activePage');
+                const timeStamp = sessionStorage.getItem('timeStamp');
+
+                const id = { origin: 'web', pageID: pageID, timeStamp: timeStamp }
+
+                // sending first message to server, so the server
+                // can store who is connected
+                socket.emit('acknowledgment', id);
+                add_log('emitted ack:' + socket.id + ' timeStamp:' + timeStamp);
+
+                socket.on('new-order', data => {
+                    const { view_order, update_last_order, update_orders_admin } = this.props;
+                    update_orders_admin(data);
+                    update_last_order(data);
+                    view_order(data.id, data, true);
+                    this.handleOpen('new-order', data);
+                });
+                socket.on('new-comment', data => {
+                    const { add_notification, view_order } = this.props;
+                    add_notification({ new_comment: true, ...data });
+                    // update_last_order(data);
+                    view_order(data.id, data, true);
+                    // this.handleOpen('new-comment', data);
+                });
+                socket.on('talk-to-human', data => {
+                    const { add_notification } = this.props;
+                    add_notification(data)
+                    this.handleOpen('notification', data);
+                });
+                socket.on('reconnect_attempt', (attempt) => {
+                    const { add_log } = this.props;
+                    add_log(' reconnect_attempt n.' + attempt);
+                    console.log('reconnecting attempt ' + attempt);
+                    const pageID = localStorage.getItem('activePage');
+                    const timeStamp = sessionStorage.getItem('timeStamp');
+                    const id = { origin: 'web', pageID: pageID, timeStamp: timeStamp }
+
+                    socket.emit('acknowledgment', id);
+                });
+                socket.on('ack_ok', (data) => {
+                    const { add_log } = this.props;
+                    add_log('ack_ok from server');
+                    this.setState({ connected: true });
+                    // const timeOut = this.state.timeOut;
+                    // if (timeOut) {
+                    //     clearTimeout(timeOut);
+                    //     console.log('clearing timeout function');
+                    //     // this.setState({ timeOut: null });
+                    // }
+                });
+                socket.on('disconnect', (reason) => {
+                    const { add_log } = this.props;
+                    add_log('disconnection reason:' + reason);
+                    console.log('disconnected for reason:', reason);
+                    set_connected(false);
+                });
+                socket.on('error', (err) => {
+                    const { add_log } = this.props;
+                    add_log('error:' + err.message);
+                    console.log(err);
+                    set_connected(false);
+                });
+            });
+            set_connected(true); // reducer
         }
+        // }
     }
 
     handleOpen = (type, data) => {
@@ -150,6 +188,7 @@ const mapStateToProps = state => ({
     lastOrder: state.ordersReducer.lastOrder,
     lastOrders: state.ordersReducer.lastOrders,
     notifications: state.notificationsReducer.notifications,
+    isConnected: state.notificationsReducer.isConnected,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -162,6 +201,7 @@ const mapDispatchToProps = dispatch => {
         add_notification: bindActionCreators(addNotificationsAction, dispatch),
         update_notifications: bindActionCreators(updateNotificationsAction, dispatch),
         set_connected: bindActionCreators(setConnectedAction, dispatch),
+        add_log: bindActionCreators(addLogAction, dispatch),
     }
 };
 

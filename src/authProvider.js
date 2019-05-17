@@ -19,7 +19,8 @@ export default async (type, params) => {
                 if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
                 if (user.activePage) localStorage.setItem('activePage', user.activePage);
             }
-
+            console.log('authProvider first if setting timeStamp');
+            sessionStorage.setItem('timeStamp', Date.now());
             return Promise.resolve();
 
         } else {
@@ -41,7 +42,8 @@ export default async (type, params) => {
                 if (user.accessToken) localStorage.setItem('accessToken', user.accessToken);
                 if (user.activePage) localStorage.setItem('activePage', user.activePage);
             }
-
+            console.log('authProvider second if setting timeStamp');
+            sessionStorage.setItem('timeStamp', Date.now());
             return Promise.resolve();
         }
     }
@@ -70,6 +72,8 @@ export default async (type, params) => {
 
     if (type === AUTH_CHECK) {
         const response = await fbGetLoginStatus();
+
+        sessionStorage.setItem('timeStamp', Date.now());
 
         if (response.status === 'connected') {
             if (localStorage.getItem('token')) {

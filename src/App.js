@@ -31,6 +31,7 @@ import locationReducer from './reducers/location';
 import ordersReducer from './reducers/ordersReducer';
 import printerReducer from './reducers/printer';
 import notificationsReducer from './reducers/notifications';
+import logsReducer from './reducers/logsReducer';
 
 import simpleRestProvider from 'ra-data-simple-rest';
 
@@ -89,7 +90,11 @@ const socket = io(process.env.REACT_APP_API_URL, {
 const App = () => (
     <SocketContext.Provider value={socket}>
         <Admin
-            customReducers={{ pagesReducer, locationReducer, ordersReducer, printerReducer, notificationsReducer }}
+            customReducers={{
+                pagesReducer,
+                locationReducer, ordersReducer, printerReducer,
+                notificationsReducer, logsReducer
+            }}
             dashboard={Dashboard}
             loginPage={CustomLogin}
             authProvider={authProvider}

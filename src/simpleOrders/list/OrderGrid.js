@@ -9,7 +9,6 @@ import { translate, refreshView as refreshAction } from 'react-admin';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import {
     update_orders_list as updateOrdersListAction,
     view_order as viewOrderAction,
@@ -19,6 +18,7 @@ import {
     remove_notification as removeNotificationAction,
 } from '../../actions/notificationsActions';
 import { ORDERSTATUS_VIEWED } from '../../util';
+import Skeleton from 'react-loading-skeleton';
 
 const styles = theme => ({
     root: {
@@ -76,30 +76,30 @@ class OrderGrid extends React.Component {
     };
 
     render () {
-        const { classes, data, translate, ...rest } = this.props;
+        const { classes, data, translate, listLoading, ...rest } = this.props;
         const { selectedIndex } = this.state;
         return (<div className={classes.root}>
             <div className={classes.sideBar}>
-                <List component="nav">
-                    {Object.values(data).sort((a, b) => a.changed_at < b.changed_at ? 1 : -1).map(order =>
-                        (
-                            <React.Fragment key={order.id}>
-                                <OrderItemList
-                                    id={order.id}
-                                    order={order}
-                                    handleListItemClick={this.handleListItemClick}
-                                    selected={selectedIndex} {...rest} />
-                                <Divider />
-                            </React.Fragment>
-                        )
-                    )}
-                </List>
+                {listLoading ? <Skeleton count={20} height='50px' /> :
+                    <List component="nav">
+                        {data && Object.values(data).sort((a, b) => a.changed_at < b.changed_at ? 1 : -1).map(order =>
+                            (
+                                <React.Fragment key={order.id}>
+                                    <OrderItemList
+                                        id={order.id}
+                                        order={order}
+                                        handleListItemClick={this.handleListItemClick}
+                                        selected={selectedIndex} {...rest} />
+                                    <Divider />
+                                </React.Fragment>
+                            )
+                        )}
+                    </List>
+                }
             </div>
-            {selectedIndex &&
-                (<div className={classes.details}>
-                    <OrderShow id={selectedIndex} {...rest} />
-                </div>)
-            }
+            <div className={classes.details}>
+                {listLoading ? <Skeleton height='50vh' /> : data && selectedIndex && <OrderShow id={selectedIndex} {...rest} />}
+            </div>
         </div>)
     }
 }

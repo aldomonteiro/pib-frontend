@@ -4,7 +4,6 @@ export default {
     ...englishMessages,
     pos: {
         search: 'Search',
-        configuration: 'Configuration',
         language: 'Language',
         areYouSure: 'Você tem certeza disso?',
         deleting: 'Apagando ',
@@ -24,6 +23,23 @@ export default {
         },
         categories: {
             changeCategory: 'Alterar Categorias em Massa',
+        },
+        configuration: {
+            title: 'Dados Financeiros',
+            creditCardHeader: 'Informe o número do seu Cartão de Crédito',
+            paymentMethod: 'Forma de Pagamento',
+            creditCard: 'Número do Cartão',
+            creditCardName: 'Nome Impresso no Cartão',
+            dueDate: 'Válido até',
+            cvc: 'Cód.',
+            updateSuccess: 'Dados financeiros atualizados com sucesso!',
+            updateFailues: 'Houve um erro durante a atualização dos seus dados financeiros',
+            messages: {
+                invalidCreditCard: 'O número de cartão de crédito informado é inválido'
+            },
+            server: {
+                title: 'Configuração do Servidor',
+            }
         },
         customer: {
             messages: {
@@ -96,15 +112,40 @@ export default {
             clear: 'Limpar notificação'
         },
         orders: {
-            todayOrders: "Pedidos de hoje",
-            rejecting: "Rejeitando o pedido",
-            map: "Ver no mapa",
-            report: "Lista de Pedidos",
-            print: "Imprimir",
             accept: "Aceitar o pedido",
-            reject: "Rejeitar o pedido",
-            deliver: "Enviar pedido para entrega",
+            confirmAddress: "Confirme o endereço do pedido",
+            confirmTotal: "Valor total do pedido",
+            updateDetails: "Atualize os detalhes do pedido",
+            ordersDate: "Data dos Pedidos",
+            defaultQuestion: 'Quer algo para beber?',
             defaultRejectionReason: "Infelizmente seu endereço está fora da nossa área de atendimento.",
+            deliver: "Enviar pedido para entrega",
+            map: "Ver no mapa",
+            messages: {
+                invalidTotal: 'O valor informado é inválido. Informe um valor válido.',
+            },
+            missingAddress: "Solicitar endereço",
+            new: {
+                title: "Novo Pedido",
+                chooseSize: "Tamanho",
+                chooseFlavor: "Produto",
+                chooseBeverage: "Bebida",
+            },
+            newComment: 'Novo Comentário',
+            newOrder: 'Novo Pedido',
+            newOrders: 'Novos Pedidos',
+            openQuestion: "Enviar mensagem",
+            print: "Imprimir",
+            reject: "Rejeitar o pedido",
+            rejecting: "Rejeitando o pedido",
+            report: "Lista de Pedidos",
+            save: "Salvar",
+            send: "Enviar Mensagem",
+            saveSend: "Salvar e Enviar Mensagem",
+            typeQuestion: "Selecione o que será enviado ao cliente",
+            updateOrder: 'Atualizar o pedido',
+            todayOrders: "Pedidos de hoje",
+            total: "Total do Pedido",
             status: {
                 pending: "Pendente",
                 viewed: "Aguard. Análise",
@@ -112,19 +153,13 @@ export default {
                 accepted: "Aceito - Pend.",
                 printed: "Impresso",
                 delivered: "Entregue",
+                finished: "Finalizado",
                 rejected: "Rejeitado",
                 cancelled: "Cancelled"
-            },
-            new: {
-                title: "Novo Pedido",
-                chooseSize: "Tamanho",
-                chooseFlavor: "Produto",
-                chooseBeverage: "Bebida",
             },
             deliveryTime: 'Tempo de Entrega',
             pickupTime: 'Tempo de Reirada',
             selectAnOrder: 'Selecione um pedido na lista de pedidos',
-            newOrders: 'Novos Pedidos',
         },
         ordersmap: {
             title: "Pedidos no mapa",
@@ -146,20 +181,6 @@ export default {
         pages: {
             select: 'Selecionar',
         },
-        configuration: {
-            title: 'Dados Financeiros',
-            creditCardHeader: 'Informe o número do seu Cartão de Crédito',
-            paymentMethod: 'Forma de Pagamento',
-            creditCard: 'Número do Cartão',
-            creditCardName: 'Nome Impresso no Cartão',
-            dueDate: 'Válido até',
-            cvc: 'Cód.',
-            updateSuccess: 'Dados financeiros atualizados com sucesso!',
-            updateFailues: 'Houve um erro durante a atualização dos seus dados financeiros',
-            messages: {
-                invalidCreditCard: 'O número de cartão de crédito informado é inválido'
-            }
-        },
     },
     resources: {
         flavors: {
@@ -172,19 +193,19 @@ export default {
                 price_by_size: 'Preço por Tamanho?',
             },
         },
-        toppings: {
-            name: 'Ingrediente |||| Ingredientes',
-            fields: {
-                topping: 'Ingrediente',
-                toppings: 'Ingredientes',
-            },
-        },
         pricings: {
             name: 'Preço |||| Preços',
             fields: {
                 categoryId: 'Categoria',
                 sizeId: 'Tamanho',
                 price: 'Preço',
+            },
+        },
+        toppings: {
+            name: 'Ingrediente |||| Ingredientes',
+            fields: {
+                topping: 'Ingrediente',
+                toppings: 'Ingredientes',
             },
         },
         beverages: {
@@ -198,6 +219,14 @@ export default {
         stores: {
             name: 'Loja |||| Lojas',
             fields: {
+                accept_notification: "Mensagem 'Aceite do Pedido'",
+                autoreply_delay: "Tempo Resp. Automática (em segundos)",
+                autoreply_notification: "Mensagem de Resposta Automática",
+                catalog_url1: 'URL do Cardápio 1',
+                catalog_url2: 'URL do Cardápio 2',
+                default_messages: 'Mensagens Padrão',
+                default_messages_message: 'Mensagem Padrão',
+                deliver_notification: "Mensagem 'Pedido saiu para entrega'",
                 name: 'Nome',
                 address: 'Endereço',
                 city: 'Cidade',
@@ -222,20 +251,19 @@ export default {
                 saturday: 'Sábado',
                 holyday: 'Feriados',
                 printer: 'Impressora',
-                catalog_url1: 'URL do Cardápio 1',
-                catalog_url2: 'URL do Cardápio 2',
                 payment_types: 'Formas de Pagamento',
                 payment_types_type: 'Forma de Pagamento',
                 payment_types_surcharge_percent: 'Acréscimo %',
                 payment_types_surcharge_amount: 'Acréscimo Fixo',
-                default_messages: 'Mensagens Padrão',
-                default_messages_message: 'Mensagem Padrão',
+                missing_address_notification: "Mensagem 'Solicitar Endereço'",
+                total_notification: "Mensagem com valor total (usar variável $TOTAL)",
             },
             tabs: {
                 main: 'Principal',
                 openingtimes: 'Horários de Abertura',
                 location: 'Localização',
                 customizing: 'Configurações',
+                messages: 'Mensagens',
                 deliveryFees: 'Taxas de Entrega'
             },
         },
@@ -245,6 +273,7 @@ export default {
                 name: 'Nome',
                 greetingText: 'Saudação do Facebook',
                 firstResponseText: 'Primeira resposta do bot ($NAME = será substituído pelo nome do cliente)',
+                orderExample: 'Exemplo dos dados que precisam ser enviados para um pedido rápido. ($TEMPOENTREGAR e $TEMPORETIRAR são variaveis)',
                 activeBot: 'Bot ativo?',
             },
             actions: {
@@ -316,6 +345,7 @@ export default {
                 id: 'ID',
                 customer: 'Cliente',
                 customerId: 'Cliente',
+                details: 'Detalhes',
                 status2: 'Status',
                 createdAt: 'Data Criação',
                 updatedAt: 'Data Atualização',
@@ -325,13 +355,14 @@ export default {
                 payment_type: 'Forma de Pagamento',
                 delivery_type: 'Entrega/Retira',
                 payment_change: 'Levar Troco?',
-                comments: 'Observações',
+                comments: 'Dados do Pedido',
                 confirmed_at: 'Data pedido',
                 confirmed_at_rangestart: 'Início',
                 confirmed_at_rangeend: 'Fim',
                 delivery_fee: 'Taxa de Entrega',
                 surcharge_percent: '% Forma de Pagto.',
                 surcharge_amount: 'Acréscimo Forma de Pagto.',
+                total: "Total",
                 basket: {
                     reference: "Referência",
                     unit_price: "Preço Unit.",
@@ -344,9 +375,18 @@ export default {
                 warningBeforeReject: "Ao executar essa ação, o cliente receberá um aviso que o pedido não será atendido. Por favor informe o motivo que será enviado ao cliente.",
                 successfulAcceptedOrder: "Pedido aceito com sucesso.",
                 successfulPrintedOrder: "Pedido impresso com sucesso.",
-                successfulDeliveredOrder: "Pedido atualizado como entregue com sucesso.",
                 successfullRejectedOrder: "Pedido rejeitado.",
-                errorViewing: 'Houve um erro ao tentar atualizar a base de dados, tente novamente.'
+                errorViewing: 'Houve um erro ao tentar atualizar a base de dados, tente novamente.',
+                success: {
+                    notifyCustomer: "Aviso enviado com sucesso",
+                    deliveredOrder: "Pedido atualizado como entregue com sucesso.",
+                    updatedOrder: "Pedido atualizado com sucesso.",
+                },
+                failure: {
+                    notifyCustomer: "Erro ao enviar aviso. Envie manualmente pelo Whatsapp.",
+                    deliveredOrder: "Erro ao atualizar o status do pedido. Tente novamente por favor",
+                    updatedOrder: "Erro ao atualizar o pedido. Tente novamente por favor",
+                }
             }
         },
         reportOrders: {

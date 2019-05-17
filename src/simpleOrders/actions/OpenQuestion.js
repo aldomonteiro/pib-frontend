@@ -45,7 +45,6 @@ class NotifyCustomer extends Component {
     async componentDidMount () {
         const { translate, store, update_stores_admin } = this.props;
         this.setState({ question: translate('pos.orders.defaultQuestion') });
-        console.log(store[1])
         if (!store[1]) {
             const res = await dataProviderFactory(GET_ONE, 'stores', { id: 1 });
             update_stores_admin(res.data);
@@ -76,7 +75,6 @@ class NotifyCustomer extends Component {
         const { showDialog } = this.state;
         const { label = 'pos.orders.send', classes = {}, record, translate } = this.props;
         const { store } = this.props;
-        console.log(store);
         return (
             <Fragment>
                 <Tooltip title={translate('pos.orders.send')}>

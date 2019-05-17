@@ -1,51 +1,29 @@
 import React from 'react';
 import {
-    List,
-    DateInput,
-    Filter,
     GET_LIST,
-    resolveBrowserLocale,
     translate,
     withDataProvider
 } from 'react-admin';
 import { withStyles } from '@material-ui/core/styles';
-import { Divider } from '@material-ui/core';
-
+import Divider from '@material-ui/core/Divider';
+import { InlineDatePicker, MuiPickersUtilsProvider } from "material-ui-pickers";
+import MomentUtils from '@date-io/moment';
+import moment from 'moment';
+import "moment/locale/pt-br";
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { bindActionCreators } from 'redux';
 
-import moment from 'moment';
 import OrderGrid from './OrderGrid';
 import LoadingPage from '../../components/LoadingPage';
 import {
     update_orders_list as updateOrdersListAction,
     update_orders_admin as updateOrdersAdminAction,
+    refresh_orders_admin as refreshOrdersAdminAction,
 } from '../../actions/orderActions';
 // import DatePicker from '../../components/DatePicker';
 
-const OrderFilter = (props) => {
-    // This filter is set in the old orderList, and it does not exist
-    // in the component orderListAside, so, I am explicitly removing it.
-    if (props.filterValues) {
-        const { filterValues, ...rest } = props;
-        let { status3, createdAt_rangestart, createdAt_rangeend, ...newFilters } = filterValues;
-        if (!newFilters || Object.keys(newFilters).length === 0)
-            newFilters = { createdAt: new Date() };
-
-        return (
-            <Filter filterValues={newFilters} {...rest}>
-                <DateInput source="createdAt" alwaysOn />
-            </Filter>
-        );
-    } else {
-        return (
-            <Filter {...props}>
-                <DateInput source="createdAt" alwaysOn />
-            </Filter>
-        );
-    }
-}
+moment.locale('pt-br');
 
 const styles = theme => ({
     divloader: {
@@ -58,40 +36,35 @@ const styles = theme => ({
     formControl: {
         margin: theme.spacing.unit,
     },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
 });
-
 
 class OrderList extends React.Component {
     state = {
         ids: [],
         orders: [],
         isLoading: true,
-        dateValue: new Date(),
+        filterDate: new Date(),
     }
 
     filterValues () {
-        const { dataProvider } = this.props;
-        const { dateValue } = this.state;
-
-        moment.locale(resolveBrowserLocale())
-
+        const { dataProvider, update_orders_admin, refresh_orders_admin, orders } = this.props;
+        const { filterDate } = this.state;
         dataProvider(GET_LIST, 'orders', {
-            // filter: { createdAt: dateValue }, // Get date from Filter.
+            filter: { updatedAt: filterDate }, // Get date from Filter.
             sort: { field: 'updatedAt', order: 'DESC' },
-            pagination: { page: 1, perPage: 100 },
-        })
-            .then(response => this.setState({ isLoading: false }));
-        // .then(response => response.data)
-        // .then(orders => {
-        //     const ids = [];
-        //     // const data = {};
-        //     for (const order of orders) {
-        //         ids.push(order.id);
-        //         // data[order.id] = order;
-        //     }
-        //     // this.setState({ ids: ids, data: data }, () => this.setState({ isLoading: false }));
-        //     this.setState({ ids: ids }, () => this.setState({ isLoading: false }));
-        // });
+            pagination: { page: 1, perPage: 999 },
+        }).then(response => response.data)
+            .then(data => {
+                const foundOrders = data && data.length > 0 ? data : [];
+                const ids = orders ? Object.keys(orders) : [];
+                update_orders_admin(foundOrders, ids);
+                this.setState({ isLoading: false })
+            });
     }
 
     componentDidMount () {
@@ -105,38 +78,34 @@ class OrderList extends React.Component {
     }
 
     handleChange = (e) => {
-        this.setState({ dateValue: e.target.value });
-        this.filterValues();
+        console.log(e);
+        this.setState({ filterDate: e._d, isLoading: true }, () => this.filterValues());
     }
 
-    // render () {
-    //     const { updateOrdersList, translate, classes, ...rest } = this.props;
-    //     const { ids, data, isLoading, dateValue } = this.state;
-    //     return isLoading ? <LoadingPage className={classes.divloader} />
-    //         : (
-    //             <React.Fragment>
-    //                 {/* <DatePicker value={dateValue} handleChange={this.handleChange} />
-    //                 <Divider /> */}
-    //                 <OrderGrid
-    //                     ids={ids}
-    //                     data={data}
-    //                     basePath="/orders"
-    //                     resource="orders"
-    //                     locale="pt"
-    //                     total={ids.length} />
-    //             </React.Fragment>);
-    // }
     render () {
-        const { ids, isLoading } = this.state;
-        const { orders, classes, ...rest } = this.props;
-        return isLoading ? <LoadingPage className={classes.divloader} />
-            : (
+        const { ids, isLoading, filterDate } = this.state;
+        const { orders, classes, translate, loading, ...rest } = this.props;
+        return (<MuiPickersUtilsProvider utils={MomentUtils} locale={'pt-br'} moment={moment}>
+            <React.Fragment>
+                <InlineDatePicker
+                    onlyCalendar
+                    label={translate('pos.orders.ordersDate')}
+                    value={filterDate}
+                    openTo="year"
+                    format={"DD/MM/YYYY"}
+                    onChange={this.handleChange}
+                    className={classes.textField}
+                />
+                <Divider />
                 <OrderGrid
                     data={orders}
+                    listLoading={isLoading}
                     basePath="/orders"
                     resource="orders"
                     locale="pt"
-                    total={ids.length} />);
+                    total={ids ? ids.length : 0} />
+            </React.Fragment>
+        </MuiPickersUtilsProvider>);
     }
 
 }
@@ -144,13 +113,15 @@ class OrderList extends React.Component {
 const mapStateToProps = state => ({
     lastOrder: state.ordersReducer.lastOrder,
     orders: state.admin.resources.orders.data,
-    views: state.admin.ui.viewVersion
+    views: state.admin.ui.viewVersion,
+    loading: state.admin.loading,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         update_orders_list: bindActionCreators(updateOrdersListAction, dispatch),
         update_orders_admin: bindActionCreators(updateOrdersAdminAction, dispatch),
+        refresh_orders_admin: bindActionCreators(refreshOrdersAdminAction, dispatch),
     }
 };
 

@@ -4,7 +4,6 @@ export default {
     ...portugueseMessages,
     pos: {
         search: 'Search',
-        configuration: 'Configuration',
         language: 'Language',
         areYouSure: 'Você tem certeza disso?',
         deleting: 'Apagando ',
@@ -24,6 +23,23 @@ export default {
         },
         categories: {
             changeCategory: 'Alterar Categorias em Massa',
+        },
+        configuration: {
+            title: 'Dados Financeiros',
+            creditCardHeader: 'Informe o número do seu Cartão de Crédito',
+            paymentMethod: 'Forma de Pagamento',
+            creditCard: 'Número do Cartão',
+            creditCardName: 'Nome Impresso no Cartão',
+            dueDate: 'Válido até',
+            cvc: 'Cód.',
+            updateSuccess: 'Dados financeiros atualizados com sucesso!',
+            updateFailues: 'Houve um erro durante a atualização dos seus dados financeiros',
+            messages: {
+                invalidCreditCard: 'O número de cartão de crédito informado é inválido'
+            },
+            server: {
+                title: 'Configuração do Servidor',
+            }
         },
         customer: {
             messages: {
@@ -164,20 +180,6 @@ export default {
         },
         pages: {
             select: 'Selecionar',
-        },
-        configuration: {
-            title: 'Dados Financeiros',
-            creditCardHeader: 'Informe o número do seu Cartão de Crédito',
-            paymentMethod: 'Forma de Pagamento',
-            creditCard: 'Número do Cartão',
-            creditCardName: 'Nome Impresso no Cartão',
-            dueDate: 'Válido até',
-            cvc: 'Cód.',
-            updateSuccess: 'Dados financeiros atualizados com sucesso!',
-            updateFailues: 'Houve um erro durante a atualização dos seus dados financeiros',
-            messages: {
-                invalidCreditCard: 'O número de cartão de crédito informado é inválido'
-            }
         },
     },
     resources: {

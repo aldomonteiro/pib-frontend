@@ -1,4 +1,7 @@
-import { ADD_NOTIFICATION, REMOVE_NOTIFICATION, UPDATE_NOTIFICATIONS, SET_CONNECTED } from '../actions/notificationsActions';
+import {
+    ADD_NOTIFICATION,
+    REMOVE_NOTIFICATION, UPDATE_NOTIFICATIONS, SET_CONNECTED
+} from '../actions/notificationsActions';
 
 const defaultState = [];
 

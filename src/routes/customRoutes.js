@@ -4,6 +4,7 @@ import PageList from "../pages/PageList";
 import OrdersMap from '../components/maps/OrdersMap';
 import CatalogDataLoad from '../dataload/catalog-data-load';
 import Configuration from '../configuration';
+import SocketConfig from '../socket';
 
 const getFacebookOauthUrl = () => {
     const rUri = window.location.origin + '/fb';
@@ -17,5 +18,6 @@ export default [
     // <Route exact path="/orderslist" component={OrderList} />,
     <Route exact path='/fb' component={() => { window.location = getFacebookOauthUrl(); return null; }} />,
     <Route exact path="/configuration" component={Configuration} />,
+    <Route exact path="/socket" component={SocketConfig} />,
     <Route exact path="/catalog" component={CatalogDataLoad} />,
 ];

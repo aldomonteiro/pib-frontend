@@ -94,6 +94,11 @@ class CustomUserMenu extends React.Component {
                         primaryText={translate('pos.configuration.title')}
                         leftIcon={<SettingsIcon />}
                     />
+                    <MenuItemLink
+                        to="/socket"
+                        primaryText={translate('pos.configuration.server.title')}
+                        leftIcon={<SettingsIcon />}
+                    />
                 </UserMenu>
                 <NotificationDialog
                     showDialog={this.state.showDialog}
