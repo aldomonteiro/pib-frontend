@@ -69,7 +69,7 @@ class Notifications extends React.Component {
                 // sending first message to server, so the server
                 // can store who is connected
                 socket.emit('acknowledgment', id);
-                add_log('emitted ack:' + socket.id + ' timeStamp:' + timeStamp);
+                add_log('socket.id:' + socket.id + ' emitted ack, timeStamp:' + timeStamp);
 
                 socket.on('new-order', data => {
                     const { view_order, update_last_order, update_orders_admin } = this.props;
@@ -92,7 +92,7 @@ class Notifications extends React.Component {
                 });
                 socket.on('reconnect_attempt', (attempt) => {
                     const { add_log } = this.props;
-                    add_log(' reconnect_attempt n.' + attempt);
+                    add_log('socket.id:' + socket.id + ' reconnect_attempt n.' + attempt);
                     console.log('reconnecting attempt ' + attempt);
                     const pageID = localStorage.getItem('activePage');
                     const timeStamp = sessionStorage.getItem('timeStamp');
@@ -102,7 +102,7 @@ class Notifications extends React.Component {
                 });
                 socket.on('ack_ok', (data) => {
                     const { add_log } = this.props;
-                    add_log('ack_ok from server');
+                    add_log('socket.id:' + socket.id + ' ack_ok from server');
                     this.setState({ connected: true });
                     // const timeOut = this.state.timeOut;
                     // if (timeOut) {
@@ -113,13 +113,13 @@ class Notifications extends React.Component {
                 });
                 socket.on('disconnect', (reason) => {
                     const { add_log } = this.props;
-                    add_log('disconnection reason:' + reason);
+                    add_log('socket.id:' + socket.id + ' disconnection reason:' + reason);
                     console.log('disconnected for reason:', reason);
                     set_connected(false);
                 });
                 socket.on('error', (err) => {
                     const { add_log } = this.props;
-                    add_log('error:' + err.message);
+                    add_log('socket.id:' + socket.id + ' error:' + err.message);
                     console.log(err);
                     set_connected(false);
                 });
