@@ -49,7 +49,6 @@ class Notifications extends React.Component {
 
     componentDidMount () {
         const { socket, isConnected, set_connected, add_log } = this.props;
-        console.log('componentDidMount:', socket ? socket.connected : 'socket is null');
         if (socket) {
             // if (!isConnected) { // reducer
 
@@ -76,7 +75,7 @@ class Notifications extends React.Component {
                     update_orders_admin(data);
                     update_last_order(data);
                     view_order(data.id, data, true);
-                    this.handleOpen('new-order', data);
+                    // this.handleOpen('new-order', data);
                 });
                 socket.on('new-comment', data => {
                     const { add_notification, view_order } = this.props;

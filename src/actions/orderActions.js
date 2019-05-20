@@ -183,7 +183,7 @@ export const refresh_orders_admin = (data) => ({
 
 // Updating the store from react-admin, as described here:
 // https://stackoverflow.com/a/51229173/7948731
-export const update_orders_admin = (data, oldIDS) => ({
+export const update_orders_admin = (data, oldIDS = []) => ({
     type: UPDATE_ORDER_ADMIN,
     payload: { data, ids: oldIDS },
     meta: {
